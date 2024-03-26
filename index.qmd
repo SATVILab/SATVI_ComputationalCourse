@@ -1,0 +1,6 @@
+# Preface {.unnumbered}
+
+This is a session guide book for the SATVI Computational Course. 
+
+This is a version-controlled living document that will be updated as needed as the course progresses. All changes are tracked using git. 
+
