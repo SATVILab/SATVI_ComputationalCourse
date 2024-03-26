@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: _book
+  output-dir: docs
 
 book:
   title: "SATVI Computational Course"

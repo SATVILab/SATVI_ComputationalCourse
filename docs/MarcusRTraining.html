@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>MaRcus R Training</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">MaRcus R Training</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">Description</h2>
+<p>The Marcus R Training program was developed by Hasse Walum of Emory University. The program will cover the following:</p>
+<ol type="1">
+<li>Importing data</li>
+<li>Basic data visualization</li>
+<li>Exporting and saving plots</li>
+<li>Data transformation</li>
+<li>R Markdown basics</li>
+<li>Summarizing data</li>
+<li>String manipulation and data joining</li>
+</ol>
+<p>Rather than reinventing what is covered in the Marcus R Training program, we have been granted permission to use the materials for our SATVI Computational Course.</p>
+<p>Over the next 6 weeks, we will refer to the Marcus R Training materials for our sessions.</p>
+</section>
+<section id="content-access" class="level2">
+<h2 class="anchored" data-anchor-id="content-access">Content access</h2>
+<p>The course and all associated resources are available at:</p>
+<p>https://haswal.github.io/MaRcus/index.html</p>
+</section>
+<section id="homework" class="level2">
+<h2 class="anchored" data-anchor-id="homework">Homework</h2>
+<p>Please refer to the MaRcus R Training program session guides to access your homework assignments.</p>
+</section>
+<section id="faq" class="level2">
+<h2 class="anchored" data-anchor-id="faq">FAQ</h2>
+<p>Q1: What are the best ways to set your working directory?</p>
+<pre><code>A: There are a few ways to do this:
+
+    1. If you are using Mac, you can navigate to the directory you would like to work in using Finder. Right click the directory and hold down the "option" key. You will see an option pop up that reads "Copy path/to/directory as Pathname". Select this option to copy the pathname, then paste it into R using setwd(). This option is generally recommended. 
+
+    2. You can also set the working directory using point and click in RStudio. To do so, navigte to the "Session" tab in RStudio, then to "Set Working Directory". Follow the options to set the working directory as desired. 
+
+    3. A note about setting working directories in scripts. It is good practice to avoid using absolute file paths in your scripts, including setwd(). This means if you have your data on your PC under the filepath "User/Documents/ProjectA/analysis/data", for example, as much as possible, avoid writing this complete path into your code. This becomes problematic if you ever need to run your code on a different machine or HPC, or if a collaborator needs to run your code and has a different file structure. R will not be able to find your data if it is not stored in exactly the same place on every machine. A better option is to set your working directory using the R console (do not setwd() in the saved script). In the console, set your working directory to whatever folder contains your generic subdirectories (i.e. "data", "output"), in this example, the "analysis" folder. Then when you run your script, all you need to include when you specify a filepath is "data" or "output". So, if you ever run the script on a different machine, the user can store the relevant files anywhere they want, as long as they have subdirectories "data" and "output". </code></pre>
+<p>Q2: When generating a plot using ggplot2, does the name used in the script for the row or column we want to plot have to match the col or rowname of the associated dataframe exactly?</p>
+<pre><code>A: Yes. The names must match exactly because R searches the dataframe for col or rownames as you specify them. If you have a typo or a lower vs uppercase, it won't find that row or column in the dataframe. Also be aware of any col or rownames that include spaces. Spaces in col and rownames can confuse R into thinking you are indicating more than one name. To avoid this, if you need to specify a col or rowname that includes a space, you must place single back ticks around the full name to indicate to R that this is one complete col or rowname. For example, if you have a column called Sample Name, you must write it into your script as 'Sample Name' for ggplot2 to work properly. </code></pre>
+<p>Q3: What is the difference between facet_wrap() and facet_grid()?</p>
+<pre><code>A: Both are options that can be applied to ggplot2. facet_wrap() wraps a 1d sequence of panels into 2d. It is best used if you want to display data in a rectangular arrangement. It is used when you want to plot one variable. facet_grid() will create a panel matrix defined by numbers of rows and columns. It is ideal for plotting multiple variables that should be visualized separately for the same data. For example, if you want to plot time vs. weight, and time vs. height, you can use facet_grid() to plot both comparisons in a grid layout. Including a ~ either before or after each variable will change the orientation of variables plotted in the grid (i.e. the variable placed before the ~ will be plotted on the row, the variable placed after the ~ will be plotted on the column).</code></pre>
+<p>Q4: When should I specify aes globally vs.&nbsp;locally?</p>
+<pre><code>A: In general, specify aes in mapping (global) so that the specifications are applied to all of the data. If you need something more fine-tuned, you can write it into geom_point (lobal), where it will be applied only to that geom_point. </code></pre>
+<p>Q5: What are HEX codes?</p>
+<pre><code>A: HEX codes are unique alphanumeric codes assigned to specific colors. They can be used to assign specific colors to your data points when you plot in R. There are also pre-defined color schemes (i.e. printer-friendly, colorblind safe) that you can select. To find more information on HEX codes or colorshemes, visit https://colorbrewer2.org</code></pre>
+<p>Q6: What are your recommendations for using Chat GPT for help with coding?</p>
+<pre><code>A: Chat GPT is a quickly growing tool used by coders. It can be very helpful for designing / troubleshooting code. We recommend using Chat GPT when you are stuck before spending hours sifting through other online sites. Information given by Chat GPT can and should be verified with the original sources. We caution against allowing Chat GPT to do your work for you! It is best to become proficient and understand coding languages independently and using Chat GPT as an assistant. Relying on it entirely will ultimately be to your detriment. When you do use Chat GPT, read the descriptions and explanations it gives and make you understand thoroughly so you can use it yourself next time. If you do need help in a hurry, you can ask Chat GPT to keep responses brief by typing "No yapping." Always say please and thank you to Chat GPT for offering such superb assistance!</code></pre>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
