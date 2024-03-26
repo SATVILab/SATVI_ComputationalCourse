@@ -1,0 +1,142 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "SATVI Computational Course",
+    "section": "",
+    "text": "This is a session guide book for the SATVI Computational Course.\nThis is a version-controlled living document that will be updated as needed as the course progresses. All changes are tracked using git."
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "All lessons will be stored on the SATVI GitHub under the repository SATVI_ComputationalCourse. Navigate to the course using this link: https://github.com/SATVILab/SATVI_ComputationalCourse\nYour instructors will be SATVI members with experience in each topic. For session-specific questions, please contact the relevant instructor:\nCarly Young-Baile: carly.young-bailie@uct.ac.za\n\nSimon Mendelsohn: simon.mendelsohn@uct.ac.za\n\nMonika Looney: monika.looney@uct.ac.za\n\nAnele Gela: anele.gela@uct.ac.za\nThe full curriculum can be found on the “Syllabus” page.\nHappy coding!\nThis is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "installations.html",
+    "href": "installations.html",
+    "title": "2  Installations",
+    "section": "",
+    "text": "This document provides installation guides for basic programming tools."
+  },
+  {
+    "objectID": "installations.html#r",
+    "href": "installations.html#r",
+    "title": "2  Installations",
+    "section": "2.2 R",
+    "text": "2.2 R\nR is a commonly used coding language for computational biologists and immunologists. Many software packages and analysis pipelines depend on R. R is also a computational environment used for computing and generating graphics.\nTo install R for Windows or Mac, follow the instructions provided by The Comprehensive R Archive Network (CRAN) found here: https://cran.r-project.org/\nIt is recommended to download the precompiled binary distribution appropriate for your machine.\nTo learn more about R, read the following introduction provided by CRAN: https://www.r-project.org/about.html"
+  },
+  {
+    "objectID": "installations.html#r-studio",
+    "href": "installations.html#r-studio",
+    "title": "2  Installations",
+    "section": "2.3 R Studio",
+    "text": "2.3 R Studio\nRStudio is an integrated development environment (IDE) based on R. It provides a user-friendly option for building code and can incorporate multiple languages including python, which is also commonly used by computational immunologists.\nTo donwload and install RStudio Desktop, follow this link and the provided instructions: https://posit.co/download/rstudio-desktop/#download"
+  },
+  {
+    "objectID": "swirl.html",
+    "href": "swirl.html",
+    "title": "3  swirl",
+    "section": "",
+    "text": "swirl (https://swirlstats.com/) is an interactive R package that helps you self-teach the basics of R. It is run from directly from the R console.\nThis session guide follows the instructions provided by swirl. Visit the following link to access the full tutorial: https://swirlstats.com/students.html\nYou can also find the full swirl course tutorial on GitHub at https://github.com/swirldev/swirl_courses"
+  },
+  {
+    "objectID": "swirl.html#install-swirl",
+    "href": "swirl.html#install-swirl",
+    "title": "3  swirl",
+    "section": "3.2 Install swirl",
+    "text": "3.2 Install swirl\nswirl requires R 3.1.0 or later installed on your computer. It is also recommended that you have RStudio installed which will provide a user-friendly environment to work with.\nFor instructions on how to install R and RStudio, visit the Installations session guide page.\nOnce you have downloaded R and RStudio, perform the following steps:\n1. Open RStudio. \n2. In the RStudio console, type the following where you see the command prompt > :\n\n    install.packages(\"swirl\")"
+  },
+  {
+    "objectID": "swirl.html#initialize-swirl",
+    "href": "swirl.html#initialize-swirl",
+    "title": "3  swirl",
+    "section": "3.3 Initialize swirl",
+    "text": "3.3 Initialize swirl\nWhenever you want to run swirl, you must load and initialize the package.\n1. In the console, type the following:\n\n    library(\"swirl\")\n    swirl()\n\n2. Follow any prompts that come up in the console. i.e. if swirl asks \"What shall I call you?\", type your name and hit enter."
+  },
+  {
+    "objectID": "swirl.html#install-an-interactive-course",
+    "href": "swirl.html#install-an-interactive-course",
+    "title": "3  swirl",
+    "section": "3.4 Install an interactive course",
+    "text": "3.4 Install an interactive course\nThe first time you initialize swirl, you will need to install a course.\nFor the SATVI Computational Course, we recommend that those who are new to coding start with “R Programming”. This course will cover the basics of programming in R.\nThere are many courses to choose from, so those who are more advanced may opt for an intermediate or advanced course to work through in their own time. A repository with all available swirl courses can be found here: https://github.com/swirldev/swirl_courses#swirl-courses.\nThere is also an expansive swirl Network that expands further on open sourse interactive R lessons. You can access the Network and associated courses or become a swirl course author here: https://swirlstats.com/scn/\nTo install a course that is not part of the swirl course repository, type the following into the console:\n    ?InstallCourses"
+  },
+  {
+    "objectID": "swirl.html#run-swirl",
+    "href": "swirl.html#run-swirl",
+    "title": "3  swirl",
+    "section": "3.5 Run swirl",
+    "text": "3.5 Run swirl\nFor now, we will assume that we are starting with the basics and have chosen to install the “R Programming” course.\nTo run the interactive lessons:\nSelect a new lesson. The R Programming course offers 14 different short interactive lessons. Go through each one in order as the information from earlier lessons is required in later lessons."
+  },
+  {
+    "objectID": "swirl.html#exit-swirl",
+    "href": "swirl.html#exit-swirl",
+    "title": "3  swirl",
+    "section": "3.6 Exit swirl",
+    "text": "3.6 Exit swirl\nIf at any time you need to exit a swirl lesson before it is complete, simply press the Esc key.\nIf you need to exit from a prompt, exit and save your work by typing: bye()"
+  },
+  {
+    "objectID": "swirl.html#interactive-commands",
+    "href": "swirl.html#interactive-commands",
+    "title": "3  swirl",
+    "section": "3.7 Interactive commands",
+    "text": "3.7 Interactive commands\nWhile you are working in swirl, you may find that you want to skip a section that you are already comfortable with, or to work more on the current topic outside of an interactive session.\nBelow are some helpful commands for getting the most out of your swirl sessions:\nFrom the R prompt (>):\nTo skip the current question: skip()\n\nTo experiment with R on your own without swirl interaction: play()\n\nTo re-initiate swirl interaction after playing: nxt()\n\nTo exit and save: bye()\n\nTo return to swirl's main menu: main()\n\nTo display these command options: info()\nIf you see a swirl output followed by … press Enter to continue."
+  },
+  {
+    "objectID": "swirl.html#homework",
+    "href": "swirl.html#homework",
+    "title": "3  swirl",
+    "section": "3.8 Homework",
+    "text": "3.8 Homework\nAs beginners, regular practice is critical! It is recommended that you go through one or two lessons daily to improve and retain these fundamentals.\nOver the next week, in your own time, complete the 14 short interactive lessons from the “R Programming” swirl course."
+  },
+  {
+    "objectID": "swirl.html#faq",
+    "href": "swirl.html#faq",
+    "title": "3  swirl",
+    "section": "3.9 FAQ",
+    "text": "3.9 FAQ\nQ1: Can funcitons learned in swirl be applied when writing my own R scripts?\nA: Absolutely! The functions that you use in swirl are all base R functions that can be used in any R script.\nQ2: If I need to use an R package, do I need to install the package each time I start a new session?\nA: Nope! Once a package is installed, you do not have to re-install when you open a new R session. Simply load the package from the library. For example, if I want to use ggplot2 and I have installed it before, load the package using >library(ggplot2). However, if you are running your script on a different machine that does not have the package installed (and are not working from a container - we'll get to this later in the course), you will need to install the package on that machine before loading it from the library."
+  },
+  {
+    "objectID": "MarcusRTraining.html",
+    "href": "MarcusRTraining.html",
+    "title": "4  MaRcus R Training",
+    "section": "",
+    "text": "The Marcus R Training program was developed by Hasse Walum of Emory University. The program will cover the following:\n\nImporting data\nBasic data visualization\nExporting and saving plots\nData transformation\nR Markdown basics\nSummarizing data\nString manipulation and data joining\n\nRather than reinventing what is covered in the Marcus R Training program, we have been granted permission to use the materials for our SATVI Computational Course.\nOver the next 6 weeks, we will refer to the Marcus R Training materials for our sessions."
+  },
+  {
+    "objectID": "MarcusRTraining.html#content-access",
+    "href": "MarcusRTraining.html#content-access",
+    "title": "4  MaRcus R Training",
+    "section": "4.2 Content access",
+    "text": "4.2 Content access\nThe course and all associated resources are available at:\nhttps://haswal.github.io/MaRcus/index.html"
+  },
+  {
+    "objectID": "MarcusRTraining.html#homework",
+    "href": "MarcusRTraining.html#homework",
+    "title": "4  MaRcus R Training",
+    "section": "4.3 Homework",
+    "text": "4.3 Homework\nPlease refer to the MaRcus R Training program session guides to access your homework assignments."
+  },
+  {
+    "objectID": "MarcusRTraining.html#faq",
+    "href": "MarcusRTraining.html#faq",
+    "title": "4  MaRcus R Training",
+    "section": "4.4 FAQ",
+    "text": "4.4 FAQ\nQ1: What are the best ways to set your working directory?\nA: There are a few ways to do this:\n\n    1. If you are using Mac, you can navigate to the directory you would like to work in using Finder. Right click the directory and hold down the \"option\" key. You will see an option pop up that reads \"Copy path/to/directory as Pathname\". Select this option to copy the pathname, then paste it into R using setwd(). This option is generally recommended. \n\n    2. You can also set the working directory using point and click in RStudio. To do so, navigte to the \"Session\" tab in RStudio, then to \"Set Working Directory\". Follow the options to set the working directory as desired. \n\n    3. A note about setting working directories in scripts. It is good practice to avoid using absolute file paths in your scripts, including setwd(). This means if you have your data on your PC under the filepath \"User/Documents/ProjectA/analysis/data\", for example, as much as possible, avoid writing this complete path into your code. This becomes problematic if you ever need to run your code on a different machine or HPC, or if a collaborator needs to run your code and has a different file structure. R will not be able to find your data if it is not stored in exactly the same place on every machine. A better option is to set your working directory using the R console (do not setwd() in the saved script). In the console, set your working directory to whatever folder contains your generic subdirectories (i.e. \"data\", \"output\"), in this example, the \"analysis\" folder. Then when you run your script, all you need to include when you specify a filepath is \"data\" or \"output\". So, if you ever run the script on a different machine, the user can store the relevant files anywhere they want, as long as they have subdirectories \"data\" and \"output\". \nQ2: When generating a plot using ggplot2, does the name used in the script for the row or column we want to plot have to match the col or rowname of the associated dataframe exactly?\nA: Yes. The names must match exactly because R searches the dataframe for col or rownames as you specify them. If you have a typo or a lower vs uppercase, it won't find that row or column in the dataframe. Also be aware of any col or rownames that include spaces. Spaces in col and rownames can confuse R into thinking you are indicating more than one name. To avoid this, if you need to specify a col or rowname that includes a space, you must place single back ticks around the full name to indicate to R that this is one complete col or rowname. For example, if you have a column called Sample Name, you must write it into your script as 'Sample Name' for ggplot2 to work properly. \nQ3: What is the difference between facet_wrap() and facet_grid()?\nA: Both are options that can be applied to ggplot2. facet_wrap() wraps a 1d sequence of panels into 2d. It is best used if you want to display data in a rectangular arrangement. It is used when you want to plot one variable. facet_grid() will create a panel matrix defined by numbers of rows and columns. It is ideal for plotting multiple variables that should be visualized separately for the same data. For example, if you want to plot time vs. weight, and time vs. height, you can use facet_grid() to plot both comparisons in a grid layout. Including a ~ either before or after each variable will change the orientation of variables plotted in the grid (i.e. the variable placed before the ~ will be plotted on the row, the variable placed after the ~ will be plotted on the column).\nQ4: When should I specify aes globally vs. locally?\nA: In general, specify aes in mapping (global) so that the specifications are applied to all of the data. If you need something more fine-tuned, you can write it into geom_point (lobal), where it will be applied only to that geom_point. \nQ5: What are HEX codes?\nA: HEX codes are unique alphanumeric codes assigned to specific colors. They can be used to assign specific colors to your data points when you plot in R. There are also pre-defined color schemes (i.e. printer-friendly, colorblind safe) that you can select. To find more information on HEX codes or colorshemes, visit https://colorbrewer2.org\nQ6: What are your recommendations for using Chat GPT for help with coding?\nA: Chat GPT is a quickly growing tool used by coders. It can be very helpful for designing / troubleshooting code. We recommend using Chat GPT when you are stuck before spending hours sifting through other online sites. Information given by Chat GPT can and should be verified with the original sources. We caution against allowing Chat GPT to do your work for you! It is best to become proficient and understand coding languages independently and using Chat GPT as an assistant. Relying on it entirely will ultimately be to your detriment. When you do use Chat GPT, read the descriptions and explanations it gives and make you understand thoroughly so you can use it yourself next time. If you do need help in a hurry, you can ask Chat GPT to keep responses brief by typing \"No yapping.\" Always say please and thank you to Chat GPT for offering such superb assistance!"
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "5  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever."
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  }
+]
