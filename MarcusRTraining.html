@@ -197,6 +197,8 @@ ul.task-list{list-style: none;}
 </section>
 <section id="faq" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="faq"><span class="header-section-number">4.4</span> FAQ</h2>
+<section id="session-1" class="level4" data-number="4.4.0.1">
+<h4 data-number="4.4.0.1" class="anchored" data-anchor-id="session-1"><span class="header-section-number">4.4.0.1</span> Session 1</h4>
 <p>Q1: What are the best ways to set your working directory?</p>
 <pre><code>A: There are a few ways to do this:
 
@@ -215,8 +217,47 @@ ul.task-list{list-style: none;}
 <pre><code>A: HEX codes are unique alphanumeric codes assigned to specific colors. They can be used to assign specific colors to your data points when you plot in R. There are also pre-defined color schemes (i.e. printer-friendly, colorblind safe) that you can select. To find more information on HEX codes or colorshemes, visit https://colorbrewer2.org</code></pre>
 <p>Q6: What are your recommendations for using Chat GPT for help with coding?</p>
 <pre><code>A: Chat GPT is a quickly growing tool used by coders. It can be very helpful for designing / troubleshooting code. We recommend using Chat GPT when you are stuck before spending hours sifting through other online sites. Information given by Chat GPT can and should be verified with the original sources. We caution against allowing Chat GPT to do your work for you! It is best to become proficient and understand coding languages independently and using Chat GPT as an assistant. Relying on it entirely will ultimately be to your detriment. When you do use Chat GPT, read the descriptions and explanations it gives and make you understand thoroughly so you can use it yourself next time. If you do need help in a hurry, you can ask Chat GPT to keep responses brief by typing "No yapping." Always say please and thank you to Chat GPT for offering such superb assistance!</code></pre>
+</section>
+<section id="session-2" class="level4" data-number="4.4.0.2">
+<h4 data-number="4.4.0.2" class="anchored" data-anchor-id="session-2"><span class="header-section-number">4.4.0.2</span> Session 2</h4>
+<p>Q1: What is the difference between top and bottom windows in R Studio?</p>
+<pre><code>A: It can help to think of this an analogy: In R Studio, the top left (script) is your recipe, bottom left (console) is your kitchen, top right (environment) is your pantry. The script window shows your saved scripts that you can use each time you need to run the analysis. You can make edits and save just like you might for your favourite recipe. The console is where you do the work. As you run lines of your script, you will see that in the console below, each line is copied into the console and run in real time. Here you can see the script running and any warnings and outputs. The environment, like a pantry, is where all of the necessary "ingredients" to run your script are kept. Just as you would before you start cooking, as you go through your script, you will load necessary items (i.e. data / metadata) into your environment so that when the recipe calls for it, it is there and ready to go. The final bottom right window serves a few functions. It can show file paths, plot outputs, packages etc. We encourage everyone to familiarize themselves with each window to better understand their functionalities. Happy cooking! I mean coding. </code></pre>
+<p>Q2: Can you plot confidence intervals automatically using geom_errorbar or do you have to calculate them separately first?</p>
+<pre><code>A: Confidence intervals should be calculated separately. </code></pre>
+</section>
+<section id="session-3" class="level4" data-number="4.4.0.3">
+<h4 data-number="4.4.0.3" class="anchored" data-anchor-id="session-3"><span class="header-section-number">4.4.0.3</span> Session 3</h4>
+<p>Q1: How can you save the contents of the R console when I finish a session?</p>
+<pre><code>A1: You can save the contents of the base R console using the 'sink()' function. Here you will specify the file path where you want the file to be saved. sink() will then save the console contents as a .txt file in your specified directory. sink must sandwich your code that you want to save.
+
+For example: 
+
+sink("output/console_content.txt")
+
+Run code of your choice
+
+sink()
+
+A2: If using RStudio, you can do this via point and click. Navigate to "History" in the top right window. Click "Save". You must do this before ending the session. The "Save" option that comes up upon closing the session will save a hidden . Rdata file, not your console output as a separate file. </code></pre>
+<p>Q2: How does ‘filter()’ work?</p>
+<pre><code>A: The 'filter()' function from the 'dplyr' package is used to subset data frames based on specified conditions. Specify the data frame and condition as follows:
+
+filter(.data, condition)
+
+Here .data is any data frame in your environment that you want to filter. Condition needs to be specified to filter the data frame however you need. filter() will search through each column (or a specified column) until it finds a row that meets the specified condition. Any row that has a value that meets your condition will be removed. Typically when we filter we assign the filtered data frame to a new name, or overwrite the original data frame. For example:
+
+filtered.data &lt;- filter(original.data, original.data$frequency &gt; 0.05)
+
+filtered.data have rows with frequency &gt; 0.05 removed. </code></pre>
+<p>Q3: What is the difference between a function and an operator?</p>
+<pre><code>A: A function is a chunk of code that is designed to perform a specific task. They typically wrap multiple arguments and use complex logic that is inefficient to rewrite each time it is needed. A function streamlines the process so all you have to do is call the function, specify a small number of options. This is typically done in one line of code. 
+
+Alternatively, an operator is a simple symbol that is used to perform arithmetic, logical, or rational operations on data. For example a '+' is an arithmetic operator for addition. </code></pre>
+<p>Q4: Why does the ‘is.na()’ function work if the NA in my data frame is uppercase? Isn’t it case-specific?</p>
+<pre><code>A: Though most things in R are case specific, is.na() isn't actually looking for the specific "NA" text. NA comes up as an empty or missing value. Therefore, even though we see NA as uppercase, in R it comes up as a missing value, so the case of the text doesn't matter. Where is.na() finds a missing value, it will return a value of 'TRUE'. Actual values will be returned as 'FALSE'</code></pre>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
