@@ -7,13 +7,17 @@ format: html
 
 This page serves as a syllabus for the SATVI Computational Course. Details for each session can be found on their dedicated page. 
 
-## **Module 1:** Intro to R and MaRcus Training Course
+## **Module 1: Intro to R and MaRcus Training Course** 
 
 ### Session 1: Intro to R and swirl
 
 **Topic:** Introduction to R language and environments, RStudio, and swirl self-teaching tools. 
 
+**Instructor:** Monika Looney: monika.looney@uct.ac.za
+
 **Date:** 05 MAR 2024
+
+**Time:** 10h30 - 11h30
 
 **Location:** Lekgotla 4A and 4B
 
@@ -23,7 +27,11 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Topic:** Importing data into R environment and basic visualizations with ggplot2
 
+**Instructor:** Carly Young-Baile: carly.young-bailie@uct.ac.za
+
 **Date:** 19 MAR 2024
+
+**Time:** 11h00 - 12h00
 
 **Location:** Lekgotla 4A and 4B
 
@@ -33,7 +41,11 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Topic:** Creating histograms and statistical summaries; combining and exporting plots 
 
+**Instructor:** Carly Young-Baile: carly.young-bailie@uct.ac.za
+
 **Date:** 26 MAR 2024
+
+**Time:** 11h00 - 12h00
 
 **Location:** Lekgotla 4A and 4B
 
@@ -43,19 +55,27 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Topic:** Basic data transformation using dplyr
 
+**Instructor:** Carly Young-Baile: carly.young-bailie@uct.ac.za
+
 **Date:** 02 APR 2024
+
+**Time:** 11h00 - 12h00
 
 **Location:** Lekgotla 4A and 4B
 
 **Homework:** See assignment from https://haswal.github.io/MaRcus/03_session.html
 
-#### Note - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.
+**Note** - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.
 
 ### Session 5: MaRcus Training Course lesson 5
 
 **Topic:** Continuation of data transformation using dplyr and data wrangling 
 
+**Instructor:** Carly Young-Baile: carly.young-bailie@uct.ac.za
+
 **Date:** 09 APR 2024
+
+**Time:** 11h00 - 12h00
 
 **Location:** Lekgotla 4A and 4B
 
@@ -65,7 +85,11 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Topic:** Clean up data using tidyr
 
+**Instructor:** Carly Young-Baile: carly.young-bailie@uct.ac.za
+
 **Date:** 30 APR 2024
+
+**Time:** 11h00 - 12h00
 
 **Location:** Lekgotla 4A and 4B
 
@@ -75,8 +99,202 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Topic:** Manipulating strings with stringr and intro to regular expressions
 
+**Instructor:** Carly Young-Baile: carly.young-bailie@uct.ac.za
+
 **Date:** 07 MAY 2024
+
+**Time:** 11h00 - 12h00
 
 **Location:** Lekgotla 4A and 4B
 
 **Homework:** See assignment from https://haswal.github.io/MaRcus/07_session.html
+
+### Session 8: Exporting data from R
+
+**Topic:** Exporting data and plots from R in different formats including csv, pdf, and jpeg
+
+**Instructor:** Monika Looney: monika.looney@uct.ac.za
+
+**Date:** 21 MAY 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** Export data frame to csv and save plots as pdf and jpeg; 
+
+## **Module 2: Quarto, GitHub, and GUIs**
+
+### Intro to Quarto 
+
+**Topic:** Intro to technical publishing using Quarto
+
+**Instructor:** Monika Looney: monika.looney@uct.ac.za
+
+**Date:** 04 JUN 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** Initialize a Quarto project for your own study; Make GitHub account, access SATVILab GitHub, and download GitHub Desktop
+
+### Intro to GitHub
+
+**Topic:** Intro to version control using Git and GitHub
+
+**Instructor:** Monika Looney: monika.looney@uct.ac.za
+
+**Date:** 18 JUN 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** Set up a version controlled project; Download VS Code 
+
+### Intro to VS Code 
+
+**Topic:** Intro to VS Code as an alternative GUI to RStudio and git-aware terminals 
+
+**Instructor:** Monika Looney: monika.looney@uct.ac.za
+
+**Date:** 02 JUL 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** Write a script in the VS Code GUI
+
+## **Module 3: Statistics**
+
+### Basic statistical tests
+
+**Topic:** Computing commonly needed statistics and confidence intervals in R
+
+**Instructor:** Miguel Rodo: miguel.rodo@uct.ac.za
+
+**Date:** 16 JUL 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 
+
+### Correlations
+
+**Topic:** Computing correlation metrics in R
+
+**Instructor:** Miguel Rodo: miguel.rodo@uct.ac.za
+
+**Date:** 30 JUL 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 
+
+## **Module 4: Commonly needed analyses for Immunology**
+
+### Receiver operating characteristic (ROC) curves
+
+**Topic:** Understanding and computing ROC curves 
+
+**Instructor:** Simon Mendelsohn: simon.mendelsohn@uct.ac.za
+
+**Date:** 13 AUG 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 
+
+### Heatmaps
+
+**Topic:** Plotting and manipulating heatmaps
+
+**Instructor:** Monika Looney: monika.looney@uct.ac.za
+
+**Date:** 27 AUG 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 
+
+### Dimensionality reduction 
+
+**Topic:** Understanding and conducting dimensionality reduction using PCA and UMAP
+
+**Instructor:** Monika Looney: monika.looney@uct.ac.za
+
+**Date:** 03 SEP 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 
+
+### Background subtraction 
+
+**Topic:** Learning how to apply a function for background subtraction 
+
+**Instructor:** Miguel Rodo: miguel.rodo@uct.ac.za
+
+**Date:** 17 SEP 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 
+
+### Basic flow cytometry analysis
+
+**Topic:** Plotting background subtracted frequencies and MFIs from flow cytometry data
+
+**Instructor:** Munyaradzi Musvosvi: munyaradzi.musvosvi@uct.ac.za
+
+**Date:** 01 OCT 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 
+
+### Automatic gating
+
+**Topic:** Generating inputs for and carrying out automated gating for flow cytometry data
+
+**Instructor:** Munyaradzi Musvosvi: munyaradzi.musvosvi@uct.ac.za
+
+**Date:** 15 OCT 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 
+
+## **Module 5: Other coding languages**
+
+### Intro to Python
+
+**Topic:** Basics of using python and applications for computational immunology 
+
+**Instructor:** Denis Awany: denis.awany@uct.ac.za
+
+**Date:** 29 OCT 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 

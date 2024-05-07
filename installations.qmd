@@ -23,3 +23,18 @@ RStudio is an integrated development environment (IDE) based on R. It provides a
 
 To donwload and install RStudio Desktop, follow this link and the provided instructions: https://posit.co/download/rstudio-desktop/#download
 
+## GitHub Desktop
+
+GitHub Desktop is a desktop application that interfaces with version-controlled code, GitHub, and other Git services. It provides a user friendly GUI where you can review changes made to code and perform Git commands. 
+It is open source and free to use. 
+
+First sign up for a GitHub account at https://github.com
+
+Now download and install GitHub Desktop, follow this link and the provided instructions: https://desktop.github.com. Sign in with your GitHub account login. 
+
+## Visual Studio Code (VS Code)
+
+VS Code is a text and code editor commonly used by developers. It can be used as an alternative for RStudio and supports multiple coding languages and various extensions for debugging and version control. 
+
+To download and install VS Code, follow this link and the provided instructions: https://code.visualstudio.com/download
+
