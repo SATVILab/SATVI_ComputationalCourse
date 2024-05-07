@@ -11,14 +11,14 @@
     "href": "intro.html",
     "title": "1  Introduction",
     "section": "",
-    "text": "Welcome to the SATVI Computational Course! This course is designed to strengthen fundamental coding skills for SATVI trainees and staff. The curriculum will take you through the basics of R, using the terminal, creating and using git controlled projects, as well as more advanced data analysis methods commonly used at SATVI.\nAll lessons will be stored on the SATVI GitHub under the repository SATVI_ComputationalCourse. Navigate to the course using this link: https://github.com/SATVILab/SATVI_ComputationalCourse\nYour instructors will be SATVI members with experience in each topic. For session-specific questions, please contact the relevant instructor:"
+    "text": "Welcome to the SATVI Computational Course! This course is designed to strengthen fundamental coding skills for SATVI trainees and staff. The curriculum will take you through the basics of R, using the terminal, creating and using git controlled projects, as well as more advanced data analysis methods commonly used at SATVI.\nAll lessons will be stored on the SATVI GitHub under the repository SATVI_ComputationalCourse. To access all relevant course content, navigate to https://github.com/SATVILab/SATVI_ComputationalCourse.\nA static webpage version of the course is also available at https://satvilab.github.io/SATVI_ComputationalCourse/\nYour instructors are SATVI members with experience in each topic. For session-specific questions, please contact the relevant instructor:"
   },
   {
     "objectID": "intro.html#instructor-contacts",
     "href": "intro.html#instructor-contacts",
     "title": "1  Introduction",
     "section": "1.1 Instructor contacts",
-    "text": "1.1 Instructor contacts\n    Carly Young-Baile: carly.young-bailie@uct.ac.za\n\n    Simon Mendelsohn: simon.mendelsohn@uct.ac.za\n\n    Monika Looney: monika.looney@uct.ac.za\n\n    Anele Gela: anele.gela@uct.ac.za\nThe full curriculum can be found on the “Syllabus” page.\nHappy coding!"
+    "text": "1.1 Instructor contacts\n    Carly Young-Baile: carly.young-bailie@uct.ac.za\n\n    Monika Looney: monika.looney@uct.ac.za\n\n    Miguel Rodo: miguel.rodo@uct.ac.za\n\n    Simon Mendelsohn: simon.mendelsohn@uct.ac.za\n\n    Munyaradzi Musvosvi: munyaradzi.musvosvi@uct.ac.za\n\n    Denis Awany: denis.awany@uct.ac.za\nThe full curriculum can be found on the “Syllabus” page.\nHappy coding!"
   },
   {
     "objectID": "syllabus.html",
@@ -32,7 +32,35 @@
     "href": "syllabus.html#module-1-intro-to-r-and-marcus-training-course",
     "title": "2  Syllabus",
     "section": "2.2 Module 1: Intro to R and MaRcus Training Course",
-    "text": "2.2 Module 1: Intro to R and MaRcus Training Course\n\n2.2.1 Session 1: Intro to R and swirl\nTopic: Introduction to R language and environments, RStudio, and swirl self-teaching tools.\nDate: 05 MAR 2024\nLocation: Lekgotla 4A and 4B\nHomework: Complete swirl “R Programming” interactive learning sessions at own pace.\n\n\n2.2.2 Session 2: MaRcus Training Course lesson 1\nTopic: Importing data into R environment and basic visualizations with ggplot2\nDate: 19 MAR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/01_session.html\n\n\n2.2.3 Session 3: MaRcus Training Course lesson 2\nTopic: Creating histograms and statistical summaries; combining and exporting plots\nDate: 26 MAR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/02_session.html\n\n\n2.2.4 Session 4: MaRcus Training Course lesson 3\nTopic: Basic data transformation using dplyr\nDate: 02 APR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/03_session.html\n\n2.2.4.1 Note - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.\n\n\n\n2.2.5 Session 5: MaRcus Training Course lesson 5\nTopic: Continuation of data transformation using dplyr and data wrangling\nDate: 09 APR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/05_session.html\n\n\n2.2.6 Session 6: MaRcus Training Course lesson 6\nTopic: Clean up data using tidyr\nDate: 30 APR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/06_session.html\n\n\n2.2.7 Session 7: MaRcus Training Course lesson 7\nTopic: Manipulating strings with stringr and intro to regular expressions\nDate: 07 MAY 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/07_session.html"
+    "text": "2.2 Module 1: Intro to R and MaRcus Training Course\n\n2.2.1 Session 1: Intro to R and swirl\nTopic: Introduction to R language and environments, RStudio, and swirl self-teaching tools.\nInstructor: Monika Looney: monika.looney@uct.ac.za\nDate: 05 MAR 2024\nTime: 10h30 - 11h30\nLocation: Lekgotla 4A and 4B\nHomework: Complete swirl “R Programming” interactive learning sessions at own pace.\n\n\n2.2.2 Session 2: MaRcus Training Course lesson 1\nTopic: Importing data into R environment and basic visualizations with ggplot2\nInstructor: Carly Young-Baile: carly.young-bailie@uct.ac.za\nDate: 19 MAR 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/01_session.html\n\n\n2.2.3 Session 3: MaRcus Training Course lesson 2\nTopic: Creating histograms and statistical summaries; combining and exporting plots\nInstructor: Carly Young-Baile: carly.young-bailie@uct.ac.za\nDate: 26 MAR 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/02_session.html\n\n\n2.2.4 Session 4: MaRcus Training Course lesson 3\nTopic: Basic data transformation using dplyr\nInstructor: Carly Young-Baile: carly.young-bailie@uct.ac.za\nDate: 02 APR 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/03_session.html\nNote - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.\n\n\n2.2.5 Session 5: MaRcus Training Course lesson 5\nTopic: Continuation of data transformation using dplyr and data wrangling\nInstructor: Carly Young-Baile: carly.young-bailie@uct.ac.za\nDate: 09 APR 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/05_session.html\n\n\n2.2.6 Session 6: MaRcus Training Course lesson 6\nTopic: Clean up data using tidyr\nInstructor: Carly Young-Baile: carly.young-bailie@uct.ac.za\nDate: 30 APR 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/06_session.html\n\n\n2.2.7 Session 7: MaRcus Training Course lesson 7\nTopic: Manipulating strings with stringr and intro to regular expressions\nInstructor: Carly Young-Baile: carly.young-bailie@uct.ac.za\nDate: 07 MAY 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/07_session.html\n\n\n2.2.8 Session 8: Exporting data from R\nTopic: Exporting data and plots from R in different formats including csv, pdf, and jpeg\nInstructor: Monika Looney: monika.looney@uct.ac.za\nDate: 21 MAY 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: Export data frame to csv and save plots as pdf and jpeg;"
+  },
+  {
+    "objectID": "syllabus.html#module-2-quarto-github-and-guis",
+    "href": "syllabus.html#module-2-quarto-github-and-guis",
+    "title": "2  Syllabus",
+    "section": "2.3 Module 2: Quarto, GitHub, and GUIs",
+    "text": "2.3 Module 2: Quarto, GitHub, and GUIs\n\n2.3.1 Intro to Quarto\nTopic: Intro to technical publishing using Quarto\nInstructor: Monika Looney: monika.looney@uct.ac.za\nDate: 04 JUN 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: Initialize a Quarto project for your own study; Make GitHub account, access SATVILab GitHub, and download GitHub Desktop\n\n\n2.3.2 Intro to GitHub\nTopic: Intro to version control using Git and GitHub\nInstructor: Monika Looney: monika.looney@uct.ac.za\nDate: 18 JUN 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: Set up a version controlled project; Download VS Code\n\n\n2.3.3 Intro to VS Code\nTopic: Intro to VS Code as an alternative GUI to RStudio and git-aware terminals\nInstructor: Monika Looney: monika.looney@uct.ac.za\nDate: 02 JUL 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework: Write a script in the VS Code GUI"
+  },
+  {
+    "objectID": "syllabus.html#module-3-statistics",
+    "href": "syllabus.html#module-3-statistics",
+    "title": "2  Syllabus",
+    "section": "2.4 Module 3: Statistics",
+    "text": "2.4 Module 3: Statistics\n\n2.4.1 Basic statistical tests\nTopic: Computing commonly needed statistics and confidence intervals in R\nInstructor: Miguel Rodo: miguel.rodo@uct.ac.za\nDate: 16 JUL 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework:\n\n\n2.4.2 Correlations\nTopic: Computing correlation metrics in R\nInstructor: Miguel Rodo: miguel.rodo@uct.ac.za\nDate: 30 JUL 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework:"
+  },
+  {
+    "objectID": "syllabus.html#module-4-commonly-needed-analyses-for-immunology",
+    "href": "syllabus.html#module-4-commonly-needed-analyses-for-immunology",
+    "title": "2  Syllabus",
+    "section": "2.5 Module 4: Commonly needed analyses for Immunology",
+    "text": "2.5 Module 4: Commonly needed analyses for Immunology\n\n2.5.1 Receiver operating characteristic (ROC) curves\nTopic: Understanding and computing ROC curves\nInstructor: Simon Mendelsohn: simon.mendelsohn@uct.ac.za\nDate: 13 AUG 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework:\n\n\n2.5.2 Heatmaps\nTopic: Plotting and manipulating heatmaps\nInstructor: Monika Looney: monika.looney@uct.ac.za\nDate: 27 AUG 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework:\n\n\n2.5.3 Dimensionality reduction\nTopic: Understanding and conducting dimensionality reduction using PCA and UMAP\nInstructor: Monika Looney: monika.looney@uct.ac.za\nDate: 03 SEP 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework:\n\n\n2.5.4 Background subtraction\nTopic: Learning how to apply a function for background subtraction\nInstructor: Miguel Rodo: miguel.rodo@uct.ac.za\nDate: 17 SEP 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework:\n\n\n2.5.5 Basic flow cytometry analysis\nTopic: Plotting background subtracted frequencies and MFIs from flow cytometry data\nInstructor: Munyaradzi Musvosvi: munyaradzi.musvosvi@uct.ac.za\nDate: 01 OCT 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework:\n\n\n2.5.6 Automatic gating\nTopic: Generating inputs for and carrying out automated gating for flow cytometry data\nInstructor: Munyaradzi Musvosvi: munyaradzi.musvosvi@uct.ac.za\nDate: 15 OCT 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework:"
+  },
+  {
+    "objectID": "syllabus.html#module-5-other-coding-languages",
+    "href": "syllabus.html#module-5-other-coding-languages",
+    "title": "2  Syllabus",
+    "section": "2.6 Module 5: Other coding languages",
+    "text": "2.6 Module 5: Other coding languages\n\n2.6.1 Intro to Python\nTopic: Basics of using python and applications for computational immunology\nInstructor: Denis Awany: denis.awany@uct.ac.za\nDate: 29 OCT 2024\nTime: 11h00 - 12h00\nLocation: Lekgotla 4A and 4B\nHomework:"
   },
   {
     "objectID": "installations.html",
@@ -54,6 +82,20 @@
     "title": "3  Installations",
     "section": "3.3 R Studio",
     "text": "3.3 R Studio\nRStudio is an integrated development environment (IDE) based on R. It provides a user-friendly option for building code and can incorporate multiple languages including python, which is also commonly used by computational immunologists.\nTo donwload and install RStudio Desktop, follow this link and the provided instructions: https://posit.co/download/rstudio-desktop/#download"
+  },
+  {
+    "objectID": "installations.html#github-desktop",
+    "href": "installations.html#github-desktop",
+    "title": "3  Installations",
+    "section": "3.4 GitHub Desktop",
+    "text": "3.4 GitHub Desktop\nGitHub Desktop is a desktop application that interfaces with version-controlled code, GitHub, and other Git services. It provides a user friendly GUI where you can review changes made to code and perform Git commands. It is open source and free to use.\nFirst sign up for a GitHub account at https://github.com\nNow download and install GitHub Desktop, follow this link and the provided instructions: https://desktop.github.com. Sign in with your GitHub account login."
+  },
+  {
+    "objectID": "installations.html#visual-studio-code-vs-code",
+    "href": "installations.html#visual-studio-code-vs-code",
+    "title": "3  Installations",
+    "section": "3.5 Visual Studio Code (VS Code)",
+    "text": "3.5 Visual Studio Code (VS Code)\nVS Code is a text and code editor commonly used by developers. It can be used as an alternative for RStudio and supports multiple coding languages and various extensions for debugging and version control.\nTo download and install VS Code, follow this link and the provided instructions: https://code.visualstudio.com/download"
   },
   {
     "objectID": "swirl.html",
