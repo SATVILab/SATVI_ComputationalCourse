@@ -17,6 +17,7 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
+    - syllabus.qmd
     - installations.qmd
     - swirl.qmd
     - MarcusRTraining.qmd

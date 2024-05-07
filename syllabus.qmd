@@ -1,0 +1,84 @@
+---
+title: "SATVI Syllabus"
+format: html
+---
+
+## Description
+
+This page serves as a syllabus for the SATVI Computational Course. Details for each session can be found on their dedicated page. 
+
+## MODULE 1: Intro to R and MaRcus Training Course
+
+### Session 1: Intro to R and swirl
+
+**Topic:** Introduction to R language and environments, RStudio, and swirl self-teaching tools. 
+
+**Date:** 05 MAR 2024
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** Complete swirl "R Programming" interactive learning sessions at own pace. 
+
+### Session 2: MaRcus Training Course lesson 1
+
+**Topic:** Importing data into R environment and basic visualizations with ggplot2
+
+**Date:** 19 MAR 2024
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** See assignment from https://haswal.github.io/MaRcus/01_session.html
+
+### Session 3: MaRcus Training Course lesson 2
+
+**Topic:** Creating histograms and statistical summaries; combining and exporting plots 
+
+**Date:** 26 MAR 2024
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** See assignment from https://haswal.github.io/MaRcus/02_session.html
+
+### Session 4: MaRcus Training Course lesson 3
+
+**Topic:** Basic data transformation using dplyr
+
+**Date:** 02 APR 2024
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** See assignment from https://haswal.github.io/MaRcus/03_session.html
+
+#### Note - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.
+
+### Session 5: MaRcus Training Course lesson 5
+
+**Topic:** Continuation of data transformation using dplyr and data wrangling 
+
+**Date:** 09 APR 2024
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** See assignment from https://haswal.github.io/MaRcus/05_session.html
+
+### Session 6: MaRcus Training Course lesson 6
+
+**Topic:** Clean up data using tidyr
+
+**Date:** 30 APR 2024
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** See assignment from https://haswal.github.io/MaRcus/06_session.html
+
+### Session 7: MaRcus Training Course lesson 7
+
+**Topic:** Manipulating strings with stringr and intro to regular expressions
+
+**Date:** 07 MAY 2024
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** See assignment from https://haswal.github.io/MaRcus/07_session.html
+
+## MODULE 2: Intro to R and MaRcus Training Course
