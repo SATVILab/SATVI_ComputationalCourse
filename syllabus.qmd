@@ -1,5 +1,5 @@
 ---
-title: "SATVI Syllabus"
+title: "Syllabus"
 format: html
 ---
 
@@ -7,7 +7,7 @@ format: html
 
 This page serves as a syllabus for the SATVI Computational Course. Details for each session can be found on their dedicated page. 
 
-## MODULE 1: Intro to R and MaRcus Training Course
+## **Module 1:** Intro to R and MaRcus Training Course
 
 ### Session 1: Intro to R and swirl
 
@@ -80,5 +80,3 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 **Location:** Lekgotla 4A and 4B
 
 **Homework:** See assignment from https://haswal.github.io/MaRcus/07_session.html
-
-## MODULE 2: Intro to R and MaRcus Training Course

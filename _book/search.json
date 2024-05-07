@@ -23,23 +23,16 @@
   {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
-    "title": "2  SATVI Syllabus",
+    "title": "2  Syllabus",
     "section": "",
     "text": "This page serves as a syllabus for the SATVI Computational Course. Details for each session can be found on their dedicated page."
   },
   {
     "objectID": "syllabus.html#module-1-intro-to-r-and-marcus-training-course",
     "href": "syllabus.html#module-1-intro-to-r-and-marcus-training-course",
-    "title": "2  SATVI Syllabus",
-    "section": "2.2 MODULE 1: Intro to R and MaRcus Training Course",
-    "text": "2.2 MODULE 1: Intro to R and MaRcus Training Course\n\n2.2.1 Session 1: Intro to R and swirl\nTopic: Introduction to R language and environments, RStudio, and swirl self-teaching tools.\nDate: 05 MAR 2024\nLocation: Lekgotla 4A and 4B\nHomework: Complete swirl “R Programming” interactive learning sessions at own pace.\n\n\n2.2.2 Session 2: MaRcus Training Course lesson 1\nTopic: Importing data into R environment and basic visualizations with ggplot2\nDate: 19 MAR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/01_session.html\n\n\n2.2.3 Session 3: MaRcus Training Course lesson 2\nTopic: Creating histograms and statistical summaries; combining and exporting plots\nDate: 26 MAR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/02_session.html\n\n\n2.2.4 Session 4: MaRcus Training Course lesson 3\nTopic: Basic data transformation using dplyr\nDate: 02 APR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/03_session.html\n\n2.2.4.1 Note - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.\n\n\n\n2.2.5 Session 5: MaRcus Training Course lesson 5\nTopic: Continuation of data transformation using dplyr and data wrangling\nDate: 09 APR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/05_session.html\n\n\n2.2.6 Session 6: MaRcus Training Course lesson 6\nTopic: Clean up data using tidyr\nDate: 30 APR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/06_session.html\n\n\n2.2.7 Session 7: MaRcus Training Course lesson 7\nTopic: Manipulating strings with stringr and intro to regular expressions\nDate: 07 MAY 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/07_session.html"
-  },
-  {
-    "objectID": "syllabus.html#module-2-intro-to-r-and-marcus-training-course",
-    "href": "syllabus.html#module-2-intro-to-r-and-marcus-training-course",
-    "title": "2  SATVI Syllabus",
-    "section": "2.3 MODULE 2: Intro to R and MaRcus Training Course",
-    "text": "2.3 MODULE 2: Intro to R and MaRcus Training Course"
+    "title": "2  Syllabus",
+    "section": "2.2 Module 1: Intro to R and MaRcus Training Course",
+    "text": "2.2 Module 1: Intro to R and MaRcus Training Course\n\n2.2.1 Session 1: Intro to R and swirl\nTopic: Introduction to R language and environments, RStudio, and swirl self-teaching tools.\nDate: 05 MAR 2024\nLocation: Lekgotla 4A and 4B\nHomework: Complete swirl “R Programming” interactive learning sessions at own pace.\n\n\n2.2.2 Session 2: MaRcus Training Course lesson 1\nTopic: Importing data into R environment and basic visualizations with ggplot2\nDate: 19 MAR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/01_session.html\n\n\n2.2.3 Session 3: MaRcus Training Course lesson 2\nTopic: Creating histograms and statistical summaries; combining and exporting plots\nDate: 26 MAR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/02_session.html\n\n\n2.2.4 Session 4: MaRcus Training Course lesson 3\nTopic: Basic data transformation using dplyr\nDate: 02 APR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/03_session.html\n\n2.2.4.1 Note - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.\n\n\n\n2.2.5 Session 5: MaRcus Training Course lesson 5\nTopic: Continuation of data transformation using dplyr and data wrangling\nDate: 09 APR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/05_session.html\n\n\n2.2.6 Session 6: MaRcus Training Course lesson 6\nTopic: Clean up data using tidyr\nDate: 30 APR 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/06_session.html\n\n\n2.2.7 Session 7: MaRcus Training Course lesson 7\nTopic: Manipulating strings with stringr and intro to regular expressions\nDate: 07 MAY 2024\nLocation: Lekgotla 4A and 4B\nHomework: See assignment from https://haswal.github.io/MaRcus/07_session.html"
   },
   {
     "objectID": "installations.html",
