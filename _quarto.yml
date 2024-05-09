@@ -21,6 +21,7 @@ book:
     - installations.qmd
     - swirl.qmd
     - MarcusRTraining.qmd
+    - dataexport.qmd
     - recordings.qmd
     - summary.qmd
     - references.qmd
