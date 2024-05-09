@@ -199,20 +199,6 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 ## **Module 4: Commonly needed analyses for Immunology**
 
-### Receiver operating characteristic (ROC) curves
-
-**Topic:** Understanding and computing ROC curves 
-
-**Instructor:** Simon Mendelsohn: simon.mendelsohn@uct.ac.za
-
-**Date:** 13 AUG 2024
-
-**Time:** 11h00 - 12h00
-
-**Location:** Lekgotla 4A and 4B
-
-**Homework:** 
-
 ### Heatmaps
 
 **Topic:** Plotting and manipulating heatmaps
@@ -241,13 +227,27 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Homework:** 
 
+### Receiver operating characteristic (ROC) curves
+
+**Topic:** Understanding and computing ROC curves 
+
+**Instructor:** Simon Mendelsohn: simon.mendelsohn@uct.ac.za
+
+**Date:** 17 SEP 2024
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Homework:** 
+
 ### Background subtraction 
 
 **Topic:** Learning how to apply a function for background subtraction 
 
 **Instructor:** Miguel Rodo: miguel.rodo@uct.ac.za
 
-**Date:** 17 SEP 2024
+**Date:** 01 OCT 2024
 
 **Time:** 11h00 - 12h00
 
@@ -261,7 +261,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Instructor:** Munyaradzi Musvosvi: munyaradzi.musvosvi@uct.ac.za
 
-**Date:** 01 OCT 2024
+**Date:** 15 OCT 2024
 
 **Time:** 11h00 - 12h00
 
@@ -275,7 +275,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Instructor:** Munyaradzi Musvosvi: munyaradzi.musvosvi@uct.ac.za
 
-**Date:** 15 OCT 2024
+**Date:** 29 OCT 2024
 
 **Time:** 11h00 - 12h00
 
@@ -291,7 +291,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Instructor:** Denis Awany: denis.awany@uct.ac.za
 
-**Date:** 29 OCT 2024
+**Date:** 12 NOV 2024
 
 **Time:** 11h00 - 12h00
 

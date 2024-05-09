@@ -1,0 +1,128 @@
+---
+title: "Exporting Data Formats using R"
+format: html
+editor: visual
+---
+
+## Description
+
+This script will demonstrate methods for exporting various data and plot formats from an R script. We will be using the built-in "iris" and "mtcars" datasets available in R. We encourage you to go through these steps with a dataset of your own and export formats that are relevant to your study. This session will cover commonly needed formats, including .csv, .xlsx, pdf, png, and jpeg. However, there are many additional data formats that can be exported and we recommend exploring these independently. Keep in mind that there are many different ways to do similar things in R, i.e. multiple packages to export to .xlsx. This script is intended to provide some helpful examples, but is not comprehensive. 
+
+### Clear environment
+
+```{r, results='hide'}
+ls()
+rm(list=ls())
+```
+
+### Set output directory
+
+```{r, warning=FALSE}
+dir.create("output")
+dir_save <- "output/"
+```
+
+### Load libraries
+
+```{r, message=FALSE}
+library(tidyverse) # Needed for 'glimpse()'
+library(openxlsx) # Needed to export data.frame to .xlsx
+library(dplyr) # Needed to convert rownames to column and simultaneously delete rownames
+```
+
+### Load datasets 
+
+We will load the built-in "iris" and "mtcars" datasets for demonstration purposes.
+
+```{r}
+data("iris")
+data("mtcars")
+```
+
+### Examine data structure 
+
+```{r}
+head(iris)
+head(mtcars)
+
+glimpse(iris)
+glimpse(mtcars)
+
+class(iris)
+class(mtcars)
+```
+
+### Export data to .xlsx
+
+Here we will use dir_save to specify where we want to save our files. Alternatively, you can write out the full path to your output directory. 
+
+```{r}
+# To export a single data.frame to .xlsx 
+
+write.xlsx(iris, paste0(dir_save, "iris_data.xlsx"))
+
+
+# To export multiple data.frames into different sheets, create a list of data.frames to be used as the object for write.xlsx
+
+data.frames <- list('Sheet1' = iris, 'Sheet2' = mtcars)
+write.xlsx(data.frames, file = paste0(dir_save, "iris_mtcars_data.xlsx"))
+
+
+# Write to .xlsx including colnames and rownames for all sheets
+
+write.xlsx(data.frames, file = paste0(dir_save, "iris_mtcars_data_colrow.xlsx"), colNames = TRUE, rowNames = TRUE)
+
+
+# Alternatively, convert rownames from specific data.frames to a named column and export without rownames
+
+mtcars <- tibble::rownames_to_column(mtcars, "Model")
+data.frames <- list('Sheet1' = iris, 'Sheet2' = mtcars)
+write.xlsx(data.frames, file = paste0(dir_save, "iris_mtcars_data_rownamestocol.xlsx"))
+```
+
+### Export data to .csv
+
+```{r}
+# Let's first export iris as is and restore mtcars to its original format before exporting to .csv
+
+write.csv(iris, file = paste0(dir_save, "iris_data.csv"))
+
+mtcars <- column_to_rownames(mtcars, var = "Model")
+write.csv(mtcars, file = paste0(dir_save, "mtcars_data.csv"))
+
+# You'll notice that the default for write.csv is to set col.names and row.names = TRUE
+
+write.csv(mtcars, file = paste0(dir_save, "mtcars_data_colrowfalse.csv"), col.names = FALSE, row.names = FALSE)
+
+# When using write.csv, colnames will still be written. If you want to eliminate colnames, use write.table
+
+write.table(mtcars, file = paste0(dir_save, "mtcars_data_colfalse.csv"), col.names = FALSE, row.names = FALSE)
+
+```
+
+### Import data from .xlsx
+
+```{r}
+# Import a data.frame from a specific sheet in a .xlsx file
+
+df.iris.xlsx <- read.xlsx(xlsxFile = "output/iris_mtcars_data_colrow.xlsx",
+                     sheet = 1,
+                     rowNames = TRUE)
+
+class(df.iris.xlsx)
+
+# A common alternative method relies on the 'readxl' package, but functions differently
+
+library(readxl)
+
+df.mtcars.xlsx <- read_excel("output/iris_mtcars_data_colrow.xlsx",
+                    sheet = 2)
+
+class(df.mtcars.xlsx)
+
+df.mtcars.xlsx <- as.data.frame(df.mtcars.xlsx)
+rownames(df.mtcars.xlsx) <- df.mtcars.xlsx[[1]]
+df.mtcars.xlsx <- df.mtcars.xlsx[-1]
+
+```
+
