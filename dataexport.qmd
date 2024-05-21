@@ -237,3 +237,26 @@ reloaded_data <- readRDS("output/df.iris.csv.rds")
 ```
 
 There is a workaround to save and reload an entire environment as .RDS, but it is a bit more involved and requires the use of loops, which is beyond the scope of this session. We will cover loops in a later session. 
+
+## Homework
+
+For this homework assignment, you will be using a script that you write yourself! If you have data for your own study, we suggest writing a simple script that is relevant to the analyses you will need to do. The only requirements are that you should use data that can be imported / exported in a table or dataframe format and plotted. If you do not have data of your own yet, you can use a built in dataset available from R. To find built in datasets use the following command:
+
+data()
+
+Now perform the following steps:
+
+1. Clear your environment.
+2. Set your working directory. This should be in a location where you perform work related to this course. 
+3. Set output directory. This should be a subdirectory within your working directory where you want to save any files that you generate. You can create this manually in your normal file finder or create it using R as is done in the script above. 
+4. Load libraries that are necessary for your script. 
+5. Load your dataset. Either import your own data or load one of the built in datasets. 
+6. Examine data structure.
+7. Plot your data however you like! Refer to previous sessions for ideas and guidance. 
+8. Save your plots as pdf, png, and jpeg. 
+9. Export your data file as .xlsx and .csv. Confirm that your row and colnames are in the correct position. 
+10. Save a relevant object from your environment as .Rdata and .rds.
+11. Load your .Rdata and .rds files back into R. 
+12. Consult the internet or ChatGPT and find at least one alternative method to import, export, and save your data or plots. Try these out. 
+13. Save your script. 
+
