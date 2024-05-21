@@ -232,6 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#plot-data-and-export" id="toc-plot-data-and-export" class="nav-link" data-scroll-target="#plot-data-and-export"> <span class="header-section-number">6.1.10</span> Plot data and export</a></li>
   <li><a href="#save-what-has-been-done-to-an-.rdata-file" id="toc-save-what-has-been-done-to-an-.rdata-file" class="nav-link" data-scroll-target="#save-what-has-been-done-to-an-.rdata-file"> <span class="header-section-number">6.1.11</span> Save what has been done to an .Rdata file</a></li>
   </ul></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"> <span class="header-section-number">6.2</span> Homework</a></li>
   </ul>
 </nav>
     </div>
@@ -577,9 +578,30 @@ Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>reloaded_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"output/df.iris.csv.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>There is a workaround to save and reload an entire environment as .RDS, but it is a bit more involved and requires the use of loops, which is beyond the scope of this session. We will cover loops in a later session.</p>
-
-
 </section>
+</section>
+<section id="homework" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="homework"><span class="header-section-number">6.2</span> Homework</h2>
+<p>For this homework assignment, you will be using a script that you write yourself! If you have data for your own study, we suggest writing a simple script that is relevant to the analyses you will need to do. The only requirements are that you should use data that can be imported / exported in a table or dataframe format and plotted. If you do not have data of your own yet, you can use a built in dataset available from R. To find built in datasets use the following command:</p>
+<p>data()</p>
+<p>Now perform the following steps:</p>
+<ol type="1">
+<li>Clear your environment.</li>
+<li>Set your working directory. This should be in a location where you perform work related to this course.</li>
+<li>Set output directory. This should be a subdirectory within your working directory where you want to save any files that you generate. You can create this manually in your normal file finder or create it using R as is done in the script above.</li>
+<li>Load libraries that are necessary for your script.</li>
+<li>Load your dataset. Either import your own data or load one of the built in datasets.</li>
+<li>Examine data structure.</li>
+<li>Plot your data however you like! Refer to previous sessions for ideas and guidance.</li>
+<li>Save your plots as pdf, png, and jpeg.</li>
+<li>Export your data file as .xlsx and .csv. Confirm that your row and colnames are in the correct position.</li>
+<li>Save a relevant object from your environment as .Rdata and .rds.</li>
+<li>Load your .Rdata and .rds files back into R.</li>
+<li>Consult the internet or ChatGPT and find at least one alternative method to import, export, and save your data or plots. Try these out.</li>
+<li>Save your script.</li>
+</ol>
+
+
 </section>
 
 </main> <!-- /main -->
