@@ -13,42 +13,43 @@ Using Quarto can provide a helpful structure to organize, annotate, and share yo
 
 Quarto is very well documented. This tutorial will provide an introduction to some basic features, but we recommend that you explore independently. These links below may be a good place to start:
 
-https://quarto.org/docs/get-started/hello/rstudio.html
+[Tutorial: Hello, Quarto](https://quarto.org/docs/get-started/hello/rstudio.html)
 
-https://quarto.org/docs/authoring/markdown-basics.html
+[Markdown Basics](https://quarto.org/docs/authoring/markdown-basics.html)
 
-### Install R Markdown 
+### Install R Markdown
 
-To use Quarto with R you will need to install R Markdown with the rmarkdown R package. This will also install knitr which is used for rendering. 
+To use Quarto with R you will need to install R Markdown with the rmarkdown R package. This will also install knitr which is used for rendering. After installing rmarkdown, install the quarto R package.
 
 ```{r, eval = FALSE}
 install.packages("rmarkdown")
+install.packages("quarto")
 ```
 
 ### Create a Quarto document
 
-For the purposes of this session, we will introduce using Quarto documents using R. You can also create a Quarto project, which knits together multiple Quarto documents, Quarto presentations, Quarto interactive documents, or Quarto websites. Quarto is also supported by different visual editors including Visual Studio Code (VS Code) which we will cover in a later session. 
+For the purposes of this session, we will introduce using Quarto documents using R. You can also create a Quarto project, which knits together multiple Quarto documents, Quarto presentations, Quarto interactive documents, or Quarto websites. Quarto is also supported by different visual editors including Visual Studio Code (VS Code) which we will cover in a later session.
 
 To begin:
 
-1. Open RStudio
-2. Create a new Quarto document. Go to File -> New File -> Quarto Document
+1.  Open RStudio
+2.  Create a new Quarto document. Go to File -\> New File -\> Quarto Document
 
 ![](images/createdoc.png)
 
-3. Enter a name and select your preferred output format and engine. Typically we leave Knitr as the default, but you can change this if necessary. 
+3.  Enter a name and select your preferred output format and engine. Typically we leave Knitr as the default, but you can change this if necessary.
 
 ![](images/newquartodoc.png)
 
-4. Save the quarto document to your working directory. 
+4.  Save the quarto document to your working directory.
 
-Now we can begin with editing the document itself. The most obvious difference in features from a traditional R script is that a Quarto document incorporates code chunks which separate major segments of code into different chunks. Each chunk can be formatted and run separately as well as part of the full script. We recommend that each chunk performs a specific function that can be annotated. 
+Now we can begin with editing the document itself. The most obvious difference in features from a traditional R script is that a Quarto document incorporates code chunks which separate major segments of code into different chunks. Each chunk can be formatted and run separately as well as part of the full script. We recommend that each chunk performs a specific function that can be annotated.
 
-Sections of code containing one or more code chunks that perform a specific task can also be denoted in an outline with headings. 
+Sections of code containing one or more code chunks that perform a specific task can also be denoted in an outline with headings.
 
 ### Set the YAML header
 
-At the top of the Quarto document, you will see a header demarcated by --- at the top and bottom. 
+At the top of the Quarto document, you will see a header demarcated by --- at the top and bottom. What is a YAML? YAML (“Yet Another Markup Language” or “YAML Ain't Markup Language,” depending on who you ask) is the metadata that tells R Markdown, Quarto, pandoc, and other software exactly how to process or display the document.
 
 ```{verbatim}
 ---
@@ -58,7 +59,7 @@ editor: visual
 ---
 ```
 
-Edit the YAML header to include relevant information. 
+Edit the YAML header to include relevant information.
 
 ```{verbatim}
 ---
@@ -69,10 +70,11 @@ date: today
 ---
 ```
 
-
 ### Create a code chunk
 
-You can do this manually by clicking the green chunk icon (C with a +) on the top right of the toolbar or you can use the keyboard shortcut option + cmd + I. This will produce an empty code chunk with R as the default language. 
+You can do this manually by clicking the green chunk icon on the top right of the toolbar or you can use the keyboard shortcut option + cmd + I. This will produce an empty code chunk with R as the default language.
+
+![](images/createchunk.png)
 
 ```{r}
 #| echo: fenced
@@ -82,7 +84,7 @@ You can do this manually by clicking the green chunk icon (C with a +) on the to
 print("Hello, Quarto!")
 ```
 
-If you want to change the language, simply specify the language you would like to use in the yellow opening delimiter. 
+If you want to change the language, simply specify the language you would like to use in the yellow opening delimiter.
 
 ```{python}
 #| echo: fenced
@@ -100,14 +102,13 @@ print(f"The square root of 16 is {sqrt_16}")
 
 ### Tailor the code chunk output
 
-Add options to each code chunk delimiter to show or hide specific information. 
+Add options to each code chunk delimiter to show or hide specific information.
 
-1. warning = FALSE means do not show any warnings generated by the code in the output
+1.  warning = FALSE means do not show any warnings generated by the code in the output
 
-2. message = FALSE means do not show any messages generated by the code in the output
+2.  message = FALSE means do not show any messages generated by the code in the output
 
-3. echo = FALSE means do not show the code in the output
-
+3.  echo = FALSE means do not show the code in the output
 
 ```{r}
 #| echo: fenced
@@ -145,8 +146,6 @@ if (y > 5) {
 }
 ```
 
-
-
 **Hide the message from the output**
 
 ```{r, message = FALSE}
@@ -166,7 +165,7 @@ if (y > 5) {
 }
 ```
 
-**Hide the warning and the message from the output** You can achieve the same effect using Markdown syntax instead of editing the opening delimiter. 
+**Hide the warning and the message from the output** You can achieve the same effect using Markdown syntax instead of editing the opening delimiter.
 
 ```{r}
 #| echo: fenced
@@ -203,7 +202,7 @@ if (y > 5) {
 }
 ```
 
-More OPML options can be found here: https://quarto.org/docs/reference/formats/opml.html
+More OPML options can be found [here](https://quarto.org/docs/reference/formats/opml.html)
 
 ## Now let's test a simple script in Quarto
 
@@ -252,7 +251,7 @@ ggplot(data = esoph, aes(x = agegp, y = ncases)) +
 
 ```
 
-Quarto docs also support the import of image files stored externally. These can be arranged inline with your code or text. 
+Quarto docs also support the import of image files stored externally. These can be arranged inline with your code or text.
 
 ## Import an image
 
@@ -261,6 +260,7 @@ The easiest way to do this is by using R Markdown syntax outside of a code chunk
 ```{verbatim}
 ![SATVI logo](images/satvi_logo.png)
 ```
+
 ![SATVI logo](images/satvi_logo.png)
 
 If you prefer to import from within a Quarto code chunk, you can do so using knitr
@@ -268,7 +268,8 @@ If you prefer to import from within a Quarto code chunk, you can do so using kni
 ```{r}
 knitr::include_graphics("images/satvi_logo.png")
 ```
-Documentation on embedding images can be found here: https://quarto.org/docs/authoring/figures.html
+
+Documentation on embedding images can be found [here](https://quarto.org/docs/authoring/figures.html)
 
 ## Render the document
 
@@ -276,8 +277,11 @@ When you render your document, all code chunks and inline code will be executed 
 
 **1. Render using point-and-click**
 
-![](images/render.png)
-This will open a preview of your rendered document automatically. This previw will automatically update as you edit your document, so it can be helpful to render early on in the process and keep the preview open alongside your editor. 
+![](images/render.png) 
+
+This will open a preview of your rendered document automatically. You can select the type of preview you prefer using the drop down menu. If you select "Preview in Window," a separate window with your rendered file will open in your browser. If you select "Preview in Viewer Pane," a viewer pane will open within RStudio. This viewer pane will automatically update as you edit your code, so it can be helpful to select this option as you modify your documents as it will give you real-time visual updates of changes made. 
+
+![](images/preview.png)
 
 You can also choose to render on every save by checking the box in the toolbar:
 
@@ -285,7 +289,7 @@ You can also choose to render on every save by checking the box in the toolbar:
 
 **2. Render from the RStudio console**
 
-You will need to download and install the Quarto command line interface (Quarto CLI, https://quarto.org/docs/get-started/). Now type the following directly into the RStudio console. 
+You will need to download and install the Quarto command line interface [Quarto CLI](https://quarto.org/docs/get-started/). Now type the following directly into the RStudio console. 
 
 ```{verbatim, eval = FALSE}
 quarto_render("quartodocs.qmd") # This will render all formats
@@ -298,7 +302,7 @@ quarto_render("quartodocs.qmd", output_format = "docx")
 
 **3. Render from the command line**
 
-Open the Terminal. 
+Open the Terminal.
 
 ```{verbatim, eval = FALSE}
 quarto render quartodocs.qmd # This will render all formats
@@ -310,23 +314,38 @@ quarto render quartodocs.qmd --to pdf
 quarto render quartodocs.qmd --to docx
 ```
 
-Further information on rendering can be found here https://quarto.org/docs/computations/r.html#rendering.
+Further information on rendering can be found [here](https://quarto.org/docs/computations/r.html#rendering).
+
+## Cheatsheets
+
+Here are 2 helpful cheatsheets for working with Quarto in R:
+
+[Quarto by RStudio](https://rstudio.github.io/cheatsheets/quarto.pdf)
+
+[datacamp Quarto Cheetsheet](https://images.datacamp.com/image/upload/v1676540721/Marketing/Blog/Quarto_Cheat_Sheet.pdf)
 
 ## Homework
 
 **Get familiar with Quarto**
 
-1. Set up a Quarto document and save to your course working directory.
-2. Populate the Quarto document with your own code, make sure each chunk and the full script runs without errors. 
-3. Render the Quarto document to html and pdf (docx if you choose). 
-4. Go back to the script and tailor the code chunk options to suit your visual preferences. 
-5. Render the Quarto document again. 
-6. Experiment with other Quarto features. We recommend initializing a Quarto project, which can knit together multiple Quarto documents into a book, website, presentation, or interactive document. 
+1.  Set up a Quarto document and save to your course working directory.
+2.  Populate the Quarto document with your own code, make sure each chunk and the full script runs without errors.
+3.  Render the Quarto document to html and pdf (docx if you choose).
+4.  Go back to the script and tailor the code chunk options to suit your visual preferences.
+5.  Render the Quarto document again.
+6.  Experiment with other Quarto features. We recommend initializing a Quarto project, which can knit together multiple Quarto documents into a book, website, presentation, or interactive document.
+
+Remember you can always find help using the R package documentation for rmarkdown and quarto. To access the package documentation, type the following:
+
+```{verbatim, eval = FALSE}
+?rmarkdown
+?quarto
+```
 
 **Prepare for our next session**
 
-Instructions for downloads can be found on the installations page. 
+Instructions for downloads can be found on the installations page.
 
-1. If you have not done so already, make an online GitHub account. 
-2. Access the SATVILab GitHub. 
-3. Download and install GitHub Desktop and login with your GitHub account. 
+1.  If you have not done so already, make an online GitHub account.
+2.  Access the SATVILab GitHub.
+3.  Download and install GitHub Desktop and login with your GitHub account.
