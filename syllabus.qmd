@@ -121,7 +121,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** Export data frame to csv and save plots as pdf and jpeg; 
+**Homework:** Load and export data frame to csv and excel. Save plots as pdf and jpeg.
 
 ## **Module 2: Quarto, GitHub, and GUIs**
 

@@ -311,3 +311,22 @@ quarto render quartodocs.qmd --to docx
 ```
 
 Further information on rendering can be found here https://quarto.org/docs/computations/r.html#rendering.
+
+## Homework
+
+**Get familiar with Quarto**
+
+1. Set up a Quarto document and save to your course working directory.
+2. Populate the Quarto document with your own code, make sure each chunk and the full script runs without errors. 
+3. Render the Quarto document to html and pdf (docx if you choose). 
+4. Go back to the script and tailor the code chunk options to suit your visual preferences. 
+5. Render the Quarto document again. 
+6. Experiment with other Quarto features. We recommend initializing a Quarto project, which can knit together multiple Quarto documents into a book, website, presentation, or interactive document. 
+
+**Prepare for our next session**
+
+Instructions for downloads can be found on the installations page. 
+
+1. If you have not done so already, make an online GitHub account. 
+2. Access the SATVILab GitHub. 
+3. Download and install GitHub Desktop and login with your GitHub account. 
