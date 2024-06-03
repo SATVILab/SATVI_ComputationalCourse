@@ -27,13 +27,13 @@ The course and all associated resources are available at:
 
 ## Homework
 
-Please refer to the MaRcus R Training program session guides to access your homework assignments. 
+Please refer to the [MaRcus R Training Program](https://haswal.github.io/MaRcus/index.html) session guides to access your homework assignments. 
 
 ## FAQ
 
 #### Session 1
 
-Q1: What are the best ways to set your working directory?
+**Q1: What are the best ways to set your working directory?**
 
     A: There are a few ways to do this:
     
@@ -44,39 +44,39 @@ Q1: What are the best ways to set your working directory?
         3. A note about setting working directories in scripts. It is good practice to avoid using absolute file paths in your scripts, including setwd(). This means if you have your data on your PC under the filepath "User/Documents/ProjectA/analysis/data", for example, as much as possible, avoid writing this complete path into your code. This becomes problematic if you ever need to run your code on a different machine or HPC, or if a collaborator needs to run your code and has a different file structure. R will not be able to find your data if it is not stored in exactly the same place on every machine. A better option is to set your working directory using the R console (do not setwd() in the saved script). In the console, set your working directory to whatever folder contains your generic subdirectories (i.e. "data", "output"), in this example, the "analysis" folder. Then when you run your script, all you need to include when you specify a filepath is "data" or "output". So, if you ever run the script on a different machine, the user can store the relevant files anywhere they want, as long as they have subdirectories "data" and "output". 
 
 
-Q2: When generating a plot using ggplot2, does the name used in the script for the row or column we want to plot have to match the col or rowname of the associated dataframe exactly?
+**Q2: When generating a plot using ggplot2, does the name used in the script for the row or column we want to plot have to match the col or rowname of the associated dataframe exactly?**
 
     A: Yes. The names must match exactly because R searches the dataframe for col or rownames as you specify them. If you have a typo or a lower vs uppercase, it won't find that row or column in the dataframe. Also be aware of any col or rownames that include spaces. Spaces in col and rownames can confuse R into thinking you are indicating more than one name. To avoid this, if you need to specify a col or rowname that includes a space, you must place single back ticks around the full name to indicate to R that this is one complete col or rowname. For example, if you have a column called Sample Name, you must write it into your script as 'Sample Name' for ggplot2 to work properly. 
 
 
-Q3: What is the difference between facet_wrap() and facet_grid()?
+**Q3: What is the difference between facet_wrap() and facet_grid()?**
 
     A: Both are options that can be applied to ggplot2. facet_wrap() wraps a 1d sequence of panels into 2d. It is best used if you want to display data in a rectangular arrangement. It is used when you want to plot one variable. facet_grid() will create a panel matrix defined by numbers of rows and columns. It is ideal for plotting multiple variables that should be visualized separately for the same data. For example, if you want to plot time vs. weight, and time vs. height, you can use facet_grid() to plot both comparisons in a grid layout. Including a ~ either before or after each variable will change the orientation of variables plotted in the grid (i.e. the variable placed before the ~ will be plotted on the row, the variable placed after the ~ will be plotted on the column).
 
 
-Q4: When should I specify aes globally vs. locally?
+**Q4: When should I specify aes globally vs. locally?**
 
     A: In general, specify aes in mapping (global) so that the specifications are applied to all of the data. If you need something more fine-tuned, you can write it into geom_point (lobal), where it will be applied only to that geom_point. 
 
 
-Q5: What are HEX codes?
+**Q5: What are HEX codes?**
 
     A: HEX codes are unique alphanumeric codes assigned to specific colors. They can be used to assign specific colors to your data points when you plot in R. There are also pre-defined color schemes (i.e. printer-friendly, colorblind safe) that you can select. To find more information on HEX codes or colorshemes, visit [https://colorbrewer2.org](https://colorbrewer2.org)
 
 
-Q6: What are your recommendations for using Chat GPT for help with coding?
+**Q6: What are your recommendations for using Chat GPT for help with coding?**
 
     A: Chat GPT is a quickly growing tool used by coders. It can be very helpful for designing / troubleshooting code. We recommend using Chat GPT when you are stuck before spending hours sifting through other online sites. Information given by Chat GPT can and should be verified with the original sources. We caution against allowing Chat GPT to do your work for you! It is best to become proficient and understand coding languages independently and using Chat GPT as an assistant. Relying on it entirely will ultimately be to your detriment. When you do use Chat GPT, read the descriptions and explanations it gives and make you understand thoroughly so you can use it yourself next time. If you do need help in a hurry, you can ask Chat GPT to keep responses brief by typing "No yapping." Always say please and thank you to Chat GPT for offering such superb assistance!
 
 
 #### Session 2
 
-Q1: What is the difference between top and bottom windows in R Studio?
+**Q1: What is the difference between top and bottom windows in R Studio?**
 
     A: It can help to think of this an analogy: In R Studio, the top left (script) is your recipe, bottom left (console) is your kitchen, top right (environment) is your pantry. The script window shows your saved scripts that you can use each time you need to run the analysis. You can make edits and save just like you might for your favourite recipe. The console is where you do the work. As you run lines of your script, you will see that in the console below, each line is copied into the console and run in real time. Here you can see the script running and any warnings and outputs. The environment, like a pantry, is where all of the necessary "ingredients" to run your script are kept. Just as you would before you start cooking, as you go through your script, you will load necessary items (i.e. data / metadata) into your environment so that when the recipe calls for it, it is there and ready to go. The final bottom right window serves a few functions. It can show file paths, plot outputs, packages etc. We encourage everyone to familiarize themselves with each window to better understand their functionalities. Happy cooking! I mean coding. 
 
 
-Q2: Can you plot confidence intervals automatically using geom_errorbar or do you have to calculate them separately first?
+**Q2: Can you plot confidence intervals automatically using geom_errorbar or do you have to calculate them separately first?**
 
     A: Confidence intervals should be calculated separately. 
 
