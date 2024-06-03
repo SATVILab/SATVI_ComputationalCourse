@@ -5,11 +5,11 @@ format: html
 
 ## Description
 
-swirl (https://swirlstats.com/) is an interactive R package that helps you self-teach the basics of R. It is run from directly from the R console. 
+[swirl](https://swirlstats.com/) is an interactive R package that helps you self-teach the basics of R. It is run from directly from the R console. 
 
-This session guide follows the instructions provided by swirl. Visit the following link to access the full tutorial: https://swirlstats.com/students.html
+This session guide follows the instructions provided by swirl. Visit the following link to access the [full tutorial](https://swirlstats.com/students.html).
 
-You can also find the full swirl course tutorial on GitHub at https://github.com/swirldev/swirl_courses
+You can also find the full swirl course tutorial on [GitHub](https://github.com/swirldev/swirl_courses).
 
 ## Install swirl 
 
@@ -41,9 +41,9 @@ The first time you initialize swirl, you will need to install a course.
 
 For the SATVI Computational Course, we recommend that those who are new to coding start with "R Programming". This course will cover the basics of programming in R. 
 
-There are many courses to choose from, so those who are more advanced may opt for an intermediate or advanced course to work through in their own time. A repository with all available swirl courses can be found here: https://github.com/swirldev/swirl_courses#swirl-courses. 
+There are many courses to choose from, so those who are more advanced may opt for an intermediate or advanced course to work through in their own time. A repository with all available swirl courses can be found here: [https://github.com/swirldev/swirl_courses#swirl-courses](https://github.com/swirldev/swirl_courses#swirl-courses). 
 
-There is also an expansive swirl Network that expands further on open sourse interactive R lessons. You can access the Network and associated courses or become a swirl course author here: https://swirlstats.com/scn/
+There is also an expansive swirl Network that expands further on open sourse interactive R lessons. You can access the Network and associated courses or become a swirl course author here: [https://swirlstats.com/scn/](https://swirlstats.com/scn/)
 
 To install a course that is not part of the swirl course repository, type the following into the console:
 
@@ -93,10 +93,10 @@ Over the next week, in your own time, complete the 14 short interactive lessons 
 
 ## FAQ
 
-Q1: Can funcitons learned in swirl be applied when writing my own R scripts? 
+**Q1: Can funcitons learned in swirl be applied when writing my own R scripts?**
 
     A: Absolutely! The functions that you use in swirl are all base R functions that can be used in any R script.
 
-Q2: If I need to use an R package, do I need to install the package each time I start a new session?
+**Q2: If I need to use an R package, do I need to install the package each time I start a new session?**
 
     A: Nope! Once a package is installed, you do not have to re-install when you open a new R session. Simply load the package from the library. For example, if I want to use ggplot2 and I have installed it before, load the package using >library(ggplot2). However, if you are running your script on a different machine that does not have the package installed (and are not working from a container - we'll get to this later in the course), you will need to install the package on that machine before loading it from the library. 

@@ -1,3 +1,7 @@
 # Summary
 
-In summary, this book has no content whatsoever.
+We hope you have enjoyed the course! Remember that the best way to learn how to code is to experiment and use coding languages as much as possible. Just like learning a foreign language, learning to code works best with daily practice. 
+
+If you have any questions, feedback, or suggestions, please contact the course instructors. 
+
+Best of luck on your computational journey!

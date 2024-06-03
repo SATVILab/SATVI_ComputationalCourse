@@ -2,9 +2,9 @@
 
 Welcome to the SATVI Computational Course! This course is designed to strengthen fundamental coding skills for SATVI trainees and staff. The curriculum will take you through the basics of R, using the terminal, creating and using git controlled projects, as well as more advanced data analysis methods commonly used at SATVI. 
 
-All lessons will be stored on the SATVI GitHub under the repository SATVI_ComputationalCourse. To access all relevant course content, navigate to https://github.com/SATVILab/SATVI_ComputationalCourse.
+All lessons will be stored on the SATVI GitHub under the repository SATVI_ComputationalCourse. To access all relevant course content, navigate to [https://github.com/SATVILab/SATVI_ComputationalCourse](https://github.com/SATVILab/SATVI_ComputationalCourse).
 
-A static webpage version of the course is also available at https://satvilab.github.io/SATVI_ComputationalCourse/
+A static webpage version of the course is also available at [https://satvilab.github.io/SATVI_ComputationalCourse/](https://satvilab.github.io/SATVI_ComputationalCourse/)
 
 Your instructors are SATVI members with experience in each topic. For session-specific questions, please contact the relevant instructor:
 

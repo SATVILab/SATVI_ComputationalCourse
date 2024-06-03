@@ -11,30 +11,30 @@ This document provides installation guides for basic programming tools.
 
 R is a commonly used coding language for computational biologists and immunologists. Many software packages and analysis pipelines depend on R. R is also a computational environment used for computing and generating graphics. 
 
-To install R for Windows or Mac, follow the instructions provided by The Comprehensive R Archive Network (CRAN) found here: https://cran.r-project.org/
+To install R for Windows or Mac, follow the instructions provided by The Comprehensive R Archive Network (CRAN) found here: [https://cran.r-project.org/](https://cran.r-project.org/)
 
 It is recommended to download the precompiled binary distribution appropriate for your machine. 
 
-To learn more about R, read the following introduction provided by CRAN: https://www.r-project.org/about.html
+To learn more about R, read the following introduction provided by CRAN: [https://www.r-project.org/about.html](https://www.r-project.org/about.html)
 
 ## R Studio
 
 RStudio is an integrated development environment (IDE) based on R. It provides a user-friendly option for building code and can incorporate multiple languages including python, which is also commonly used by computational immunologists. 
 
-To donwload and install RStudio Desktop, follow this link and the provided instructions: https://posit.co/download/rstudio-desktop/#download
+To donwload and install RStudio Desktop, follow this link and the provided instructions: [https://posit.co/download/rstudio-desktop/#download](https://posit.co/download/rstudio-desktop/#download)
 
 ## GitHub Desktop
 
 GitHub Desktop is a desktop application that interfaces with version-controlled code, GitHub, and other Git services. It provides a user friendly GUI where you can review changes made to code and perform Git commands. 
 It is open source and free to use. 
 
-First sign up for a GitHub account at https://github.com
+First sign up for a GitHub account at [https://github.com](https://github.com)
 
-Now download and install GitHub Desktop, follow this link and the provided instructions: https://desktop.github.com. Sign in with your GitHub account login. 
+Now download and install GitHub Desktop, follow this link and the provided instructions: [https://desktop.github.com](https://desktop.github.com). Sign in with your GitHub account login. 
 
 ## Visual Studio Code (VS Code)
 
 VS Code is a text and code editor commonly used by developers. It can be used as an alternative for RStudio and supports multiple coding languages and various extensions for debugging and version control. 
 
-To download and install VS Code, follow this link and the provided instructions: https://code.visualstudio.com/download
+To download and install VS Code, follow this link and the provided instructions: [https://code.visualstudio.com/download](https://code.visualstudio.com/download)
 

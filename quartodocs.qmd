@@ -1,6 +1,7 @@
 ---
 title: "Introduction to Quarto"
 format: html
+prefer-html: true
 author: SATVI Computational Group
 date: today
 ---
@@ -165,7 +166,7 @@ if (y > 5) {
 }
 ```
 
-**Hide the warning and the message from the output** You can achieve the same effect using Markdown syntax instead of editing the opening delimiter.
+**Hide the warning and the message from the output.** You can achieve the same effect using Markdown syntax instead of editing the opening delimiter.
 
 ```{r}
 #| echo: fenced
@@ -202,7 +203,13 @@ if (y > 5) {
 }
 ```
 
-More OPML options can be found [here](https://quarto.org/docs/reference/formats/opml.html)
+More OPML options can be found [here](https://quarto.org/docs/reference/formats/opml.html).
+
+## View outline
+
+As you build your script with multiple chunks, an outline will be generated which can be viewed alongside your scirpt or hidden. 
+
+![](images/outline.png)
 
 ## Now let's test a simple script in Quarto
 
@@ -215,7 +222,7 @@ rm(list=ls())
 
 ### Load libraries
 
-```{r, message=FALSE}
+```{r, message = FALSE}
 library(knitr) # Needed to embed an external image within a code chunk
 library(quarto) # Needed to render Quarto document from R console
 library(ggplot2) # Needed to plot data
@@ -234,6 +241,20 @@ head(esoph)
 
 summary(esoph)
 ```
+
+If you want to display your dataframe in a more aesthetic way, you can use the DT R package.
+
+*Note - This display option is supported by html. If you want to display tables this way AND render to html and non-html formats, you will also need to install "webshot" or "webshot2" packages that will allow non-html formats to be populated with a snapshot of the table, or include "prefer-html: true" in your YAML front-matter.*
+
+```{r, message = FALSE}
+library(DT)
+
+# Now just use the datatable function to display your table. 
+
+datatable(head(esoph), class = 'cell-border stripe')
+```
+
+Find additional datatable display options [here](https://rstudio.github.io/DT/).
 
 ### Plot data
 
@@ -262,7 +283,7 @@ If you prefer to import from within a Quarto code chunk, you can do so using kni
 knitr::include_graphics("images/satvi_logo.png")
 ```
 
-Documentation on embedding images can be found [here](https://quarto.org/docs/authoring/figures.html)
+Documentation on embedding images can be found [here](https://quarto.org/docs/authoring/figures.html).
 
 ## Render the document
 

@@ -35,7 +35,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** See assignment from https://haswal.github.io/MaRcus/01_session.html
+**Homework:** See assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/01_session.html)
 
 ### Session 3: MaRcus Training Course lesson 2
 
@@ -49,7 +49,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** See assignment from https://haswal.github.io/MaRcus/02_session.html
+**Homework:** See assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/02_session.html)
 
 ### Session 4: MaRcus Training Course lesson 3
 
@@ -63,7 +63,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** See assignment from https://haswal.github.io/MaRcus/03_session.html
+**Homework:** See assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/03_session.html)
 
 **Note** - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.
 
@@ -79,7 +79,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** See assignment from https://haswal.github.io/MaRcus/05_session.html
+**Homework:** See assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/05_session.html)
 
 ### Session 6: MaRcus Training Course lesson 6
 
@@ -93,7 +93,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** See assignment from https://haswal.github.io/MaRcus/06_session.html
+**Homework:** See assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/06_session.html)
 
 ### Session 7: MaRcus Training Course lesson 7
 
@@ -107,7 +107,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** See assignment from https://haswal.github.io/MaRcus/07_session.html
+**Homework:** See assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/07_session.html)
 
 ### Session 8: Exporting data from R
 

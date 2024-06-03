@@ -242,7 +242,9 @@ There is a workaround to save and reload an entire environment as .RDS, but it i
 
 For this homework assignment, you will be using a script that you write yourself! If you have data for your own study, we suggest writing a simple script that is relevant to the analyses you will need to do. The only requirements are that you should use data that can be imported / exported in a table or dataframe format and plotted. If you do not have data of your own yet, you can use a built in dataset available from R. To find built in datasets use the following command:
 
+```{verbatim, eval = FALSE}
 data()
+```
 
 Now perform the following steps:
 
