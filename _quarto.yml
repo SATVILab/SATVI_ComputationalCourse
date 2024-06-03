@@ -13,16 +13,16 @@ book:
     background: light
   sidebar:
     border: true
-    logo: satvi_logo.png
+    logo: images/satvi_logo.png
   chapters:
     - index.qmd
     - intro.qmd
     - syllabus.qmd
     - installations.qmd
     - swirl.qmd
-    - MarcusRTraining.qmd
+    - MaRcusRTraining.qmd
     - dataexport.qmd
-    - recordings.qmd
+    - quartodocs.qmd
     - summary.qmd
     - references.qmd
 
