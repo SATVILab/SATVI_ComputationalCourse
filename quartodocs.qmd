@@ -213,13 +213,6 @@ ls()
 rm(list=ls())
 ```
 
-### Set output directory
-
-```{r, warning=FALSE}
-dir.create("output")
-dir_save <- "output/"
-```
-
 ### Load libraries
 
 ```{r, message=FALSE}
