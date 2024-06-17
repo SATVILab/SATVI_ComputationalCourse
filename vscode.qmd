@@ -1,0 +1,17 @@
+---
+title: "Introduction to Visual Studio Code (VS Code)"
+format: html
+prefer-html: true
+author: SATVI Computational Group
+date: today
+---
+
+## Description 
+
+This session will cover a basic introduction to Visual Studio Code (VS Code). VS Code is a visual code editor that streamlines brings together functionalities of many different coding tools, including programming languages, like R, technical publishing systems, like Quarto, and command line interfacing. 
+
+VS Code is the most widely used code editor amongst developers worldwide and can be very helpful for getting started with developing version controlled computational projects. 
+
+## Download and install VS Code 
+
+Follow [these instructions](https://code.visualstudio.com/download) to download VS Code for your machine. 

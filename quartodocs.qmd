@@ -76,7 +76,6 @@ date: today
 You can do this manually by clicking the green chunk icon on the top right of the toolbar or you can use the keyboard shortcut option + cmd + I. This will produce an empty code chunk with R as the default language.
 
 ![](images/createchunk.png)
-
 ```{r}
 #| echo: fenced
 #| label: R chunk

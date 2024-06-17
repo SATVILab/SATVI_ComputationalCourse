@@ -23,6 +23,7 @@ book:
     - MaRcusRTraining.qmd
     - dataexport.qmd
     - quartodocs.qmd
+    - github.qmd
     - recordings.qmd
     - summary.qmd
     - references.qmd
