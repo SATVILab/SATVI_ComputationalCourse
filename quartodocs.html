@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="SATVI Computational Group">
-<meta name="dcterms.date" content="2024-06-03">
+<meta name="dcterms.date" content="2024-06-17">
 
 <title>SATVI Computational Course - 7&nbsp; Introduction to Quarto</title>
 <style>
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./recordings.html" rel="next">
+<link href="./github.html" rel="next">
 <link href="./dataexport.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -207,14 +207,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./recordings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Session Recordings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Session Recordings</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -279,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 3, 2024</p>
+      <p class="date">June 17, 2024</p>
     </div>
   </div>
   
@@ -533,8 +539,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(esoph), <span class="at">class =</span> <span class="st">'cell-border stripe'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-cc206882536e7320e373" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-cc206882536e7320e373">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["25-34","25-34","25-34","25-34","25-34","25-34"],["0-39g/day","0-39g/day","0-39g/day","0-39g/day","40-79","40-79"],["0-9g/day","10-19","20-29","30+","0-9g/day","10-19"],[0,0,0,0,0,0],[40,10,6,5,27,7]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>agegp<\/th>\n      <th>alcgp<\/th>\n      <th>tobgp<\/th>\n      <th>ncases<\/th>\n      <th>ncontrols<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[4,5]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"agegp","targets":1},{"name":"alcgp","targets":2},{"name":"tobgp","targets":3},{"name":"ncases","targets":4},{"name":"ncontrols","targets":5}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-fa65ca498fa5478b6359" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-fa65ca498fa5478b6359">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["25-34","25-34","25-34","25-34","25-34","25-34"],["0-39g/day","0-39g/day","0-39g/day","0-39g/day","40-79","40-79"],["0-9g/day","10-19","20-29","30+","0-9g/day","10-19"],[0,0,0,0,0,0],[40,10,6,5,27,7]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>agegp<\/th>\n      <th>alcgp<\/th>\n      <th>tobgp<\/th>\n      <th>ncases<\/th>\n      <th>ncontrols<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[4,5]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"agegp","targets":1},{"name":"alcgp","targets":2},{"name":"tobgp","targets":3},{"name":"ncases","targets":4},{"name":"ncontrols","targets":5}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Find additional datatable display options <a href="https://rstudio.github.io/DT/">here</a>.</p>
@@ -1055,8 +1061,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./recordings.html" class="pagination-link" aria-label="Session Recordings">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Session Recordings</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./github.html" class="pagination-link" aria-label="Introduction to Git and GitHub">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
