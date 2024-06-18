@@ -45,6 +45,8 @@ Most of the time, we use git on our local machine to develop the contents of the
 
     1. Confirm git is installed. Open Terminal and type the following:
 
+*Note - If you can't find your Terminal, (for Mac) you can press Cmd + space to open Spotlight search. Type "Termianl". We recommend adding Terminal to your dock.*
+
 ```{r, eval = FALSE}
 git --version
 ```
@@ -52,7 +54,7 @@ git --version
 
     You should see a readout that looks like this:
 
-    ![](images/github_version.png)
+![](images/github_version.png)
 
     2. Configure git
 
@@ -188,7 +190,8 @@ git reset .
     10. Commit changes
 
           - Once you are happy with the files in your staging area you can commit to save the changes and the current snapshot of the repository. 
-          - *Note - It is good practice to always include a short "message" with each commit that describes what was changed. This should be written in present tense. Your first commit is generally called "Initial commit."
+
+    *Note - It is good practice to always include a short "message" with each commit that describes what was changed. This should be written in present tense. Your first commit is generally called "Initial commit."*
 
 ```{r, eval = FALSE}
 # The -m option will include the message for your commit
