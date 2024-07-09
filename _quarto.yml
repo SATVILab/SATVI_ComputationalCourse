@@ -24,6 +24,7 @@ book:
     - dataexport.qmd
     - quartodocs.qmd
     - github.qmd
+    - vscode.qmd
     - recordings.qmd
     - summary.qmd
     - references.qmd
