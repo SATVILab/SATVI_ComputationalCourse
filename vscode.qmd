@@ -242,12 +242,6 @@ One of the key features VS Code supports is debugging. VS Code has a built in de
 
 Follow the instructions in the README.md to install and deploy R Debugger. 
 
-VS Code supports extensions for AI assistants that can help debug code as you work. Some options are below:
-
-[GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
-
-GitHub Copilot allows you to interface with a ChatGPT-like AI tool to help with your code as you develop. It is a paid extension, but there is a free trial. 
-
 Briefly:
 
 1. Install R Debugger extension in VS Code.
@@ -283,6 +277,13 @@ prnt("Hello World")
 Now launch R Debugger and view the errors. You should see that R Debugger has identified the issue so you can fix it:
 
 ![](images/vscode_rdebugger.png)
+
+
+VS Code also supports extensions for AI assistants that can help debug code as you work, such as GitHub Copilot:
+
+[GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
+
+GitHub Copilot allows you to interface with a ChatGPT-like AI tool to help with your code as you develop. It is a paid extension, but there is a free trial. 
 
 ## Cheatsheets
 
