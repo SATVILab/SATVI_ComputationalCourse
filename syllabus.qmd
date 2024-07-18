@@ -175,7 +175,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Instructor:** Miguel Rodo: miguel.rodo@uct.ac.za
 
-**Date:** 16 JUL 2024
+**Date:** 23 JUL 2024
 
 **Time:** 11h00 - 12h00
 
