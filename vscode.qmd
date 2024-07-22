@@ -1,17 +1,298 @@
 ---
-title: "Introduction to Visual Studio Code (VS Code)"
+title: "Introduction to Visual Studio Code"
 format: html
 prefer-html: true
 author: SATVI Computational Group
 date: today
 ---
 
-## Description 
+## Description
 
-This session will cover a basic introduction to Visual Studio Code (VS Code). VS Code is a visual code editor that streamlines brings together functionalities of many different coding tools, including programming languages, like R, technical publishing systems, like Quarto, and command line interfacing. 
+This session will cover an introduction to using Visual Studio Code (VS Code). VS Code has many features and functions that we will not have time to cover in this introductory session. It is very versatile and used by developers and computational biologists alike. We encourage you to explore in your own time and consider using VS Code as an additional tool in you computational kit.  
 
-VS Code is the most widely used code editor amongst developers worldwide and can be very helpful for getting started with developing version controlled computational projects. 
+### What is VS Code?
 
-## Download and install VS Code 
+VS Code is a commonly used code editor that incorporates many of the same features as RStudio, but allows for additional functionalities such as debugging, extensions, and version control interfacing. 
 
-Follow [these instructions](https://code.visualstudio.com/download) to download VS Code for your machine. 
+What we love about VS Code - one place for everything! 
+
+VS Code allows you to create new projects and files, switch between coding languages, create, edit, debug, push, pull, and version control code all from one place. 
+
+**Some common vocabulary:**
+
+1. Code editor = a text editor program that is designed for editing source code and can identify code elements and errors in real time. 
+  
+  
+### Initialize a project in VS Code
+
+1. Open the VS Code desktop application. You should see the VS Code "Welcome" page. 
+    
+    - From the Welcome page, you can create a new file, open an existing or recent project or file, clone a git repository, or connect to a remote development workspace. These options can also be found under the "File" tab. 
+
+    - The Welcome page also contains liks to helpful "Walkthroughs" which provide tutorials for tasks and functionalities you might find useful while you develop your code.
+
+    - Today we will create a new Quarto project, add files, and initialize git, and push to GitHub. 
+    
+![](images/vscode_welcome.png)
+
+2. Consider checking "Auto Save"
+
+![](images/vscode_autosave.png)
+
+3. Create a new Quarto project
+    
+    - When you click "New File", a pop-up will open where you can select the type of file you want to generate. We will select "Quarto Project" 
+          
+![](images/vscode_newquartoproj.png)
+
+4. Next select the type of project you will want to create. We will create a Quarto Book. 
+    
+![](images/vscode_newquartobook.png)
+    
+5. Select the directory where you want to save your project and give it a name. 
+    
+![](images/vscode_namequartobook.png)
+
+6. You will see your Quarto Book project directory and automatically generated base files appear in the left panel in VS Code. 
+    
+![](images/vscode_newquartobookopen.png)
+
+The panels in VS Code are customizable. Some key features are:
+    
+**User interface**
+
+The VS Code user interface contains all of the necessary components to develop your code. Each component is described below. 
+          
+![https://code.visualstudio.com/docs/getstarted/userinterface](images/vscode_userinterface.png)
+**Activity Bar**
+
+Controls the view of the Primary Side Bar and houses extensions.
+
+**Primary Side Bar**
+
+What you see here will depend on what you have selected from the Activity Bar. We often have this set to "Explorer" which shows you the files within your directory and project. The Explorer pane can also show your outline, timeline, containers, etc that are relevant for the open project. These are all collapsable. 
+
+You can also use the Activity Bar to open a Search tool, Source Control, Debugging tool, Extensions, Remote Explorer (i.e. GitHub Codespaces), or Containers in the Primary Side Bar. 
+
+**Editor**
+
+This is where you do your work. Like the scripts panel in RStudio, this is where you will open and edit files. 
+
+    - Multiple panels - Change the Editor Layout from the "View" tab or from the four icons on the top right of the VS Code window to view multiple files simultaneously. Editors can be split vertically or horizontally. 
+          
+![](images/vscode_twopanels.png)
+
+![](images/vscode_twopanels2.png)
+
+**Panel**
+
+This is a versatile additional space where you can run code from the command line, view debugging information, background jobs etc. Importantly, this is where you can access your Terminal directly within VS Code. We will discuss this in further detail below. 
+
+**Status Bar**
+
+The Status Bar provides information about the open files and project, status of git-controlled repositories, and information on if scripts are currently being run. 
+
+### Install Extensions
+
+When you first install VS Code, you should have no extensions. As different code will require different extensions, you will customize you list of installed extensions as you develop. You can explore available extensions directly from the VS Code Extensions pane, or you can browse the [VS Code Marketplace](https://marketplace.visualstudio.com/). If you start a script that requires a certain extension, VS Code will prompt you to install it. However, there are some basic extensions that most users will need. 
+
+To install an extension, simply click on the Extensions icon from the Activity Bar and search for your needed extension or choose from the list of recommended extensions. When you click on a desired extension it will display associated documentation in your Editor. Click "Install" and check that it appears in your "Installed" section in the Extensions pane. 
+
+Some recommended extensions are below. We have provided links to the documentation on VS Code Marketplace so you can read about these while you are in the process of setting up VS Code on your machine, but we recommend that eventually you install these directly in VS Code desktop, rather than from the links provided here:
+
+[Code Runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner)
+
+[R](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r)
+
+[vscodeR](https://marketplace.visualstudio.com/items?itemName=jkroening.vscoder)
+
+[Quarto](https://marketplace.visualstudio.com/items?itemName=quarto.quarto)
+
+[GitHub Repositories](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub)
+
+There are also some extensions dedicated to debugging which you may find useful, such as [R Debugger](https://marketplace.visualstudio.com/items?itemName=RDebugger.r-debugger).
+
+Use the Extensions pane to manage and uninstall extensions as needed. 
+
+### Manage files
+
+To manage the files in your directory, you do not have to exit VS Code and manage files from your standard file finder. The Explorer pane in your Primary Side Bar can serve as a file finder and manager. 
+
+1. To rename a file in Explorer:
+
+    - Right click the file and rename
+    
+2. To delete a file from Explorer:
+      
+    - Right click the file and delete
+
+3. To change the file type in Explorer:
+
+    - Right click and change the file extension. For example if you create a new Python file called newfile.py, but actually wanted it to be JavaScript, you can just change the file extension to .js.
+    
+![](images/vscode_changefiletype.png)
+    
+Notice that if you try to create a new file that needs a certain extension to run, VS Code will prompt you to install the recommended extensions.
+
+![](images/vscode_popupextension.png)
+## Initialize Git
+
+One major benefit of using VS Code is that it enables integration of your code editor and terminal, streamlining the process for initializing and managing git-controlled projects. 
+
+Let's use what we learned from the last session to initialize git for our current directory from VS Code. 
+
+1. Open a new Terminal in your VS Code panel. 
+
+![](images/vscode_newterminal.png)
+
+2. Follow the steps from our session on git and GitHub to initialize git on the project repository, add all files to the staging area, commit, and push to GitHub. 
+
+```{r, eval = FALSE}
+# Initialize git
+git init
+
+# Create .gitignore
+touch .gitignore
+
+# Create README.md
+touch README.md
+
+# Check git status
+git status
+
+# Add all files in the directory to staging area recursively
+git add .
+
+# Check git status
+git status
+
+# Make initial commit
+git commit -m "Initial commit."
+
+# Authenticate GitHub
+gh auth login 
+
+# Create a remote repository 
+gh repo create
+
+# Set path to existing local repository when prompted
+?Path to local repository (.) /PATH/TO/LOCAL/REPO
+
+# Push existing local repository 
+git push
+```
+
+## Code
+
+
+You can now add and edit your files however you like! Add and edit files, just remember to continue to commit and push as you go. Let's create a simple .qmd file with the code below and save it as a new file to our repository:
+
+### Clear environment
+
+```{r, results='hide'}
+ls()
+rm(list=ls())
+```
+
+### Set output directory
+
+```{r, warning=FALSE}
+dir.create("output")
+dir_save <- "output/"
+```
+
+### Load libraries
+
+```{r, message=FALSE}
+library(dplyr)
+library(tidyverse)
+```
+
+### Load dataset
+
+We will load the built-in "iris" R dataset and examine structure.
+
+```{r}
+data("iris")
+head(iris)
+```
+
+### Plot data and export
+
+```{r, message = FALSE}
+ggplot(data = iris, 
+                mapping = aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point(aes(color = Petal.Width)) +
+  geom_smooth(method="lm") +
+  labs(title = "Petal vs. Sepal Length", subtitle = "Separated by Species", x = "Sepal Length", y = "Petal Length") + 
+  facet_wrap(~Species, 
+             scales = "free_x") +
+  theme(plot.title = element_text(face = "bold"))
+
+ggsave("output/iris_ggplot.pdf", width = 7, height = 7)
+ggsave("output/iris_ggplot.png", width = 7, height = 7)
+ggsave("output/iris_ggplot.jpeg", width = 7, height = 7)
+```
+
+Render the .qmd file. 
+
+## Debugging
+
+One of the key features VS Code supports is debugging. VS Code has a built in debugger that is compatible with JavaScript and TypeScript, but for other languages, you, like R, you will need to install an extension to help debug the code. For R, the debugging extension is [R Debugger](https://marketplace.visualstudio.com/items?itemName=RDebugger.r-debugger). 
+
+Follow the instructions in the README.md to install and deploy R Debugger. 
+
+Briefly:
+
+1. Install R Debugger extension in VS Code.
+
+2. Install R package vsDebugger().
+
+```{r, eval = FALSE}
+devtools::install_github("ManuelHentschel/vscDebugger")
+```
+
+3. Open you R file in the VS Code editor pane. 
+
+4. Click the debugger from the Activity Panel so it opens in the Primary Sidebar. 
+
+5. Click F5 or the "Launch" button in the Debugger Activity Sidebar. 
+
+    - You may also want to open the DEBUG CONSOLE in your panel. 
+    
+6. Click F5 or "Continue" to debug your code. 
+
+Let's try with a very simple example. Create a simple R script in your open directory:
+
+```{r, eval = FALSE}
+print("Hello World")
+```
+
+Run the code to make sure it works. Then introduce an intentional error:
+
+```{r, eval = FALSE}
+prnt("Hello World")
+```
+
+Now launch R Debugger and view the errors. You should see that R Debugger has identified the issue so you can fix it:
+
+![](images/vscode_rdebugger.png)
+
+
+VS Code also supports extensions for AI assistants that can help debug code as you work, such as GitHub Copilot:
+
+[GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
+
+GitHub Copilot allows you to interface with a ChatGPT-like AI tool to help with your code as you develop. It is a paid extension, but there is a free trial. 
+
+## Cheatsheets
+
+[VS Code Keyboard Shortcuts - macOS](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf)
+
+[VS Code Keyboard Shortcuts - Windows](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf)
+
+## Homework
+
+1. Download and install VS Code.
+2. Play around VS Code.
+3. Edit your git-controlled repository, commit, and push to GitHub, all within VS Code. 

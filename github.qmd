@@ -14,7 +14,7 @@ This session will cover the basics of using Git and GitHub to create version-con
 
 Git is the most widely used version control system to date. It is free and open source. Git-based version controlling allows users to track changes that have been made to documents, code, etc. It also gives users the ability to restore version-controlled documents to earlier versions and collaborate with other developers. 
 
-Some common vocabulary:
+**Some common vocabulary:**
 
     1. Directory = Folder
     2. Repository = Parent folder which is the top folder for your project
@@ -45,7 +45,7 @@ Most of the time, we use git on our local machine to develop the contents of the
 
     1. Confirm git is installed. Open Terminal and type the following:
 
-*Note - If you can't find your Terminal, (for Mac) you can press Cmd + space to open Spotlight search. Type "Termianl". We recommend adding Terminal to your dock.*
+*Note - If you can't find your Terminal, (for Mac) you can press Cmd + space to open Spotlight search. Type "Terminal". We recommend adding Terminal to your dock.*
 
 ```{r, eval = FALSE}
 git --version
@@ -328,6 +328,7 @@ Here are two helpful git sheat sheets:
 [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 
 [GitLab Cheat Sheet](https://about.gitlab.com/images/press/git-cheat-sheet.pdf)
+
 
 ## Homework
 
