@@ -20,7 +20,7 @@ book:
     - syllabus.qmd
     - installations.qmd
     - swirl.qmd
-    - MaRcusRTraining.qmd
+    - MarcusRTraining.qmd
     - dataexport.qmd
     - quartodocs.qmd
     - github.qmd
