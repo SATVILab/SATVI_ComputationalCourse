@@ -1,18 +1,28 @@
 ---
 title: "Inference"
-format: html
+format:
+  html:
+    code-fold: true
 ---
 
 ```{r}
-#| include: false
-library(ggplot2)
-library(cowplot)
-library(tibble)
-path_dir_fig <- "images/inference"
-if (dir.exists(path_dir_fig)) {
-  unlink(path_dir_fig, recursive = TRUE)
+#| warning: false
+#| message: false
+#| results: hide
+# attach packages
+pkg_vec <- c(
+  "ggplot2", "cowplot", "tibble", "dplyr", "knitr", "remotes"
+)
+for (x in pkg_vec) {
+  if (!requireNamespace(x, quietly = TRUE)) {
+    install.packages(x)
+  }
+  library(x, character.only = TRUE)
 }
+# create clean directory to save figures to
+path_dir_fig <- "images/inference"
 dir.create(path_dir_fig, recursive = TRUE)
+# create custom theme
 theme_cowplot_custom <- function(major = "xy", minor = "none") {
   theme_cowplot() +
   theme(
@@ -28,7 +38,6 @@ theme_cowplot_custom <- function(major = "xy", minor = "none") {
 Suppose we have a spreadsheet with two variables:
 
 ```{r}
-#| echo: false
 set.seed(123)
 x_vec <- runif(100, 0, 1)
 y_vec <- x_vec + rnorm(100, 0, 0.1)
@@ -39,39 +48,488 @@ data_tbl_bother <- tibble::tibble(
 ```
 
 ```{r}
-p <- ggplot(data_tbl_bother, aes(x = x, y = y)) +
+p_bother <- ggplot(data_tbl_bother, aes(x = x, y = y)) +
   geom_point(colour = "dodgerblue", alpha = 0.8) +
-  theme_cowplot_custom()
+  theme_cowplot_custom() +
   labs(x = "Variable 1", y = "Variable 2")
 # save plot
 path_p <- file.path(path_dir_fig, "p-why-bother-init.png")
-ggsave(path_p, p, width = 10, height = 10, units = "cm")
+ggsave(path_p, p_bother, width = 10, height = 10, units = "cm")
 ```
 
 ```{r}
 #| results: asis
+#| echo: false
 knitr::include_graphics(path_p)
 ```
 
 <!--
-After lecture, add this to comments:
+::: {.content-visible when-format="html"}
 <details>
   <summary>Why bother with statistics?</summary>
   - Assistant decision-making under uncertainty
-  - Two primary methods:
-    - Inference
-      - Hypothesis testing
-      - Confidence intervals
+  - Three primary methods:
+    - Hypothesis testing
+    - Confidence intervals
     - Prediction
 </details>
+
+:::
+
+::: {.content-visible when-format="pdf"}
+- Purpose: assist decision-making under uncertainty
+- Three primary methods:
+  - Hypothesis testing
+  - Confidence intervals
+  - Prediction
+:::
 !-->
 
+### Performing inference
+
+Today, we'll talk about choosing appropriate statistical approaches to detect effects in our data.
+
+In particular, we'll mention useful `R` functions for performing these tasks, such as the following:
+
+```{r}
+#| echo: true
+#| code-fold: false
+corr_test_obj <- cor.test(data_tbl_bother$x, data_tbl_bother$y)
+corr_test_obj
+```
+
+We will also discuss how to extract the key information (estimate, p-value, etc.) and present it in a more readable format:
+
+```{r}
+#| results: asis
+#| echo: false
+#| code-fold: false
+
+# extract
+est <- corr_test_obj$estimate
+conf_int <- corr_test_obj$conf.int
+p_val <- corr_test_obj$p.value
+
+# don't show all digits
+est <- signif(est, 3)
+conf_int <- signif(conf_int, 3)
+p_val <- signif(p_val, 3)
+
+# convert confint to chr:
+conf_int <- paste(conf_int, collapse = " to ")
+
+# put into a table for display:
+corr_tbl <- tibble(
+  `Correlation` = est,
+  `Confidence interval` = conf_int,
+  `P-value` = p_val
+)
+
+# display using the `kable` function (from `knitr` R package)
+corr_tbl |>
+  knitr::kable()
+```
+
+## Understanding terms
+
+### Hypothesis testing
+
+- Purpose: detect differences
+- Examples:
+  - Is the correlation between two variables different from zero?
+  - Is the effect of a drug different from a placebo?
+- Primary tool for accounting for uncertainty: P-value
+
+### Estimation
+
+- Purpose: obtain best estimate for a given value from the data
+- Examples:
+  - What is the correlation between two variables?
+  - What is the effect of a drug?
+- Primary tool for accounting for uncertainty: confidence intervals
+
+::: {.content-visible when-format="html"}
 <details>
-  <summary>Why bother with statistics?</summary>
-  - Assistant decision-making under uncertainty
-  - Two primary methods:
-    - Inference
-      - Hypothesis testing
-      - Confidence intervals
-    - Prediction
+</summary>Details<summary>
+
+## Relationship to the data
+
+- P-values measure the compatibility of the data with the null hypothesis
+- Confidence intervals provide a range of values that will contain the true value with a certain probability
+  - For example, a 95% confidence interval [0.04, 0.5] says that 95% of the time, the true value will fall within the interval [0.04, 0.5]
+
+#### Hypothesis testing
+
+- **Null hypothesis** ($H_0$): The default assumption
+  - Typically, that there is no effect/difference
+  - For example:
+    - The correlation between two variables is zero
+    - The effect of a drug is no different from a placebo
+- The null hypothesis is tested against the **alternative hypothesis** ($H_1$)
+  - For example:
+    - The correlation between two variables is not zero
+    - The effect of a drug is different from a placebo
+- P-value:
+  - The probability of observing a value at least as extreme as what we did observe, given that the null hypothesis is true
+
 </details>
+:::
+
+## The primary challenge
+
+The main difficulty in performing inference well lies in choosing the appropriate method for the task at hand.
+Inappropriate choices can be disastrous.
+Here, for example, two different correlation coefficients will give very different results, because one's assumptions make it vulnerable to outliers:
+
+```{r}
+#| echo: false
+set.seed(123)
+x_vec <- c(runif(20, 0, 1), 2)
+y_vec <- rnorm(length(x_vec), 0, 0.1)
+y_vec[length(y_vec)] <- y_vec[length(y_vec)] + 2
+data_tbl_error <- tibble::tibble(
+  x = x_vec,
+  y = y_vec
+)
+```
+
+```{r}
+#| echo: false
+corr_tbl <- tibble(
+  `Method` = c("Pearson", "Spearman"),
+  `Correlation` = c(cor(data_tbl_error$x, data_tbl_error$y), cor(data_tbl_error$x, data_tbl_error$y, method = "spearman"))
+)
+corr_test_obj_pearson <- cor.test(data_tbl_error$x, data_tbl_error$y)
+corr_tbl_pearson <- tibble(
+  `Method` = "Pearson's",
+  `Correlation` = corr_test_obj_pearson$estimate |> signif(3),
+  `P-value` = corr_test_obj_pearson$p.value |> signif(3)
+)
+corr_test_obj_spearman <- cor.test(
+  data_tbl_error$x, data_tbl_error$y, method = "spearman"
+  )
+corr_tbl_spearman <- tibble(
+  Method = "Spearman's",
+  `Correlation` = corr_test_obj_spearman$estimate |> signif(3),
+  `P-value` = corr_test_obj_spearman$p.value |> signif(3)
+)
+corr_tbl_error <- corr_tbl_pearson |>
+  dplyr::bind_rows(corr_tbl_spearman)
+p_error <- ggplot(data_tbl_error, aes(x = x, y = y)) +
+  geom_point(colour = "dodgerblue", alpha = 0.8) +
+  theme_cowplot_custom() +
+  labs(x = "Variable 1", y = "Variable 2") +
+  geom_text(
+    data = corr_tbl_error[1, ],
+    aes(
+      x = 0.2, y = 1.45,
+      label = paste("Pearsons's: ", Correlation, " (P-value: ", `P-value`, ")")),
+    hjust = 0,
+    vjust = 1
+  ) +
+  geom_text(
+    data = corr_tbl_error[2, ],
+    aes(
+      x = 0.2, y = 1.55,
+      label = paste("Spearman's: ", Correlation, " (P-value: ", `P-value`, ")")),
+    hjust = 0,
+    vjust = 0
+  )
+
+# save plot
+path_p <- file.path(path_dir_fig, "p-error.png")
+ggsave(path_p, p_error, width = 10, height = 10, units = "cm")
+```
+
+```{r}
+#| results: asis
+#| echo: false
+knitr::include_graphics(path_p)
+```
+
+## Side-skipping the difficulties
+
+The easiest way to avoid making erroneous assumptions is to not make any.
+This is the reason for the undying (and well-deserved) popularity of non-parametric methods, which make no assumptions about the underlying distribution of the data.
+Chief among them are:
+
+- Correlation:
+  - The Spearman rank correlation
+- Hypothesis testing:
+  - The Wilcoxon rank-sum test (Mann-Whitney/Mann-Whitney U/Wilcoxon-Mann-Whitney/...)
+  - The Kruskal-Wallis test
+- Confidence intervals:
+  - The bootstrap method
+
+For this section, we will focus on hypothesis testing.
+
+## Spearman rank correlation
+
+The Spearman rank correlation test is a non-parametric test that assesses the strength and direction of association between two ranked variables.
+
+It is robust against outliers because it uses *ranks$ instead of the actual values of the variables.
+
+### Ranks
+
+Here is what ranks look like, as a table:
+
+```{r}
+#| results: asis
+rank_tbl <- tibble(
+  Value = data_tbl_error$x[seq_len(5)] |> signif(2)
+) |>
+  mutate(
+    Rank = rank(Value)
+  )
+rank_tbl |> knitr::kable()
+```
+
+Here's what the look like, plotted:
+
+```{r}
+p_error <- ggplot(data_tbl_error, aes(x = x, y = y)) +
+  geom_point(colour = "dodgerblue", alpha = 0.8) +
+  theme_cowplot_custom() +
+  labs(x = "Variable 1", y = "Variable 2")
+p_error_ranked <- ggplot(
+  data_tbl_error |>
+    dplyr::mutate(x = rank(x), y = rank(y)),
+  aes(x = x, y = y)) +
+  geom_point(colour = "dodgerblue", alpha = 0.8) +
+  theme_cowplot_custom() +
+  labs(x = "Variable 1 (ranks)", y = "Variable 2 (ranks)")
+p_grid_error_rank <- plot_grid(
+  p_error + labs(title = "Original"),
+  p_error_ranked + labs(title = "Ranked"),
+  nrow = 1
+)
+# save plot
+path_p <- file.path(path_dir_fig, "p-error-rank.png")
+ggsave(path_p, p_grid_error_rank, width = 14, height = 10, units = "cm")
+```
+
+
+### Test
+
+To perform the Spearman rank correlation test, we can use the `cor.test` function with the `method` argument set to `"spearman"`:
+
+```{r}
+#| code-fold: false
+cor_test_obj_spearman <- cor.test(
+  data_tbl_error$x, data_tbl_error$y, method = "spearman"
+)
+```
+
+Here are the results, which are quite messy:
+
+```{r}
+#| code-false: false
+cor_test_obj_spearman
+```
+
+To extract the correlation and p-value, we can use the following code:
+
+```{r}
+corr_spearman <- cor_test_obj_spearman$estimate
+corr_spearman
+p_value_spearman <- cor_test_obj_spearman$p.value
+p_value_spearman
+```
+
+It is both difficult and pointless to remember the exact syntax for extracting the correlation and p-value from the `cor_test_obj_spearman` object.
+
+Of course, one could always ask ChatGPT. [Here's the answer](https://chatgpt.com/share/26b69d15-2cd9-48f4-a010-b0f740c79453) it gave me.
+
+But typically it is a bit quicker to just look what is in the object and extract it.
+When you get complicated output like when printing the `cor_test_obj_spearman` object, you can use the following code to see what is in the object:
+
+```{r}
+corr_test_obj_spearman |> attributes()
+```
+
+If we are not sure what these names mean exactly, typically they are listed in the help file of the function:
+
+```{r}
+#| eval: false
+?cor.test
+```
+
+They're under the `Value` header (would need to scroll down a bit, comes right before examples):
+
+```{r}
+#| results: asis
+knitr::include_graphics("images/inference/help_file.png")
+```
+
+```{r}
+#| code-fold: false
+corr_tbl_spearman <- data.frame(
+  `est` = cor_test_obj_spearman$estimate,
+  `p_val` = cor_test_obj_spearman$p.value
+)
+corr_tbl_spearman
+```
+
+This is not an attractive table. We can make it more presentable with the following code:
+
+```{r}
+#| results: asis
+corr_tbl_spearman <- corr_tbl_spearman |>
+  # show only significant digits
+  mutate(
+    Correlation = est |> signif(3),
+    `P-value` = p_val |> signif(3)
+  ) |>
+  dplyr::select(-c(est, p_val))
+# don't display the row names
+rownames(corr_tbl_spearman) <- NULL
+# display using `kable` function:
+corr_tbl_spearman |> kable()
+```
+
+Note that for the `kable` function to produce good output, you need to have the chunk option `results: asis` set.
+
+### Alternatives
+
+We'll talk about the Pearson correlation coefficient and the Concordance correlation coefficient next week.
+
+## Wilcoxon rank-sum test
+
+The Wilcoxon rank-sum test is a non-parametric test that assesses whether two independent samples come from the same distribution.
+
+As with the Spearman's correlation coefficient, it is robust against outliers because it uses ranks instead of the actual values of the variables.
+
+### Example
+
+Suppose that we have twenty samples from two groups:
+
+```{r}
+#| code-fold: true
+set.seed(4)
+x_vec <- rnorm(20, 0, 1)
+y_vec <- rnorm(20, 0.5, 1)
+sample_tbl_mw <- tibble(group_1 = x_vec, group_2 = y_vec)
+sample_tbl_mw |> head()
+```
+
+We can compare if their medians (roughly speaking) are different using the Wilcoxon rank-sum test:
+
+```{r}
+#| code-fold: false
+wilcox_obj <- wilcox.test(sample_tbl_mw$group_1, sample_tbl_mw$group_2)
+wilcox_obj
+```
+
+Again, we don't remember where the output is:
+
+```{r}
+wilcox_obj |> attributes()
+```
+
+We extract and format the p-value:
+
+```{r}
+wilcox_obj[["p.value"]] |> signif(3)
+```
+
+## Paired data
+
+When we have paired data, we typically have *much* more power to detect differences.
+
+For example, suppose we have two measurements from each of twenty people, pre- and post-treatment:
+
+```{r}
+set.seed(4)
+base_vec <- runif(20, 0, 5)
+pre_vec <- base_vec + rnorm(20, 0, 0.5)
+post_vec <- base_vec + rnorm(20, 1, 0.5)
+paired_tbl <- tibble(
+  pre = pre_vec,
+  post = post_vec
+)
+paired_tbl |> head()
+```
+
+If we perform the (unpaired) Mann-Whitney, we don't find a significant p-value:
+
+```{r}
+#| code-fold: false
+wilcox_obj <- wilcox.test(paired_tbl$pre, paired_tbl$post)
+wilcox_obj$p.value |> signif(3)
+```
+
+But if we use the paired-test equivalent, it is highly significant:
+
+```{r}
+wilcox_obj_paired <- wilcox.test(paired_tbl$pre, paired_tbl$post, paired = TRUE)
+wilcox_obj_paired$p.value |> signif(3)
+```
+
+The reason is that a lot of the "noise" (variability apart from the treatment) is removed when we use paired data.
+Sources of such variability include sex, age, income, etc.
+
+## Kruskal-Wallis test
+
+The Kruskal-Wallis test is a non-parametric test that assesses whether three or more independent samples come from the same distribution.
+
+It is a direct extension of the Mann-Whitney test to multiple groups.
+
+### Example
+
+Suppose that we have add a third group to the previous example:
+
+```{r}
+#| code-fold: true
+set.seed(4)
+sample_tbl_kw <- sample_tbl_mw |>
+  mutate(
+    group_3 = rnorm(20, 4, 1)
+  )
+sample_tbl_kw |> head()
+```
+
+We can compare if their medians (roughly speaking) are different using the Kruskal-Wallis test:
+
+```{r}
+#| code-fold: false
+kw_obj <- kruskal.test(
+  list(
+    sample_tbl_kw$group_1,
+    sample_tbl_kw$group_2,
+    sample_tbl_kw$group_3
+  )
+)
+```
+
+Again, we can extract and format the p-value:
+
+```{r}
+kw_obj[["p.value"]] |> signif(3)
+```
+
+## Multiple testing
+
+## Homework
+
+1. Install the package `DataTidy23RodoSTA2005SAssignment`:
+
+```{r}
+#| eval: false
+#| code-fold: false
+install_github("MiguelRodo/DataTidy23RodoSTA2005SAssignment@410a5247d600ce462e7941065233b634574fca86")
+```
+
+```{r}
+#| code-fold: false
+data("data_tidy_yield", package = "DataTidy23RodoSTA2005SAssignment")
+data_tidy_yield
+```
+
+It contains (simulated) data on maize crop yield (`CropYield`) under various conditions.
+
+2. Apply the appropriate test and display the results in a table for the following questions:
+
+- Question 1. Does crop yield depend on whether pesticide was applied?
+- Question 2. Does crop yield depend on the irrigation type?
+- Question 3. Does crop yield depend on rainfall?
+- Question 4. Apply the Bonferroni multiple comparison correction to the results of Question 1-3.

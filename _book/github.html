@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="SATVI Computational Group">
-<meta name="dcterms.date" content="2024-06-18">
+<meta name="dcterms.date" content="2024-07-22">
 
-<title>SATVI Computational Course - 8&nbsp; Introduction to Git and GitHub</title>
+<title>SATVI Computational Course - 7&nbsp; Introduction to Git and GitHub</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,8 +66,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./recordings.html" rel="next">
-<link href="./quartodocs.html" rel="prev">
+<link href="./inference.html" rel="next">
+<link href="./dataexport.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -130,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./github.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./github.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -179,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./MaRcusRTraining.html" class="sidebar-item-text sidebar-link">
+  <a href="./MarcusRTraining.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">MaRcus R Training</span></span></a>
   </div>
 </li>
@@ -191,14 +191,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quartodocs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></span></a>
+  <a href="./inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -229,18 +229,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">8.1</span> Description</a>
+  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">7.1</span> Description</a>
   <ul class="collapse">
-  <li><a href="#what-is-git" id="toc-what-is-git" class="nav-link" data-scroll-target="#what-is-git"><span class="header-section-number">8.1.1</span> What is Git?</a></li>
-  <li><a href="#basic-git-commands" id="toc-basic-git-commands" class="nav-link" data-scroll-target="#basic-git-commands"><span class="header-section-number">8.1.2</span> Basic git commands:</a></li>
-  <li><a href="#interface-with-git-from-your-local-machine-using-the-terminal" id="toc-interface-with-git-from-your-local-machine-using-the-terminal" class="nav-link" data-scroll-target="#interface-with-git-from-your-local-machine-using-the-terminal"><span class="header-section-number">8.1.3</span> Interface with git from your local machine using the Terminal</a></li>
-  <li><a href="#branching-and-merging-from-the-terminal" id="toc-branching-and-merging-from-the-terminal" class="nav-link" data-scroll-target="#branching-and-merging-from-the-terminal"><span class="header-section-number">8.1.4</span> Branching and Merging from the Terminal</a></li>
-  <li><a href="#using-git-commands-to-navigate-through-git-architecture-from-the-terminal" id="toc-using-git-commands-to-navigate-through-git-architecture-from-the-terminal" class="nav-link" data-scroll-target="#using-git-commands-to-navigate-through-git-architecture-from-the-terminal"><span class="header-section-number">8.1.5</span> Using git commands to navigate through git architecture from the Terminal</a></li>
-  <li><a href="#create-branch-and-clone-a-repository-from-github" id="toc-create-branch-and-clone-a-repository-from-github" class="nav-link" data-scroll-target="#create-branch-and-clone-a-repository-from-github"><span class="header-section-number">8.1.6</span> Create, branch, and clone a repository from GitHub</a></li>
-  <li><a href="#create-branch-and-push-a-repository-from-github-desktop" id="toc-create-branch-and-push-a-repository-from-github-desktop" class="nav-link" data-scroll-target="#create-branch-and-push-a-repository-from-github-desktop"><span class="header-section-number">8.1.7</span> Create, branch, and push a repository from GitHub Desktop</a></li>
+  <li><a href="#what-is-git" id="toc-what-is-git" class="nav-link" data-scroll-target="#what-is-git"><span class="header-section-number">7.1.1</span> What is Git?</a></li>
+  <li><a href="#basic-git-commands" id="toc-basic-git-commands" class="nav-link" data-scroll-target="#basic-git-commands"><span class="header-section-number">7.1.2</span> Basic git commands:</a></li>
+  <li><a href="#interface-with-git-from-your-local-machine-using-the-terminal" id="toc-interface-with-git-from-your-local-machine-using-the-terminal" class="nav-link" data-scroll-target="#interface-with-git-from-your-local-machine-using-the-terminal"><span class="header-section-number">7.1.3</span> Interface with git from your local machine using the Terminal</a></li>
+  <li><a href="#branching-and-merging-from-the-terminal" id="toc-branching-and-merging-from-the-terminal" class="nav-link" data-scroll-target="#branching-and-merging-from-the-terminal"><span class="header-section-number">7.1.4</span> Branching and Merging from the Terminal</a></li>
+  <li><a href="#using-git-commands-to-navigate-through-git-architecture-from-the-terminal" id="toc-using-git-commands-to-navigate-through-git-architecture-from-the-terminal" class="nav-link" data-scroll-target="#using-git-commands-to-navigate-through-git-architecture-from-the-terminal"><span class="header-section-number">7.1.5</span> Using git commands to navigate through git architecture from the Terminal</a></li>
+  <li><a href="#create-branch-and-clone-a-repository-from-github" id="toc-create-branch-and-clone-a-repository-from-github" class="nav-link" data-scroll-target="#create-branch-and-clone-a-repository-from-github"><span class="header-section-number">7.1.6</span> Create, branch, and clone a repository from GitHub</a></li>
+  <li><a href="#create-branch-and-push-a-repository-from-github-desktop" id="toc-create-branch-and-push-a-repository-from-github-desktop" class="nav-link" data-scroll-target="#create-branch-and-push-a-repository-from-github-desktop"><span class="header-section-number">7.1.7</span> Create, branch, and push a repository from GitHub Desktop</a></li>
   </ul></li>
-  <li><a href="#cheatsheets" id="toc-cheatsheets" class="nav-link" data-scroll-target="#cheatsheets"><span class="header-section-number">8.2</span> Cheatsheets</a></li>
-  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">8.3</span> Homework</a></li>
+  <li><a href="#cheatsheets" id="toc-cheatsheets" class="nav-link" data-scroll-target="#cheatsheets"><span class="header-section-number">7.2</span> Cheatsheets</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">7.3</span> Homework</a></li>
   </ul>
 </nav>
     </div>
@@ -249,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></h1>
 </div>
 
 
@@ -266,7 +266,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 18, 2024</p>
+      <p class="date">July 22, 2024</p>
     </div>
   </div>
   
@@ -278,11 +278,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="description" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="description"><span class="header-section-number">8.1</span> Description</h2>
+<section id="description" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="description"><span class="header-section-number">7.1</span> Description</h2>
 <p>This session will cover the basics of using Git and GitHub to create version-controlled analyses and projects. Before this session you should have set up at GitHub account and installed GitHub Desktop. For instructions, visit the “Installations” session document. It is also recommended that you install the GitHub CLI to facilitate streamlined interfacing between github and the Terminal.</p>
-<section id="what-is-git" class="level3" data-number="8.1.1">
-<h3 data-number="8.1.1" class="anchored" data-anchor-id="what-is-git"><span class="header-section-number">8.1.1</span> What is Git?</h3>
+<section id="what-is-git" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="what-is-git"><span class="header-section-number">7.1.1</span> What is Git?</h3>
 <p>Git is the most widely used version control system to date. It is free and open source. Git-based version controlling allows users to track changes that have been made to documents, code, etc. It also gives users the ability to restore version-controlled documents to earlier versions and collaborate with other developers.</p>
 <p>Some common vocabulary:</p>
 <pre><code>1. Directory = Folder
@@ -297,16 +297,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>What is the difference between Git, GitHub, and GitHub Desktop?</p>
 <p><strong>Git</strong> is the tool that actually tracks changes made to your code over time and allows for version control. <strong>GitHub</strong> is an online website that stores your Git repositories. <strong>GitHub Desktop</strong> is a downloaded software that allows you to work with your Git repositories locally.</p>
 </section>
-<section id="basic-git-commands" class="level3" data-number="8.1.2">
-<h3 data-number="8.1.2" class="anchored" data-anchor-id="basic-git-commands"><span class="header-section-number">8.1.2</span> Basic git commands:</h3>
+<section id="basic-git-commands" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="basic-git-commands"><span class="header-section-number">7.1.2</span> Basic git commands:</h3>
 <pre><code>1. git clone = copy a GitHub repository to your local machine
 2. git add = add files to the git staging area
 3. git commit = save files (typically with a message describing what was changed)
 4. git push = upload files in the commit to a remote repository (GitHub)
 5. git pull = download remote repository to local directory and update local repository with remote version </code></pre>
 </section>
-<section id="interface-with-git-from-your-local-machine-using-the-terminal" class="level3" data-number="8.1.3">
-<h3 data-number="8.1.3" class="anchored" data-anchor-id="interface-with-git-from-your-local-machine-using-the-terminal"><span class="header-section-number">8.1.3</span> Interface with git from your local machine using the Terminal</h3>
+<section id="interface-with-git-from-your-local-machine-using-the-terminal" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="interface-with-git-from-your-local-machine-using-the-terminal"><span class="header-section-number">7.1.3</span> Interface with git from your local machine using the Terminal</h3>
 <p>Most of the time, we use git on our local machine to develop the contents of the repo and then push them to GitHub. For this session, we will be interfacing with git from the Terminal to build an understanding of how git operates on a fundamental level. In our next session, we will cover how to develop git-controlled projects using the code editor VS Code.</p>
 <pre><code>1. Confirm git is installed. Open Terminal and type the following:</code></pre>
 <p><em>Note - If you can’t find your Terminal, (for Mac) you can press Cmd + space to open Spotlight search. Type “Termianl”. We recommend adding Terminal to your dock.</em></p>
@@ -450,8 +450,8 @@ This will allow you to set your user information so it will stay consistent acro
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>git push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="branching-and-merging-from-the-terminal" class="level3" data-number="8.1.4">
-<h3 data-number="8.1.4" class="anchored" data-anchor-id="branching-and-merging-from-the-terminal"><span class="header-section-number">8.1.4</span> Branching and Merging from the Terminal</h3>
+<section id="branching-and-merging-from-the-terminal" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4" class="anchored" data-anchor-id="branching-and-merging-from-the-terminal"><span class="header-section-number">7.1.4</span> Branching and Merging from the Terminal</h3>
 <p>One main feature of git repositories is the ability to create and merge different branches. This comes in handy when you have multiple people working on the same project. You can work on different branches that are dedicated to different parts of the project, and then those branches can be merged back into the master branch.</p>
 <pre><code>1. Create and switch to a branch</code></pre>
 <div class="cell">
@@ -477,8 +477,8 @@ This will allow you to set your user information so it will stay consistent acro
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>git checkout main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="using-git-commands-to-navigate-through-git-architecture-from-the-terminal" class="level3" data-number="8.1.5">
-<h3 data-number="8.1.5" class="anchored" data-anchor-id="using-git-commands-to-navigate-through-git-architecture-from-the-terminal"><span class="header-section-number">8.1.5</span> Using git commands to navigate through git architecture from the Terminal</h3>
+<section id="using-git-commands-to-navigate-through-git-architecture-from-the-terminal" class="level3" data-number="7.1.5">
+<h3 data-number="7.1.5" class="anchored" data-anchor-id="using-git-commands-to-navigate-through-git-architecture-from-the-terminal"><span class="header-section-number">7.1.5</span> Using git commands to navigate through git architecture from the Terminal</h3>
 <p>This diagram from <a href="https://unstop.com/blog/what-is-git">unstop</a> may be helpful for understanding how git commands can be used to move files around between local and remote directories. The webpage also gives a thorough description of how git and GitHub work.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -487,8 +487,8 @@ This will allow you to set your user information so it will stay consistent acro
 </figure>
 </div>
 </section>
-<section id="create-branch-and-clone-a-repository-from-github" class="level3" data-number="8.1.6">
-<h3 data-number="8.1.6" class="anchored" data-anchor-id="create-branch-and-clone-a-repository-from-github"><span class="header-section-number">8.1.6</span> Create, branch, and clone a repository from GitHub</h3>
+<section id="create-branch-and-clone-a-repository-from-github" class="level3" data-number="7.1.6">
+<h3 data-number="7.1.6" class="anchored" data-anchor-id="create-branch-and-clone-a-repository-from-github"><span class="header-section-number">7.1.6</span> Create, branch, and clone a repository from GitHub</h3>
 <p>Think of a git repository as a project folder. All of the documents that you will need to run analyses for your project should be stored within the same repo.</p>
 <pre><code>1. Sign in to [GitHub](https://github.com/login).</code></pre>
 <p><img src="images/github_login.png" class="img-fluid"></p>
@@ -514,8 +514,8 @@ This will allow you to set your user information so it will stay consistent acro
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>git clone https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>SATVILab<span class="sc">/</span>SATVI_ComputationalCourse.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="create-branch-and-push-a-repository-from-github-desktop" class="level3" data-number="8.1.7">
-<h3 data-number="8.1.7" class="anchored" data-anchor-id="create-branch-and-push-a-repository-from-github-desktop"><span class="header-section-number">8.1.7</span> Create, branch, and push a repository from GitHub Desktop</h3>
+<section id="create-branch-and-push-a-repository-from-github-desktop" class="level3" data-number="7.1.7">
+<h3 data-number="7.1.7" class="anchored" data-anchor-id="create-branch-and-push-a-repository-from-github-desktop"><span class="header-section-number">7.1.7</span> Create, branch, and push a repository from GitHub Desktop</h3>
 <pre><code>1. Open GitHub Desktop and sign in.</code></pre>
 <p><img src="images/github_desktopsignin.png" class="img-fluid"></p>
 <pre><code>2. Add a repository. This repo can either be cloned from GitHub, created as a new repo, or added from an existing local repo. </code></pre>
@@ -526,14 +526,14 @@ This will allow you to set your user information so it will stay consistent acro
 <p><img src="images/github_desktoppush.png" class="img-fluid"></p>
 </section>
 </section>
-<section id="cheatsheets" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="cheatsheets"><span class="header-section-number">8.2</span> Cheatsheets</h2>
+<section id="cheatsheets" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="cheatsheets"><span class="header-section-number">7.2</span> Cheatsheets</h2>
 <p>Here are two helpful git sheat sheets:</p>
 <p><a href="https://education.github.com/git-cheat-sheet-education.pdf">Git Cheat Sheet</a></p>
 <p><a href="https://about.gitlab.com/images/press/git-cheat-sheet.pdf">GitLab Cheat Sheet</a></p>
 </section>
-<section id="homework" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="homework"><span class="header-section-number">8.3</span> Homework</h2>
+<section id="homework" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="homework"><span class="header-section-number">7.3</span> Homework</h2>
 <pre><code>1. Read the blog post "What is GIT" from unstop</code></pre>
 <p><a href="https://unstop.com/blog/what-is-git">unstop “What is GIT”</a></p>
 <pre><code>2. Set up 2-Factor Authentication on your GitHub account. This will be required to access the SATVILab GitHub organization. Contact Miguel Rodo (rdxmig002@myuct.ac.za) to be added to the SATVILab organization. </code></pre>
@@ -960,13 +960,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./quartodocs.html" class="pagination-link" aria-label="Introduction to Quarto">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span>
+      <a href="./dataexport.html" class="pagination-link" aria-label="Exporting and Importing Data Formats in R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exporting and Importing Data Formats in R</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./recordings.html" class="pagination-link" aria-label="Session Recordings">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Session Recordings</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./inference.html" class="pagination-link" aria-label="Inference">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

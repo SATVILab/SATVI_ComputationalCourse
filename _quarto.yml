@@ -22,7 +22,7 @@ book:
     - swirl.qmd
     - MarcusRTraining.qmd
     - dataexport.qmd
-    - quartodocs.qmd
+    # - quartodocs.qmd
     - github.qmd
     - inference.qmd
     - recordings.qmd
