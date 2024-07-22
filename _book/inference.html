@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>SATVI Computational Course - 8&nbsp; Inference</title>
+<title>SATVI Computational Course - 9&nbsp; Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./recordings.html" rel="next">
-<link href="./github.html" rel="prev">
+<link href="./vscode.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -157,7 +157,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./inference.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inference</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./inference.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inference</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -224,20 +224,26 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./vscode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Visual Studio Code</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./inference.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./recordings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Session Recordings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Session Recordings</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -256,35 +262,35 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-bother-with-statistics" id="toc-why-bother-with-statistics" class="nav-link active" data-scroll-target="#why-bother-with-statistics"><span class="header-section-number">8.1</span> Why bother with statistics?</a>
+  <li><a href="#why-bother-with-statistics" id="toc-why-bother-with-statistics" class="nav-link active" data-scroll-target="#why-bother-with-statistics"><span class="header-section-number">9.1</span> Why bother with statistics?</a>
   <ul class="collapse">
-  <li><a href="#performing-inference" id="toc-performing-inference" class="nav-link" data-scroll-target="#performing-inference"><span class="header-section-number">8.1.1</span> Performing inference</a></li>
+  <li><a href="#performing-inference" id="toc-performing-inference" class="nav-link" data-scroll-target="#performing-inference"><span class="header-section-number">9.1.1</span> Performing inference</a></li>
   </ul></li>
-  <li><a href="#understanding-terms" id="toc-understanding-terms" class="nav-link" data-scroll-target="#understanding-terms"><span class="header-section-number">8.2</span> Understanding terms</a>
+  <li><a href="#understanding-terms" id="toc-understanding-terms" class="nav-link" data-scroll-target="#understanding-terms"><span class="header-section-number">9.2</span> Understanding terms</a>
   <ul class="collapse">
-  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing"><span class="header-section-number">8.2.1</span> Hypothesis testing</a></li>
-  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">8.2.2</span> Estimation</a></li>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing"><span class="header-section-number">9.2.1</span> Hypothesis testing</a></li>
+  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">9.2.2</span> Estimation</a></li>
   </ul></li>
-  <li><a href="#relationship-to-the-data" id="toc-relationship-to-the-data" class="nav-link" data-scroll-target="#relationship-to-the-data"><span class="header-section-number">8.3</span> Relationship to the data</a></li>
-  <li><a href="#the-primary-challenge" id="toc-the-primary-challenge" class="nav-link" data-scroll-target="#the-primary-challenge"><span class="header-section-number">8.4</span> The primary challenge</a></li>
-  <li><a href="#side-skipping-the-difficulties" id="toc-side-skipping-the-difficulties" class="nav-link" data-scroll-target="#side-skipping-the-difficulties"><span class="header-section-number">8.5</span> Side-skipping the difficulties</a></li>
-  <li><a href="#spearman-rank-correlation" id="toc-spearman-rank-correlation" class="nav-link" data-scroll-target="#spearman-rank-correlation"><span class="header-section-number">8.6</span> Spearman rank correlation</a>
+  <li><a href="#relationship-to-the-data" id="toc-relationship-to-the-data" class="nav-link" data-scroll-target="#relationship-to-the-data"><span class="header-section-number">9.3</span> Relationship to the data</a></li>
+  <li><a href="#the-primary-challenge" id="toc-the-primary-challenge" class="nav-link" data-scroll-target="#the-primary-challenge"><span class="header-section-number">9.4</span> The primary challenge</a></li>
+  <li><a href="#side-skipping-the-difficulties" id="toc-side-skipping-the-difficulties" class="nav-link" data-scroll-target="#side-skipping-the-difficulties"><span class="header-section-number">9.5</span> Side-skipping the difficulties</a></li>
+  <li><a href="#spearman-rank-correlation" id="toc-spearman-rank-correlation" class="nav-link" data-scroll-target="#spearman-rank-correlation"><span class="header-section-number">9.6</span> Spearman rank correlation</a>
   <ul class="collapse">
-  <li><a href="#ranks" id="toc-ranks" class="nav-link" data-scroll-target="#ranks"><span class="header-section-number">8.6.1</span> Ranks</a></li>
-  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test"><span class="header-section-number">8.6.2</span> Test</a></li>
-  <li><a href="#alternatives" id="toc-alternatives" class="nav-link" data-scroll-target="#alternatives"><span class="header-section-number">8.6.3</span> Alternatives</a></li>
+  <li><a href="#ranks" id="toc-ranks" class="nav-link" data-scroll-target="#ranks"><span class="header-section-number">9.6.1</span> Ranks</a></li>
+  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test"><span class="header-section-number">9.6.2</span> Test</a></li>
+  <li><a href="#alternatives" id="toc-alternatives" class="nav-link" data-scroll-target="#alternatives"><span class="header-section-number">9.6.3</span> Alternatives</a></li>
   </ul></li>
-  <li><a href="#wilcoxon-rank-sum-test" id="toc-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#wilcoxon-rank-sum-test"><span class="header-section-number">8.7</span> Wilcoxon rank-sum test</a>
+  <li><a href="#wilcoxon-rank-sum-test" id="toc-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#wilcoxon-rank-sum-test"><span class="header-section-number">9.7</span> Wilcoxon rank-sum test</a>
   <ul class="collapse">
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">8.7.1</span> Example</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">9.7.1</span> Example</a></li>
   </ul></li>
-  <li><a href="#paired-data" id="toc-paired-data" class="nav-link" data-scroll-target="#paired-data"><span class="header-section-number">8.8</span> Paired data</a></li>
-  <li><a href="#kruskal-wallis-test" id="toc-kruskal-wallis-test" class="nav-link" data-scroll-target="#kruskal-wallis-test"><span class="header-section-number">8.9</span> Kruskal-Wallis test</a>
+  <li><a href="#paired-data" id="toc-paired-data" class="nav-link" data-scroll-target="#paired-data"><span class="header-section-number">9.8</span> Paired data</a></li>
+  <li><a href="#kruskal-wallis-test" id="toc-kruskal-wallis-test" class="nav-link" data-scroll-target="#kruskal-wallis-test"><span class="header-section-number">9.9</span> Kruskal-Wallis test</a>
   <ul class="collapse">
-  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">8.9.1</span> Example</a></li>
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">9.9.1</span> Example</a></li>
   </ul></li>
-  <li><a href="#multiple-testing" id="toc-multiple-testing" class="nav-link" data-scroll-target="#multiple-testing"><span class="header-section-number">8.10</span> Multiple testing</a></li>
-  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">8.11</span> Homework</a></li>
+  <li><a href="#multiple-testing" id="toc-multiple-testing" class="nav-link" data-scroll-target="#multiple-testing"><span class="header-section-number">9.10</span> Multiple testing</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">9.11</span> Homework</a></li>
   </ul>
 </nav>
     </div>
@@ -293,7 +299,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inference</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inference</span></h1>
 </div>
 
 
@@ -337,8 +343,8 @@ window.Quarto = {
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="why-bother-with-statistics" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="why-bother-with-statistics"><span class="header-section-number">8.1</span> Why bother with statistics?</h2>
+<section id="why-bother-with-statistics" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="why-bother-with-statistics"><span class="header-section-number">9.1</span> Why bother with statistics?</h2>
 <p>Suppose we have a spreadsheet with two variables:</p>
 <div class="cell">
 <details class="code-fold">
@@ -386,8 +392,8 @@ window.Quarto = {
   - Prediction
 :::
 !-->
-<section id="performing-inference" class="level3" data-number="8.1.1">
-<h3 data-number="8.1.1" class="anchored" data-anchor-id="performing-inference"><span class="header-section-number">8.1.1</span> Performing inference</h3>
+<section id="performing-inference" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="performing-inference"><span class="header-section-number">9.1.1</span> Performing inference</h3>
 <p>Today, we’ll talk about choosing appropriate statistical approaches to detect effects in our data.</p>
 <p>In particular, we’ll mention useful <code>R</code> functions for performing these tasks, such as the following:</p>
 <div class="cell">
@@ -426,10 +432,10 @@ sample estimates:
 </table>
 </section>
 </section>
-<section id="understanding-terms" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="understanding-terms"><span class="header-section-number">8.2</span> Understanding terms</h2>
-<section id="hypothesis-testing" class="level3" data-number="8.2.1">
-<h3 data-number="8.2.1" class="anchored" data-anchor-id="hypothesis-testing"><span class="header-section-number">8.2.1</span> Hypothesis testing</h3>
+<section id="understanding-terms" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="understanding-terms"><span class="header-section-number">9.2</span> Understanding terms</h2>
+<section id="hypothesis-testing" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="hypothesis-testing"><span class="header-section-number">9.2.1</span> Hypothesis testing</h3>
 <ul>
 <li>Purpose: detect differences</li>
 <li>Examples:
@@ -440,8 +446,8 @@ sample estimates:
 <li>Primary tool for accounting for uncertainty: P-value</li>
 </ul>
 </section>
-<section id="estimation" class="level3" data-number="8.2.2">
-<h3 data-number="8.2.2" class="anchored" data-anchor-id="estimation"><span class="header-section-number">8.2.2</span> Estimation</h3>
+<section id="estimation" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="estimation"><span class="header-section-number">9.2.2</span> Estimation</h3>
 <ul>
 <li>Purpose: obtain best estimate for a given value from the data</li>
 <li>Examples:
@@ -458,8 +464,8 @@ Details
 <summary>
 </summary></details></section>
 </section>
-<section id="relationship-to-the-data" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="relationship-to-the-data"><span class="header-section-number">8.3</span> Relationship to the data</h2>
+<section id="relationship-to-the-data" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="relationship-to-the-data"><span class="header-section-number">9.3</span> Relationship to the data</h2>
 <ul>
 <li>P-values measure the compatibility of the data with the null hypothesis</li>
 <li>Confidence intervals provide a range of values that will contain the true value with a certain probability
@@ -467,8 +473,8 @@ Details
 <li>For example, a 95% confidence interval [0.04, 0.5] says that 95% of the time, the true value will fall within the interval [0.04, 0.5]</li>
 </ul></li>
 </ul>
-<section id="hypothesis-testing-1" class="level4" data-number="8.3.0.1">
-<h4 data-number="8.3.0.1" class="anchored" data-anchor-id="hypothesis-testing-1"><span class="header-section-number">8.3.0.1</span> Hypothesis testing</h4>
+<section id="hypothesis-testing-1" class="level4" data-number="9.3.0.1">
+<h4 data-number="9.3.0.1" class="anchored" data-anchor-id="hypothesis-testing-1"><span class="header-section-number">9.3.0.1</span> Hypothesis testing</h4>
 <ul>
 <li><strong>Null hypothesis</strong> (<span class="math inline">\(H_0\)</span>): The default assumption
 <ul>
@@ -496,13 +502,13 @@ Details
 <p>:::</p>
 </section>
 </section>
-<section id="the-primary-challenge" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="the-primary-challenge"><span class="header-section-number">8.4</span> The primary challenge</h2>
+<section id="the-primary-challenge" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="the-primary-challenge"><span class="header-section-number">9.4</span> The primary challenge</h2>
 <p>The main difficulty in performing inference well lies in choosing the appropriate method for the task at hand. Inappropriate choices can be disastrous. Here, for example, two different correlation coefficients will give very different results, because one’s assumptions make it vulnerable to outliers:</p>
 <p><img src="images/inference/p-error.png" class="img-fluid" width="590"></p>
 </section>
-<section id="side-skipping-the-difficulties" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="side-skipping-the-difficulties"><span class="header-section-number">8.5</span> Side-skipping the difficulties</h2>
+<section id="side-skipping-the-difficulties" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="side-skipping-the-difficulties"><span class="header-section-number">9.5</span> Side-skipping the difficulties</h2>
 <p>The easiest way to avoid making erroneous assumptions is to not make any. This is the reason for the undying (and well-deserved) popularity of non-parametric methods, which make no assumptions about the underlying distribution of the data. Chief among them are:</p>
 <ul>
 <li>Correlation:
@@ -521,12 +527,12 @@ Details
 </ul>
 <p>For this section, we will focus on hypothesis testing.</p>
 </section>
-<section id="spearman-rank-correlation" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="spearman-rank-correlation"><span class="header-section-number">8.6</span> Spearman rank correlation</h2>
+<section id="spearman-rank-correlation" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="spearman-rank-correlation"><span class="header-section-number">9.6</span> Spearman rank correlation</h2>
 <p>The Spearman rank correlation test is a non-parametric test that assesses the strength and direction of association between two ranked variables.</p>
 <p>It is robust against outliers because it uses *ranks$ instead of the actual values of the variables.</p>
-<section id="ranks" class="level3" data-number="8.6.1">
-<h3 data-number="8.6.1" class="anchored" data-anchor-id="ranks"><span class="header-section-number">8.6.1</span> Ranks</h3>
+<section id="ranks" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="ranks"><span class="header-section-number">9.6.1</span> Ranks</h3>
 <p>Here is what ranks look like, as a table:</p>
 <details class="code-fold">
 <summary>Code</summary>
@@ -594,8 +600,8 @@ Details
 </details>
 </div>
 </section>
-<section id="test" class="level3" data-number="8.6.2">
-<h3 data-number="8.6.2" class="anchored" data-anchor-id="test"><span class="header-section-number">8.6.2</span> Test</h3>
+<section id="test" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="test"><span class="header-section-number">9.6.2</span> Test</h3>
 <p>To perform the Spearman rank correlation test, we can use the <code>cor.test</code> function with the <code>method</code> argument set to <code>"spearman"</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cor_test_obj_spearman <span class="ot">&lt;-</span> <span class="fu">cor.test</span>(</span>
@@ -712,17 +718,17 @@ rho -0.1909091 0.4053961</code></pre>
 </table>
 <p>Note that for the <code>kable</code> function to produce good output, you need to have the chunk option <code>results: asis</code> set.</p>
 </section>
-<section id="alternatives" class="level3" data-number="8.6.3">
-<h3 data-number="8.6.3" class="anchored" data-anchor-id="alternatives"><span class="header-section-number">8.6.3</span> Alternatives</h3>
+<section id="alternatives" class="level3" data-number="9.6.3">
+<h3 data-number="9.6.3" class="anchored" data-anchor-id="alternatives"><span class="header-section-number">9.6.3</span> Alternatives</h3>
 <p>We’ll talk about the Pearson correlation coefficient and the Concordance correlation coefficient next week.</p>
 </section>
 </section>
-<section id="wilcoxon-rank-sum-test" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="wilcoxon-rank-sum-test"><span class="header-section-number">8.7</span> Wilcoxon rank-sum test</h2>
+<section id="wilcoxon-rank-sum-test" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="wilcoxon-rank-sum-test"><span class="header-section-number">9.7</span> Wilcoxon rank-sum test</h2>
 <p>The Wilcoxon rank-sum test is a non-parametric test that assesses whether two independent samples come from the same distribution.</p>
 <p>As with the Spearman’s correlation coefficient, it is robust against outliers because it uses ranks instead of the actual values of the variables.</p>
-<section id="example" class="level3" data-number="8.7.1">
-<h3 data-number="8.7.1" class="anchored" data-anchor-id="example"><span class="header-section-number">8.7.1</span> Example</h3>
+<section id="example" class="level3" data-number="9.7.1">
+<h3 data-number="9.7.1" class="anchored" data-anchor-id="example"><span class="header-section-number">9.7.1</span> Example</h3>
 <p>Suppose that we have twenty samples from two groups:</p>
 <div class="cell">
 <details class="code-fold">
@@ -785,8 +791,8 @@ $class
 </div>
 </section>
 </section>
-<section id="paired-data" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="paired-data"><span class="header-section-number">8.8</span> Paired data</h2>
+<section id="paired-data" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="paired-data"><span class="header-section-number">9.8</span> Paired data</h2>
 <p>When we have paired data, we typically have <em>much</em> more power to detect differences.</p>
 <p>For example, suppose we have two measurements from each of twenty people, pre- and post-treatment:</p>
 <div class="cell">
@@ -835,12 +841,12 @@ $class
 </div>
 <p>The reason is that a lot of the “noise” (variability apart from the treatment) is removed when we use paired data. Sources of such variability include sex, age, income, etc.</p>
 </section>
-<section id="kruskal-wallis-test" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="kruskal-wallis-test"><span class="header-section-number">8.9</span> Kruskal-Wallis test</h2>
+<section id="kruskal-wallis-test" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="kruskal-wallis-test"><span class="header-section-number">9.9</span> Kruskal-Wallis test</h2>
 <p>The Kruskal-Wallis test is a non-parametric test that assesses whether three or more independent samples come from the same distribution.</p>
 <p>It is a direct extension of the Mann-Whitney test to multiple groups.</p>
-<section id="example-1" class="level3" data-number="8.9.1">
-<h3 data-number="8.9.1" class="anchored" data-anchor-id="example-1"><span class="header-section-number">8.9.1</span> Example</h3>
+<section id="example-1" class="level3" data-number="9.9.1">
+<h3 data-number="9.9.1" class="anchored" data-anchor-id="example-1"><span class="header-section-number">9.9.1</span> Example</h3>
 <p>Suppose that we have add a third group to the previous example:</p>
 <div class="cell">
 <details class="code-fold">
@@ -884,14 +890,13 @@ $class
 <pre><code>[1] 1.74e-09</code></pre>
 </div>
 </div>
-<p><img src="images/inference/p-error-rank.png" class="img-fluid" width="826"></p>
 </section>
 </section>
-<section id="multiple-testing" class="level2" data-number="8.10">
-<h2 data-number="8.10" class="anchored" data-anchor-id="multiple-testing"><span class="header-section-number">8.10</span> Multiple testing</h2>
+<section id="multiple-testing" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="multiple-testing"><span class="header-section-number">9.10</span> Multiple testing</h2>
 </section>
-<section id="homework" class="level2" data-number="8.11">
-<h2 data-number="8.11" class="anchored" data-anchor-id="homework"><span class="header-section-number">8.11</span> Homework</h2>
+<section id="homework" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="homework"><span class="header-section-number">9.11</span> Homework</h2>
 <ol type="1">
 <li>Install the package <code>DataTidy23RodoSTA2005SAssignment</code>:</li>
 </ol>
@@ -1346,13 +1351,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./github.html" class="pagination-link" aria-label="Introduction to Git and GitHub">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></span>
+      <a href="./vscode.html" class="pagination-link" aria-label="Introduction to Visual Studio Code">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Visual Studio Code</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./recordings.html" class="pagination-link" aria-label="Session Recordings">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Session Recordings</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Session Recordings</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
