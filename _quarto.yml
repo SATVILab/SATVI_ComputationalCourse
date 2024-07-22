@@ -24,6 +24,7 @@ book:
     - dataexport.qmd
     - quartodocs.qmd
     - github.qmd
+    - inference.qmd
     - recordings.qmd
     - summary.qmd
     - references.qmd

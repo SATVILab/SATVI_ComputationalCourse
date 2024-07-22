@@ -1,0 +1,77 @@
+---
+title: "Inference"
+format: html
+---
+
+```{r}
+#| include: false
+library(ggplot2)
+library(cowplot)
+library(tibble)
+path_dir_fig <- "images/inference"
+if (dir.exists(path_dir_fig)) {
+  unlink(path_dir_fig, recursive = TRUE)
+}
+dir.create(path_dir_fig, recursive = TRUE)
+theme_cowplot_custom <- function(major = "xy", minor = "none") {
+  theme_cowplot() +
+  theme(
+    plot.background = element_rect(fill = "white"),
+    panel.background = element_rect(fill = "white")
+  ) +
+  background_grid(major = major, minor = minor)
+}
+```
+
+## Why bother with statistics?
+
+Suppose we have a spreadsheet with two variables:
+
+```{r}
+#| echo: false
+set.seed(123)
+x_vec <- runif(100, 0, 1)
+y_vec <- x_vec + rnorm(100, 0, 0.1)
+data_tbl_bother <- tibble::tibble(
+  x = x_vec,
+  y = y_vec
+)
+```
+
+```{r}
+p <- ggplot(data_tbl_bother, aes(x = x, y = y)) +
+  geom_point(colour = "dodgerblue", alpha = 0.8) +
+  theme_cowplot_custom()
+  labs(x = "Variable 1", y = "Variable 2")
+# save plot
+path_p <- file.path(path_dir_fig, "p-why-bother-init.png")
+ggsave(path_p, p, width = 10, height = 10, units = "cm")
+```
+
+```{r}
+#| results: asis
+knitr::include_graphics(path_p)
+```
+
+<!--
+After lecture, add this to comments:
+<details>
+  <summary>Why bother with statistics?</summary>
+  - Assistant decision-making under uncertainty
+  - Two primary methods:
+    - Inference
+      - Hypothesis testing
+      - Confidence intervals
+    - Prediction
+</details>
+!-->
+
+<details>
+  <summary>Why bother with statistics?</summary>
+  - Assistant decision-making under uncertainty
+  - Two primary methods:
+    - Inference
+      - Hypothesis testing
+      - Confidence intervals
+    - Prediction
+</details>
