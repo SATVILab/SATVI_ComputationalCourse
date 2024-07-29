@@ -1,0 +1,151 @@
+---
+title: "Inference"
+format:
+  html:
+    code-fold: true
+---
+
+```{r}
+#| warning: false
+#| message: false
+#| results: hide
+# attach packages
+pkg_vec <- c(
+  "ggplot2", "cowplot", "tibble", "dplyr", "knitr", "remotes"
+)
+for (x in pkg_vec) {
+  if (!requireNamespace(x, quietly = TRUE)) {
+    install.packages(x)
+  }
+  library(x, character.only = TRUE)
+}
+if (!requireNamespace("UtilsGGSV", quietly = TRUE)) {
+  renv::install("UtilsGGSV")
+}
+# create clean directory to save figures to
+path_dir_fig <- "images/correlation"
+dir.create(path_dir_fig, recursive = TRUE)
+# create custom theme
+theme_cowplot_custom <- function(major = "xy", minor = "none") {
+  theme_cowplot() +
+  theme(
+    plot.background = element_rect(fill = "white"),
+    panel.background = element_rect(fill = "white")
+  ) +
+  background_grid(major = major, minor = minor)
+}
+```
+
+# Correlation
+
+What does correlation measure?
+
+## Different strokes for different folks
+
+```{r}
+# generate data for each scenario
+set.seed(4)
+# Spearman: non-linear monotonic relationship
+x_spearman <- runif(100, 0, 10)
+y_spearman <- (x_spearman + 1)^5 + rnorm(100, 0, 3e3)
+
+set.seed(123)
+# Pearson: linear relationship
+x_pearson <- runif(100, 0, 10)
+y_pearson <- 2 * x_pearson + rnorm(100)
+
+
+# Concordance: linear relationship on y = x
+x_concordance <- runif(100, 0, 10)
+y_concordance <- x_concordance + rnorm(100, 0, 1)
+
+# Non-monotonic relationship
+x_nonmono <- runif(100, 0, 10)
+y_nonmono <- sin(x_nonmono) + rnorm(100, 0, 0.2)
+
+data_spearman <- tibble(
+  x = x_spearman, y = y_spearman, scenario = "monotonic"
+  )
+data_pearson <- tibble(
+  x = x_pearson, y = y_pearson, scenario = "linear"
+)
+data_concordance <- tibble(
+  x = x_concordance, y = y_concordance, scenario = "matching"
+)
+data_nonmono <- tibble(
+  x = x_nonmono, y = y_nonmono, scenario = "non-monotonic"
+)
+scenario_tbl <- data_spearman |>
+  dplyr::bind_rows(
+    data_pearson,
+    data_concordance,
+    data_nonmono
+  )
+```
+
+```{r}
+p_list <- lapply(unique(scenario_tbl$scenario), function(scenario) {
+  data <- scenario_tbl |>
+    dplyr::filter(scenario == .env$scenario) |>
+    dplyr::mutate(id = as.character(seq_len(dplyr::n()))) |>
+    dplyr::mutate(y = y / sd(y), x = x / sd(x)) |>
+    tidyr::pivot_longer(
+      cols = c(x, y),
+      names_to = "grp",
+      values_to = "value"
+    ) 
+  if (scenario %in% c("linear", "monotonic")) {
+    data <- data |>
+      dplyr::mutate(value = ifelse(grp == "y", value / 2, value))
+  }
+  UtilsGGSV::ggcorr(
+    data = data,
+    grp = "grp",
+    y = "value",
+    corr_method = c("spearman", "pearson", "ccc"),
+    id = "id",
+    thm = theme_cowplot_custom(),
+    abline = TRUE,
+    grp_to_col = "dodgerblue",
+    skip = 0.07,
+    limits_equal = TRUE
+  ) +
+  coord_equal() +
+  labs(title = switch(scenario,
+    monotonic = "Monotonic",
+    linear = "Linear",
+    matching = "Matching",
+    "non-monotonic" = "Non-monotonic"
+  ))
+})
+p_grid <- cowplot::plot_grid(
+  plotlist = p_list,
+  ncol = 2,
+  align = "hv"
+) +
+  theme(
+    panel.background = element_rect(fill = "white")
+  )
+cowplot::ggsave2(
+  filename = file.path(path_dir_fig, "p-correlation_scenarios.png"),
+  plot = p_grid,
+  width = 20,
+  height = 20,
+  units = "cm"
+)
+```
+
+```{r}
+#| results: asis
+#| echo: false
+knitr::include_graphics(file.path(path_dir_fig, "p-correlation_scenarios.png"))
+```
+
+## Relationship to inference
+
+- Hypothesis testing: we can check if the data are compatible with the correlation being zero
+- Confidence intervals: we can estimate a range of plausible values for the correlation
+
+## Confidence intervals
+
+## Homework
