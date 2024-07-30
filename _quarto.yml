@@ -20,11 +20,12 @@ book:
     - syllabus.qmd
     - installations.qmd
     - swirl.qmd
-    - MaRcusRTraining.qmd
+    - MarcusRTraining.qmd
     - dataexport.qmd
-    - quartodocs.qmd
+    # - quartodocs.qmd
     - github.qmd
     - vscode.qmd
+    - hypothesistesting.qmd
     - recordings.qmd
     - summary.qmd
     - references.qmd

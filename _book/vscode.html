@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="SATVI Computational Group">
-<meta name="dcterms.date" content="2024-07-09">
+<meta name="dcterms.date" content="2024-07-22">
 
-<title>SATVI Computational Course - 9&nbsp; Introduction to Visual Studio Code</title>
+<title>SATVI Computational Course - 8&nbsp; Introduction to Visual Studio Code</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./recordings.html" rel="next">
+<link href="./inference.html" rel="next">
 <link href="./github.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -130,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./vscode.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to Visual Studio Code</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./vscode.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Visual Studio Code</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -179,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./MaRcusRTraining.html" class="sidebar-item-text sidebar-link">
+  <a href="./MarcusRTraining.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">MaRcus R Training</span></span></a>
   </div>
 </li>
@@ -191,20 +191,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quartodocs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./vscode.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to Visual Studio Code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Visual Studio Code</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -235,24 +235,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">9.1</span> Description</a>
+  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">8.1</span> Description</a>
   <ul class="collapse">
-  <li><a href="#what-is-vs-code" id="toc-what-is-vs-code" class="nav-link" data-scroll-target="#what-is-vs-code"><span class="header-section-number">9.1.1</span> What is VS Code?</a></li>
-  <li><a href="#initialize-a-project-in-vs-code" id="toc-initialize-a-project-in-vs-code" class="nav-link" data-scroll-target="#initialize-a-project-in-vs-code"><span class="header-section-number">9.1.2</span> Initialize a project in VS Code</a></li>
-  <li><a href="#install-extensions" id="toc-install-extensions" class="nav-link" data-scroll-target="#install-extensions"><span class="header-section-number">9.1.3</span> Install Extensions</a></li>
-  <li><a href="#manage-files" id="toc-manage-files" class="nav-link" data-scroll-target="#manage-files"><span class="header-section-number">9.1.4</span> Manage files</a></li>
+  <li><a href="#what-is-vs-code" id="toc-what-is-vs-code" class="nav-link" data-scroll-target="#what-is-vs-code"><span class="header-section-number">8.1.1</span> What is VS Code?</a></li>
+  <li><a href="#initialize-a-project-in-vs-code" id="toc-initialize-a-project-in-vs-code" class="nav-link" data-scroll-target="#initialize-a-project-in-vs-code"><span class="header-section-number">8.1.2</span> Initialize a project in VS Code</a></li>
+  <li><a href="#install-extensions" id="toc-install-extensions" class="nav-link" data-scroll-target="#install-extensions"><span class="header-section-number">8.1.3</span> Install Extensions</a></li>
+  <li><a href="#manage-files" id="toc-manage-files" class="nav-link" data-scroll-target="#manage-files"><span class="header-section-number">8.1.4</span> Manage files</a></li>
   </ul></li>
-  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">9.2</span> Code</a>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">8.2</span> Code</a>
   <ul class="collapse">
-  <li><a href="#clear-environment" id="toc-clear-environment" class="nav-link" data-scroll-target="#clear-environment"><span class="header-section-number">9.2.1</span> Clear environment</a></li>
-  <li><a href="#set-output-directory" id="toc-set-output-directory" class="nav-link" data-scroll-target="#set-output-directory"><span class="header-section-number">9.2.2</span> Set output directory</a></li>
-  <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link" data-scroll-target="#load-libraries"><span class="header-section-number">9.2.3</span> Load libraries</a></li>
-  <li><a href="#load-dataset" id="toc-load-dataset" class="nav-link" data-scroll-target="#load-dataset"><span class="header-section-number">9.2.4</span> Load dataset</a></li>
-  <li><a href="#plot-data-and-export" id="toc-plot-data-and-export" class="nav-link" data-scroll-target="#plot-data-and-export"><span class="header-section-number">9.2.5</span> Plot data and export</a></li>
+  <li><a href="#clear-environment" id="toc-clear-environment" class="nav-link" data-scroll-target="#clear-environment"><span class="header-section-number">8.2.1</span> Clear environment</a></li>
+  <li><a href="#set-output-directory" id="toc-set-output-directory" class="nav-link" data-scroll-target="#set-output-directory"><span class="header-section-number">8.2.2</span> Set output directory</a></li>
+  <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link" data-scroll-target="#load-libraries"><span class="header-section-number">8.2.3</span> Load libraries</a></li>
+  <li><a href="#load-dataset" id="toc-load-dataset" class="nav-link" data-scroll-target="#load-dataset"><span class="header-section-number">8.2.4</span> Load dataset</a></li>
+  <li><a href="#plot-data-and-export" id="toc-plot-data-and-export" class="nav-link" data-scroll-target="#plot-data-and-export"><span class="header-section-number">8.2.5</span> Plot data and export</a></li>
   </ul></li>
-  <li><a href="#debugging" id="toc-debugging" class="nav-link" data-scroll-target="#debugging"><span class="header-section-number">9.3</span> Debugging</a></li>
-  <li><a href="#cheatsheets" id="toc-cheatsheets" class="nav-link" data-scroll-target="#cheatsheets"><span class="header-section-number">9.4</span> Cheatsheets</a></li>
-  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">9.5</span> Homework</a></li>
+  <li><a href="#debugging" id="toc-debugging" class="nav-link" data-scroll-target="#debugging"><span class="header-section-number">8.3</span> Debugging</a></li>
+  <li><a href="#cheatsheets" id="toc-cheatsheets" class="nav-link" data-scroll-target="#cheatsheets"><span class="header-section-number">8.4</span> Cheatsheets</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">8.5</span> Homework</a></li>
   </ul>
 </nav>
     </div>
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to Visual Studio Code</span></h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Visual Studio Code</span></h1>
 </div>
 
 
@@ -278,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 9, 2024</p>
+      <p class="date">July 22, 2024</p>
     </div>
   </div>
   
@@ -290,11 +290,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="description" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="description"><span class="header-section-number">9.1</span> Description</h2>
+<section id="description" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="description"><span class="header-section-number">8.1</span> Description</h2>
 <p>This session will cover an introduction to using Visual Studio Code (VS Code). VS Code has many features and functions that we will not have time to cover in this introductory session. It is very versatile and used by developers and computational biologists alike. We encourage you to explore in your own time and consider using VS Code as an additional tool in you computational kit.</p>
-<section id="what-is-vs-code" class="level3" data-number="9.1.1">
-<h3 data-number="9.1.1" class="anchored" data-anchor-id="what-is-vs-code"><span class="header-section-number">9.1.1</span> What is VS Code?</h3>
+<section id="what-is-vs-code" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="what-is-vs-code"><span class="header-section-number">8.1.1</span> What is VS Code?</h3>
 <p>VS Code is a commonly used code editor that incorporates many of the same features as RStudio, but allows for additional functionalities such as debugging, extensions, and version control interfacing.</p>
 <p>What we love about VS Code - one place for everything!</p>
 <p>VS Code allows you to create new projects and files, switch between coding languages, create, edit, debug, push, pull, and version control code all from one place.</p>
@@ -303,8 +303,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Code editor = a text editor program that is designed for editing source code and can identify code elements and errors in real time.</li>
 </ol>
 </section>
-<section id="initialize-a-project-in-vs-code" class="level3" data-number="9.1.2">
-<h3 data-number="9.1.2" class="anchored" data-anchor-id="initialize-a-project-in-vs-code"><span class="header-section-number">9.1.2</span> Initialize a project in VS Code</h3>
+<section id="initialize-a-project-in-vs-code" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="initialize-a-project-in-vs-code"><span class="header-section-number">8.1.2</span> Initialize a project in VS Code</h3>
 <ol type="1">
 <li><p>Open the VS Code desktop application. You should see the VS Code “Welcome” page.</p>
 <ul>
@@ -356,8 +356,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Status Bar</strong></p>
 <p>The Status Bar provides information about the open files and project, status of git-controlled repositories, and information on if scripts are currently being run.</p>
 </section>
-<section id="install-extensions" class="level3" data-number="9.1.3">
-<h3 data-number="9.1.3" class="anchored" data-anchor-id="install-extensions"><span class="header-section-number">9.1.3</span> Install Extensions</h3>
+<section id="install-extensions" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="install-extensions"><span class="header-section-number">8.1.3</span> Install Extensions</h3>
 <p>When you first install VS Code, you should have no extensions. As different code will require different extensions, you will customize you list of installed extensions as you develop. You can explore available extensions directly from the VS Code Extensions pane, or you can browse the <a href="https://marketplace.visualstudio.com/">VS Code Marketplace</a>. If you start a script that requires a certain extension, VS Code will prompt you to install it. However, there are some basic extensions that most users will need.</p>
 <p>To install an extension, simply click on the Extensions icon from the Activity Bar and search for your needed extension or choose from the list of recommended extensions. When you click on a desired extension it will display associated documentation in your Editor. Click “Install” and check that it appears in your “Installed” section in the Extensions pane.</p>
 <p>Some recommended extensions are below. We have provided links to the documentation on VS Code Marketplace so you can read about these while you are in the process of setting up VS Code on your machine, but we recommend that eventually you install these directly in VS Code desktop, rather than from the links provided here:</p>
@@ -369,8 +369,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>There are also some extensions dedicated to debugging which you may find useful, such as <a href="https://marketplace.visualstudio.com/items?itemName=RDebugger.r-debugger">R Debugger</a>.</p>
 <p>Use the Extensions pane to manage and uninstall extensions as needed.</p>
 </section>
-<section id="manage-files" class="level3" data-number="9.1.4">
-<h3 data-number="9.1.4" class="anchored" data-anchor-id="manage-files"><span class="header-section-number">9.1.4</span> Manage files</h3>
+<section id="manage-files" class="level3" data-number="8.1.4">
+<h3 data-number="8.1.4" class="anchored" data-anchor-id="manage-files"><span class="header-section-number">8.1.4</span> Manage files</h3>
 <p>To manage the files in your directory, you do not have to exit VS Code and manage files from your standard file finder. The Explorer pane in your Primary Side Bar can serve as a file finder and manager.</p>
 <ol type="1">
 <li><p>To rename a file in Explorer:</p>
@@ -434,32 +434,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="code" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="code"><span class="header-section-number">9.2</span> Code</h2>
+<section id="code" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="code"><span class="header-section-number">8.2</span> Code</h2>
 <p>You can now add and edit your files however you like! Add and edit files, just remember to continue to commit and push as you go. Let’s create a simple .qmd file with the code below and save it as a new file to our repository:</p>
-<section id="clear-environment" class="level3" data-number="9.2.1">
-<h3 data-number="9.2.1" class="anchored" data-anchor-id="clear-environment"><span class="header-section-number">9.2.1</span> Clear environment</h3>
+<section id="clear-environment" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="clear-environment"><span class="header-section-number">8.2.1</span> Clear environment</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="set-output-directory" class="level3" data-number="9.2.2">
-<h3 data-number="9.2.2" class="anchored" data-anchor-id="set-output-directory"><span class="header-section-number">9.2.2</span> Set output directory</h3>
+<section id="set-output-directory" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="set-output-directory"><span class="header-section-number">8.2.2</span> Set output directory</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"output"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dir_save <span class="ot">&lt;-</span> <span class="st">"output/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="load-libraries" class="level3" data-number="9.2.3">
-<h3 data-number="9.2.3" class="anchored" data-anchor-id="load-libraries"><span class="header-section-number">9.2.3</span> Load libraries</h3>
+<section id="load-libraries" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="load-libraries"><span class="header-section-number">8.2.3</span> Load libraries</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="load-dataset" class="level3" data-number="9.2.4">
-<h3 data-number="9.2.4" class="anchored" data-anchor-id="load-dataset"><span class="header-section-number">9.2.4</span> Load dataset</h3>
+<section id="load-dataset" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="load-dataset"><span class="header-section-number">8.2.4</span> Load dataset</h3>
 <p>We will load the built-in “iris” R dataset and examine structure.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"iris"</span>)</span>
@@ -475,8 +475,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="plot-data-and-export" class="level3" data-number="9.2.5">
-<h3 data-number="9.2.5" class="anchored" data-anchor-id="plot-data-and-export"><span class="header-section-number">9.2.5</span> Plot data and export</h3>
+<section id="plot-data-and-export" class="level3" data-number="8.2.5">
+<h3 data-number="8.2.5" class="anchored" data-anchor-id="plot-data-and-export"><span class="header-section-number">8.2.5</span> Plot data and export</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> iris, </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Sepal.Length, <span class="at">y =</span> Petal.Length)) <span class="sc">+</span></span>
@@ -500,8 +500,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Render the .qmd file.</p>
 </section>
 </section>
-<section id="debugging" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="debugging"><span class="header-section-number">9.3</span> Debugging</h2>
+<section id="debugging" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="debugging"><span class="header-section-number">8.3</span> Debugging</h2>
 <p>One of the key features VS Code supports is debugging. VS Code has a built in debugger that is compatible with JavaScript and TypeScript, but for other languages, you, like R, you will need to install an extension to help debug the code. For R, the debugging extension is <a href="https://marketplace.visualstudio.com/items?itemName=RDebugger.r-debugger">R Debugger</a>.</p>
 <p>Follow the instructions in the README.md to install and deploy R Debugger.</p>
 <p>Briefly:</p>
@@ -535,13 +535,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot">GitHub Copilot</a></p>
 <p>GitHub Copilot allows you to interface with a ChatGPT-like AI tool to help with your code as you develop. It is a paid extension, but there is a free trial.</p>
 </section>
-<section id="cheatsheets" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="cheatsheets"><span class="header-section-number">9.4</span> Cheatsheets</h2>
+<section id="cheatsheets" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="cheatsheets"><span class="header-section-number">8.4</span> Cheatsheets</h2>
 <p><a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf">VS Code Keyboard Shortcuts - macOS</a></p>
 <p><a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf">VS Code Keyboard Shortcuts - Windows</a></p>
 </section>
-<section id="homework" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="homework"><span class="header-section-number">9.5</span> Homework</h2>
+<section id="homework" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="homework"><span class="header-section-number">8.5</span> Homework</h2>
 <ol type="1">
 <li>Download and install VS Code.</li>
 <li>Play around VS Code.</li>
@@ -964,12 +964,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./github.html" class="pagination-link" aria-label="Introduction to Git and GitHub">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction to Git and GitHub</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./recordings.html" class="pagination-link" aria-label="Session Recordings">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Session Recordings</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./inference.html" class="pagination-link" aria-label="Inference">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
