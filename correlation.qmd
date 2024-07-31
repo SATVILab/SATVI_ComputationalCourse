@@ -11,7 +11,8 @@ format:
 #| results: hide
 # attach packages
 pkg_vec <- c(
-  "ggplot2", "cowplot", "tibble", "dplyr", "knitr", "remotes"
+  "ggplot2", "cowplot", "tibble", "dplyr", "knitr", "remotes", "DescTools",
+  "cccrm", "ggpubr"
 )
 for (x in pkg_vec) {
   if (!requireNamespace(x, quietly = TRUE)) {
@@ -20,11 +21,14 @@ for (x in pkg_vec) {
   library(x, character.only = TRUE)
 }
 if (!requireNamespace("UtilsGGSV", quietly = TRUE)) {
-  renv::install("UtilsGGSV")
+  renv::install("SATVILab/UtilsGGSV")
 }
+library(UtilsGGSV)
 # create clean directory to save figures to
 path_dir_fig <- "images/correlation"
-dir.create(path_dir_fig, recursive = TRUE)
+if (!dir.exists(path_dir_fig)) {
+  dir.create(path_dir_fig, recursive = TRUE)
+}
 # create custom theme
 theme_cowplot_custom <- function(major = "xy", minor = "none") {
   theme_cowplot() +
@@ -34,6 +38,8 @@ theme_cowplot_custom <- function(major = "xy", minor = "none") {
   ) +
   background_grid(major = major, minor = minor)
 }
+n_obs_all <- 1e6
+n_boot <- 1e2
 ```
 
 # Correlation
@@ -53,6 +59,8 @@ set.seed(123)
 # Pearson: linear relationship
 x_pearson <- runif(100, 0, 10)
 y_pearson <- 2 * x_pearson + rnorm(100)
+x_example <- x_pearson
+y_example <- y_pearson
 
 
 # Concordance: linear relationship on y = x
@@ -102,13 +110,18 @@ p_list <- lapply(unique(scenario_tbl$scenario), function(scenario) {
     data = data,
     grp = "grp",
     y = "value",
-    corr_method = c("spearman", "pearson", "ccc"),
+    corr_method = c("spearman", "pearson", "concordance"),
     id = "id",
     thm = theme_cowplot_custom(),
     abline = TRUE,
     grp_to_col = "dodgerblue",
     skip = 0.07,
-    limits_equal = TRUE
+    font_size = 3.5,
+    limits_equal = TRUE,
+    est_signif = 2,
+    pval_signif = 2,
+    ci_signif = 2,
+    point_alpha = 0.75
   ) +
   coord_equal() +
   labs(title = switch(scenario,
@@ -146,6 +159,646 @@ knitr::include_graphics(file.path(path_dir_fig, "p-correlation_scenarios.png"))
 - Hypothesis testing: we can check if the data are compatible with the correlation being zero
 - Confidence intervals: we can estimate a range of plausible values for the correlation
 
-## Confidence intervals
+## Correlation estimation and inference in `R`
+
+### Spearman and Pearson
+
+In this case, we use the `cor.test` function (available by default in `R`), as we did last week:
+
+```{r}
+#| code-fold: false
+cor.test(x = x_pearson, y = y_pearson)
+```
+
+By default, the `wilcox.test` function uses the Pearson correlation:
+
+```{r}
+#| code-fold: false
+cor.test(x = x_example, y = y_example, method = "pearson")
+```
+
+We can specify the method to use the Spearman correlation:
+
+```{r}
+#| code-fold: false
+cor.test(x = x_example, y = y_example, method = "spearman")
+```
+
+The Spearman method lacks a confidence interval, in this case.
+
+### Concordance correlation coefficient
+
+To compute the concordance correlation coefficient, we can use the `cccUst` function from the `cccrm` package:
+
+```{r}
+#| code-fold: false
+ccc_tbl <- tibble(
+  value = c(x_example, y_example),
+  grp = rep(c("x", "y"), each = length(x_example))
+)
+ccc_obj <- cccUst(
+  dataset = ccc_tbl, ry = "value", rmet = "grp", cl = 0.95
+)
+ccc_obj
+```
+
+It lacks a p-value, however.
+
+We can also use the `CCC` function from the `DescTools` package:
+
+```{r}
+#| code-fold: false
+CCC(x_example, y_example)$rho.c
+```
+
+The confidence intervals, interestingly, are clearly narrower than for the `cccrm` package.
+
+#### Comparing confidence interval coverage
+
+Let's compare the actual coverage percentages.
+
+So we'll see what percentage of time the confidence intervals actually contain the true correlation, across sample sizes and methods and nature of relationship.
+
+##### Key functions
+
+First, we define a function to calculate the concordance correlation coefficient on large datasets:
+
+```{r}
+calc_ccc <- function(x, y, n_test = 1e5) {
+  n_test <- 1e5
+  n_est <- length(x) / n_test
+  est_sum <- rep(0, n_est)
+  lb_sum <- rep(0, n_est)
+  ub_sum <- rep(0, n_est)
+  for (i in seq_len(n_est)) {
+    ind_vec <- seq((i - 1) * n_test + 1, n_test * i)
+    ccc_obj <- CCC(x[ind_vec], y[ind_vec])$rho.c
+    est_sum <- sum(est_sum, ccc_obj[[1]])
+    lb_sum <- sum(lb_sum, ccc_obj[[2]])
+    ub_sum <- sum(ub_sum, ccc_obj[[3]])
+  }
+  ccc_obj <- c(est_sum, lb_sum, ub_sum) / n_est
+  ccc_obj
+}
+```
+
+Then we'll find a function to simulate the coverage:
+
+```{r}
+simulate_coverage <- function(x,
+                              y,
+                              lb,
+                              ub,
+                              seed,
+                              n_boot = 1e3, 
+                              method = NULL,
+                              sample_size = NULL) {
+  method <- if (is.null(method)) {
+    c("cccrm", "z-transform", "asymptotic")
+  } else {
+    method
+  }
+  sample_size <- if (is.null(sample_size)) {
+    c(5, 10, 20, 50, 100, 200, 500, 1e3, 2e3, 5e3, 1e4)[1:4]
+  } else {
+    sample_size
+  }
+  set.seed(seed)
+  sample_size_ind <- sample_size[1]; method_ind <- "z-transform"
+  purrr::map_df(sample_size, function(sample_size_ind) {
+    print(sample_size_ind)
+    purrr::map_df(method, function(method_ind) {
+      print(method_ind)
+      inc_vec <- purrr::map_lgl(seq_len(n_boot), function(i) {
+        ind_vec <- seq((i - 1) * sample_size_ind + 1, sample_size_ind * i)
+        boot_vec_x <- x[ind_vec]
+        boot_vec_y <- y[ind_vec]
+        boot_tbl <- tibble(
+          value = c(boot_vec_x, boot_vec_y),
+          grp = rep(c("x", "y"), each = sample_size_ind)
+        )
+        ci <- if (method_ind == "cccrm") {
+          cccUst(
+            dataset = boot_tbl,
+            ry = "value",
+            rmet = "grp",
+            cl = 0.95
+          )[2:3]
+        } else {
+          CCC(boot_vec_x, boot_vec_y, ci = method_ind)$rho.c[2:3] |> unlist()
+        }
+        ci_vec <- seq(ci[1], ci[2], length.out = 1e2)
+        any(ci_vec >= lb & ci_vec <= ub)
+      })
+      tibble::tibble(
+        sample_size = sample_size_ind, method = method_ind, coverage = mean(inc_vec)
+      )
+    })
+  })
+}
+```
+
+##### Calculation
+
+We'll now calculate covarage, under three scenarios:
+
+- A matching relationship
+- A linear but non-matching relationship
+- A monotonic but non-linear relationship
+
+###### Matching
+
+First, let's generate a large dataset, where can "know" the true correlation:
+
+```{r}
+#| label: matching-data
+#| eval: false
+set.seed(4)
+x_all_match <- runif(n_obs_all, 0, 10)
+y_all_match <- x_all_match + rnorm(n_obs_all, 0, 1)
+ccc_vec_match <- calc_ccc(x_all_match, y_all_match)
+ccc_vec_match |> signif(4)
+```
+
+So we know where the correlation coefficient lies quite precisely.
+So we'll count any confidence interval that overlaps with this as correct.
+
+```{r}
+#| label: matching-calc
+#| results: hide
+#| eval: false
+results_tbl_match <- simulate_coverage(
+  x = x_all_match,
+  y = y_all_match,
+  lb = ccc_vec_match[[2]],
+  ub = ccc_vec_match[[3]],
+  seed = 4,
+  n_boot = n_boot
+)
+```
+
+```{r}
+#| echo: false
+#| label: matching-results
+#| results: asis
+#| eval: false
+results_tbl_match |>
+  tidyr::pivot_wider(
+    names_from = method,
+    values_from = c(coverage)
+  ) |>
+  knitr::kable()
+```
+
+##### Linear
+
+First, let's generate a large dataset, where we can "know" the true correlation:
+
+```{r}
+#| label: linear-data
+#| eval: false
+set.seed(4)
+n_obs_all <- 1e6
+x_all_linear <- runif(n_obs_all, 0, 10)
+y_all_linear <- 2 * x_all_linear + rnorm(100)
+ccc_vec_linear <- calc_ccc(x_all_linear, y_all_linear)
+ccc_vec_linear |> signif(4)
+```
+
+So we know where the correlation coefficient lies quite precisely.
+So we'll count any confidence interval that overlaps with this as correct.
+
+```{r}
+#| label: linear-calc
+#| results: hide
+#| eval: false
+results_tbl_linear <- simulate_coverage(
+  x = x_all_linear,
+  y = y_all_linear,
+  lb = ccc_vec_linear[[2]],
+  ub = ccc_vec_linear[[3]],
+  seed = 4,
+  n_boot = n_boot
+)
+```
+
+```{r}
+#| echo: false
+#| label: linear-results
+#| results: asis
+#| eval: false
+results_tbl_linear |>
+  tidyr::pivot_wider(
+    names_from = method,
+    values_from = c(coverage)
+  ) |>
+  knitr::kable()
+```
+
+##### Monotonic
+
+```{r}
+#| label: monotonic-data
+#| eval: false
+set.seed(4)
+n_obs_all <- 1e6
+# Spearman: monotonic monotonic relationship
+x_all_monotonic <- runif(n_obs_all, 0, 10)
+y_all_monotonic <- (x_all_monotonic + 1)^5 + rnorm(n_obs_all, 0, 3e3)
+y_all_monotonic <- y_all_monotonic / sd(y_all_monotonic) / 2
+ccc_vec_monotonic <- calc_ccc(x_all_monotonic, y_all_monotonic)
+ccc_vec_monotonic |> signif(4)
+```
+
+So we know where the correlation coefficient lies quite precisely.
+So we'll count any confidence interval that overlaps with this as correct.
+
+```{r}
+#| label: monotonic-calc
+#| results: hide
+#| eval: false
+results_tbl_monotonic <- simulate_coverage(
+  x = x_all_monotonic,
+  y = y_all_monotonic,
+  lb = ccc_vec_monotonic[[2]],
+  ub = ccc_vec_monotonic[[3]],
+  seed = 4,
+  n_boot = n_boot
+)
+```
+
+```{r}
+#| echo: false
+#| label: monotonic-results
+#| results: asis
+#| eval: false
+results_tbl_monotonic |>
+  tidyr::pivot_wider(
+    names_from = method,
+    values_from = c(coverage)
+  ) |>
+  knitr::kable()
+```
+
+
+#### Results
+
+Here is a plot of the results:
+
+```{r}
+#| eval: false
+#| label: plot-results
+plot_tbl <- results_tbl_match |>
+  dplyr::mutate(scenario = "Matching") |>
+  dplyr::bind_rows(
+    results_tbl_linear |>
+      dplyr::mutate(scenario = "Linear")
+  ) |>
+  dplyr::bind_rows(
+    results_tbl_monotonic |>
+      dplyr::mutate(scenario = "Monotonic")
+  ) |>
+  dplyr::mutate(
+    sample_size_num = case_when(
+      sample_size == 5 ~ 1,
+      sample_size == 10 ~ 2,
+      sample_size == 20 ~ 3,
+      sample_size == 50 ~ 4
+    )
+  )
+p <- ggplot(
+  plot_tbl,
+  aes(x = sample_size_num, y = coverage, color = method)
+) +
+  geom_line(aes(color = method), lwd = 1.2) +
+  geom_point(colour = "gray50") +
+  geom_hline(yintercept = 0.95, linetype = "dashed") +
+  cowplot::theme_cowplot() +
+  cowplot::background_grid(major = "xy") +
+  theme(plot.background = element_rect(fill = "white")) +
+  theme(panel.background = element_rect(fill = "white")) +
+  scale_x_continuous(labels = c(5, 10, 20, 50)) +
+  facet_wrap(~scenario) +
+  theme(
+    strip.background = element_rect(fill = "white", colour = "gray50")
+  ) +
+  labs(x = "Coverage", y = "Sample size") +
+  scale_colour_manual(
+    values = c("cccrm" = "#66c2a5", "z-transform" = "#fc8d62", "asymptotic" = "#8da0cb"),
+    name = "Method"
+  )
+cowplot::ggsave2(
+  filename = file.path(path_dir_fig, "p-correlation_coverage.png"),
+  plot = p,
+  width = 15,
+  height = 8,
+  units = "cm"
+)
+```
+
+```{r}
+#| results: asis
+knitr::include_graphics(file.path(path_dir_fig, "p-correlation_coverage.png"))
+```
+
+### Conclusion
+
+Always use the `DescTools` package for confidence interval estimation, as it's coverage is practically useful and consistently better than the `cccrm` package.
+Either the `z-transform` or `asymptotic` methods are fine.
+
+## Plotting correlation coefficients
+
+### Straight `ggplot2`
+
+We can plot the raw data, calculate the coefficient and add it manually:
+
+```{r}
+
+```
+
+### `ggpubr`
+
+```{r}
+#| code-fode: false
+# Load data
+data("mtcars")
+df <- mtcars
+
+# Scatter plot with correlation coefficient
+#:::::::::::::::::::::::::::::::::::::::::::::::::
+sp <- ggscatter(df, x = "wt", y = "mpg",
+   add = "reg.line",  # Add regressin line
+   add.params = list(color = "blue", fill = "lightgray"), # Customize reg. line
+   conf.int = TRUE # Add confidence interval
+   )
+# Add correlation coefficient
+sp + stat_cor(method = "pearson", label.x = 3, label.y = 30)
+```
+
+It does not support the concordance correlation coefficient, however.
+
+### `UtilsGGSV::ggcorr`
+
+This is the function I've developed over the years to help with quality assurance at SATVI.
+When we want to check whether two people running the same assay on the same participants get the same result, we use the concordance correlation coefficient.
+However, it can also do the Spearman and Pearson correlation coefficients.
+
+The function `ggcorr` plots correlation coefficients:
+
+```{r }
+set.seed(3)
+response_vec_a <- rnorm(5)
+response_tbl <- data.frame(
+  group = rep(letters[1:3], each = 5),
+  response = c(
+    response_vec_a,
+    response_vec_a * 1.2 + rnorm(5, sd = 0.2),
+    response_vec_a * 2 + rnorm(5, sd = 2)
+  ),
+  pid = rep(paste0("id_", 1:5), 3)
+)
+
+ggcorr(
+  data = response_tbl |> dplyr::filter(group %in% c("a", "b")),
+  grp = "group",
+  y = "response",
+  id = "pid"
+)
+```
+
+We can display multiple correlation coefficients:
+
+```{r}
+ggcorr(
+  data = response_tbl |> dplyr::filter(group %in% c("a", "b")),
+  grp = "group",
+  y = "response",
+  id = "pid",
+  corr_method = c("spearman", "pearson")
+)
+```
+
+We can compare more than two groups:
+
+```{r}
+ggcorr(
+  data = response_tbl,
+  grp = "group",
+  y = "response",
+  id = "pid",
+  corr_method = "kendall"
+)
+```
+
+We can compare more than two groups and multiple correlation coefficients:
+
+```{r}
+ggcorr(
+  data = response_tbl,
+  grp = "group",
+  y = "response",
+  id = "pid",
+  corr_method = c("spearman", "pearson")
+)
+```
+
+Specific functionality to make appropriate plots for the concordance
+correlation coefficient is available:
+
+```{r}
+ggcorr(
+  data = response_tbl |> dplyr::filter(group %in% c("a", "b")),
+  grp = "group",
+  y = "response",
+  id = "pid",
+  corr_method = "concordance",
+  abline = TRUE,
+  limits_equal = TRUE
+)
+```
+
+Text in table can be moved around and resized:
+
+```{r}
+ggcorr(
+  data = response_tbl |> dplyr::filter(group %in% c("a", "b")),
+  grp = "group",
+  y = "response",
+  id = "pid",
+  corr_method = c("spearman", "pearson", "concordance"),
+  abline = TRUE,
+  limits_equal = TRUE,
+  coord = c(0.4, 0.17),
+  font_size = 3,
+  skip = 0.04,
+  pval_signif = 2,
+  est_signif = 2,
+  ci_signif = 2
+)
+```
+
+Finally, the text placement is kept consistent when the axes are visually
+transformed:
+
+```{r}
+ggcorr(
+  data = response_tbl |> dplyr::mutate(response = abs(response + 1)^4),
+  grp = "group",
+  y = "response",
+  id = "pid",
+  corr_method = "spearman",
+  abline = TRUE,
+  limits_equal = TRUE,
+  trans = "log10",
+  skip = 0.06
+)
+```
+
+### Bootstrapping
+
+Maybe next time!
 
 ## Homework
+
+### Question one
+
+```{r}
+#| echo: false
+#| eval: false
+set.seed(4)
+n_obs <- 30
+x_all_match <- runif(n_obs, 0, 10)
+y_all_match <- 1.3 * x_all_match + rnorm(n_obs, 0, 1)
+operator_tbl <- tibble(
+  operator = rep(LETTERS[1:2], each = n_obs),
+  measurement = c(x_all_match, y_all_match) |> signif(3)
+  )
+dput(operator_tbl)
+```
+
+A lab wants to check that operator `B`, a trainee, can achieve the same results on the same assay as operator `A`. Read in the data by running the following command:
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-fold: false
+operator_tbl <- structure(list(operator = c("A", "A", "A", "A", "A", "A", "A", 
+"A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", 
+"A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "B", 
+"B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", 
+"B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", 
+"B"), measurement = c(5.86, 0.0895, 2.94, 2.77, 8.14, 2.6, 7.24, 
+9.06, 9.49, 0.731, 7.55, 2.86, 1, 9.54, 4.16, 4.55, 9.71, 5.84, 
+9.62, 7.62, 7.15, 9.97, 5.06, 4.9, 6.49, 8.31, 4.82, 8.42, 5.14, 
+5.3, 7.78, 1.28, 3.77, 3.51, 10.3, 4.93, 9.58, 13.1, 13.6, 1.54, 
+9.53, 4.97, 2.21, 11.5, 6.64, 6.07, 13.7, 6.84, 11, 10.8, 8.88, 
+12.7, 7.52, 5.9, 7.8, 12.1, 6.45, 12.2, 4.99, 6.07)), class = c("tbl_df", 
+"tbl", "data.frame"), row.names = c(NA, -60L))
+```
+
+a. Calculate the appropriate correlation coefficient.
+b. Plot the raw data and the appropriate correlation coefficient.
+c. Interpret the results.
+
+### Question two
+
+We are interested in knowing whether two genes are associated.
+We do not know the nature of the relationship, if there is one.
+
+```{r}
+#| echo: false
+#| eval: false
+set.seed(4)
+n_obs <- 20
+x_all_match <- runif(n_obs, 0, 10)
+y_all_match <- x_all_match^3 + rnorm(n_obs, 0, 1)
+gene_tbl <- tibble(
+  gene = rep(c("UNDERMINER4", "TROGLODYTE7"), each = n_obs),
+  expression = c(x_all_match, y_all_match)
+)
+dput(gene_tbl)
+```
+
+Read the data in, as follows:
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-fold: false
+gene_tbl <- structure(list(gene = c("UNDERMINER4", "UNDERMINER4", "UNDERMINER4", 
+"UNDERMINER4", "UNDERMINER4", "UNDERMINER4", "UNDERMINER4", "UNDERMINER4", 
+"UNDERMINER4", "UNDERMINER4", "UNDERMINER4", "UNDERMINER4", "UNDERMINER4", 
+"UNDERMINER4", "UNDERMINER4", "UNDERMINER4", "UNDERMINER4", "UNDERMINER4", 
+"UNDERMINER4", "UNDERMINER4", "TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", 
+"TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", 
+"TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", 
+"TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", "TROGLODYTE7", 
+"TROGLODYTE7", "TROGLODYTE7"), expression = c(5.85800305008888, 
+0.0894579570740461, 2.93739611981437, 2.77374957920983, 8.13574214931577, 
+2.60427771368995, 7.24405892658979, 9.06092151300982, 9.49040221050382, 
+0.73144469410181, 7.54675026983023, 2.8600062080659, 1.00053521571681, 
+9.5406877505593, 4.15607118513435, 4.55102417618036, 9.71055655973032, 
+5.83987979684025, 9.6220462443307, 7.6170240319334, 201.591007212395, 
+0.0164353615310555, 25.7277804258383, 21.2952232089115, 538.541568097937, 
+17.8319216170362, 381.30708631164, 743.86015840029, 854.678654517749, 
+0.107886637441148, 431.354200915445, 23.558977358528, 2.3092288669259, 
+869.726714251939, 72.3804140205039, 93.9770546568619, 916.911928248853, 
+200.074244601714, 889.917326105173, 443.17271786801)), class = c("tbl_df", 
+"tbl", "data.frame"), row.names = c(NA, -40L))
+```
+
+a. Calculate the most appropriate correlation coefficient. Is it statistically significant?
+b. Plot the raw data and the appropriate correlation coefficient.
+c. Interpret the results.
+
+### Question three
+
+We have been reliably informed that two variables are linearly related (last question imagination levels here).
+Read the data in as follows:
+
+```{r}
+set.seed(4)
+n_obs <- 15
+x_all_match <- runif(n_obs, 0, 10)
+y_all_match <- 5 + x_all_match * 10 + rnorm(n_obs, 0, 10)
+var_tbl <- tibble(
+  variable = rep(c("exciting-thing-1", "exciting-thing-2"), each = n_obs),
+  value = c(x_all_match, y_all_match)
+)
+dput(var_tbl)
+```
+
+Read the data in as follows:
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-fold: false
+var_tbl <- structure(list(variable = c("exciting-thing-1", "exciting-thing-1", 
+"exciting-thing-1", "exciting-thing-1", "exciting-thing-1", "exciting-thing-1", 
+"exciting-thing-1", "exciting-thing-1", "exciting-thing-1", "exciting-thing-1", 
+"exciting-thing-1", "exciting-thing-1", "exciting-thing-1", "exciting-thing-1", 
+"exciting-thing-1", "exciting-thing-2", "exciting-thing-2", "exciting-thing-2", 
+"exciting-thing-2", "exciting-thing-2", "exciting-thing-2", "exciting-thing-2", 
+"exciting-thing-2", "exciting-thing-2", "exciting-thing-2", "exciting-thing-2", 
+"exciting-thing-2", "exciting-thing-2", "exciting-thing-2", "exciting-thing-2"
+), value = c(5.85800305008888, 0.0894579570740461, 2.93739611981437, 
+2.77374957920983, 8.13574214931577, 2.60427771368995, 7.24405892658979, 
+9.06092151300982, 9.49040221050382, 0.73144469410181, 7.54675026983023, 
+2.8600062080659, 1.00053521571681, 9.5406877505593, 4.15607118513435, 
+62.4522288284119, 8.01564342234369, 41.4918552015465, 59.8149071489473, 
+86.1053092224815, 40.6163456528487, 87.4571949887254, 96.3563217676658, 
+92.8071441398129, 16.2900278303966, 99.4289883901294, 36.7089255281769, 
+-9.78185363090419, 93.4135192204788, 37.4412720963096)), class = c("tbl_df", 
+"tbl", "data.frame"), row.names = c(NA, -30L))
+```
+
+a. Calculate the most appropriate correlation coefficient. Is it statistically significant?
+b. Plot the raw data and the appropriate correlation coefficient.
+c. Interpret the results.
+d. Congratulate yourself for uncovering this important relationship!
+
+### Question four
+
+Complete that blank section detailing how to plot the correlation coefficient using `ggplot2` directly above.
+Bonus marks (and immortality) for contributing the answer via GitHub to the repo (`https://github.com/SATVILab/SATVI_ComputationalCourse`).

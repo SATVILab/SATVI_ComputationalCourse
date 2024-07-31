@@ -189,7 +189,7 @@
     },
     "UtilsGGSV": {
       "Package": "UtilsGGSV",
-      "Version": "0.3.3",
+      "Version": "0.4.4",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
@@ -197,7 +197,7 @@
       "RemoteUsername": "SATVILab",
       "RemotePkgRef": "SATVILab/UtilsGGSV",
       "RemoteRef": "HEAD",
-      "RemoteSha": "68283a81aff2247f40fc8969cfc602d7104efcb4",
+      "RemoteSha": "1d47609e0e16d43443d0996387c37e28120d8d06",
       "Requirements": [
         "R",
         "cowplot",
@@ -206,9 +206,10 @@
         "purrr",
         "rlang",
         "rprojroot",
-        "scales"
+        "scales",
+        "tibble"
       ],
-      "Hash": "38ddf3ef09f4f926db810a44789622a7"
+      "Hash": "312c2d8589ff5c84e20846b91effbb05"
     },
     "askpass": {
       "Package": "askpass",
