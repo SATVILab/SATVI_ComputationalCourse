@@ -543,7 +543,19 @@ This is the function I've developed over the years to help with quality assuranc
 When we want to check whether two people running the same assay on the same participants get the same result, we use the concordance correlation coefficient.
 However, it can also do the Spearman and Pearson correlation coefficients.
 
-The function `ggcorr` plots correlation coefficients:
+Install it using the following:
+
+```{r}
+#| code-fold: false
+#| echo: true
+#| eval: false  
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  utils::install.packages("remotes")
+}
+remotes::install_github("SATVILab/UtilsGGSV")
+```
+
+The function `ggcorr` plots correlation coefficients (see `?ggcorr` for more information):
 
 ```{r }
 set.seed(3)

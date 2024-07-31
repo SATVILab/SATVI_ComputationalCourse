@@ -813,48 +813,35 @@ sample estimates:
 <section id="utilsggsvggcorr" class="level3" data-number="11.4.3">
 <h3 data-number="11.4.3" class="anchored" data-anchor-id="utilsggsvggcorr"><span class="header-section-number">11.4.3</span> <code>UtilsGGSV::ggcorr</code></h3>
 <p>This is the function I’ve developed over the years to help with quality assurance at SATVI. When we want to check whether two people running the same assay on the same participants get the same result, we use the concordance correlation coefficient. However, it can also do the Spearman and Pearson correlation coefficients.</p>
-<p>The function <code>ggcorr</code> plots correlation coefficients:</p>
+<p>Install it using the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"remotes"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  utils<span class="sc">::</span><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"SATVILab/UtilsGGSV"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The function <code>ggcorr</code> plots correlation coefficients (see <code>?ggcorr</code> for more information):</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>response_vec_a <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>response_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">rep</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">each =</span> <span class="dv">5</span>),</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">response =</span> <span class="fu">c</span>(</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    response_vec_a,</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    response_vec_a <span class="sc">*</span> <span class="fl">1.2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">sd =</span> <span class="fl">0.2</span>),</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    response_vec_a <span class="sc">*</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">pid =</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"id_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="dv">3</span>)</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorr</span>(</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)),</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">grp =</span> <span class="st">"group"</span>,</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"response"</span>,</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"pid"</span></span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="correlation_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>We can display multiple correlation coefficients:</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorr</span>(</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)),</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grp =</span> <span class="st">"group"</span>,</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"response"</span>,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"pid"</span>,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="fu">c</span>(<span class="st">"spearman"</span>, <span class="st">"pearson"</span>)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>response_vec_a <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>response_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">rep</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">each =</span> <span class="dv">5</span>),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">response =</span> <span class="fu">c</span>(</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    response_vec_a,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    response_vec_a <span class="sc">*</span> <span class="fl">1.2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">sd =</span> <span class="fl">0.2</span>),</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    response_vec_a <span class="sc">*</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">pid =</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"id_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="dv">3</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorr</span>(</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)),</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">grp =</span> <span class="st">"group"</span>,</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"response"</span>,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"pid"</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -864,16 +851,16 @@ sample estimates:
 </div>
 </div>
 </div>
-<p>We can compare more than two groups:</p>
+<p>We can display multiple correlation coefficients:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorr</span>(</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)),</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grp =</span> <span class="st">"group"</span>,</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"response"</span>,</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"pid"</span>,</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="st">"kendall"</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="fu">c</span>(<span class="st">"spearman"</span>, <span class="st">"pearson"</span>)</span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
@@ -884,7 +871,7 @@ sample estimates:
 </div>
 </div>
 </div>
-<p>We can compare more than two groups and multiple correlation coefficients:</p>
+<p>We can compare more than two groups:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -893,7 +880,7 @@ sample estimates:
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grp =</span> <span class="st">"group"</span>,</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"response"</span>,</span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"pid"</span>,</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="fu">c</span>(<span class="st">"spearman"</span>, <span class="st">"pearson"</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="st">"kendall"</span></span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
@@ -904,19 +891,17 @@ sample estimates:
 </div>
 </div>
 </div>
-<p>Specific functionality to make appropriate plots for the concordance correlation coefficient is available:</p>
+<p>We can compare more than two groups and multiple correlation coefficients:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorr</span>(</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)),</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl,</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grp =</span> <span class="st">"group"</span>,</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"response"</span>,</span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"pid"</span>,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="st">"concordance"</span>,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">abline =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">limits_equal =</span> <span class="cn">TRUE</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="fu">c</span>(<span class="st">"spearman"</span>, <span class="st">"pearson"</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -926,7 +911,7 @@ sample estimates:
 </div>
 </div>
 </div>
-<p>Text in table can be moved around and resized:</p>
+<p>Specific functionality to make appropriate plots for the concordance correlation coefficient is available:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -935,16 +920,10 @@ sample estimates:
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grp =</span> <span class="st">"group"</span>,</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"response"</span>,</span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"pid"</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="fu">c</span>(<span class="st">"spearman"</span>, <span class="st">"pearson"</span>, <span class="st">"concordance"</span>),</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="st">"concordance"</span>,</span>
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">abline =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">limits_equal =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">coord =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.17</span>),</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">font_size =</span> <span class="dv">3</span>,</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="fl">0.04</span>,</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval_signif =</span> <span class="dv">2</span>,</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">est_signif =</span> <span class="dv">2</span>,</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">ci_signif =</span> <span class="dv">2</span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">limits_equal =</span> <span class="cn">TRUE</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -954,26 +933,54 @@ sample estimates:
 </div>
 </div>
 </div>
-<p>Finally, the text placement is kept consistent when the axes are visually transformed:</p>
+<p>Text in table can be moved around and resized:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorr</span>(</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">abs</span>(response <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">^</span><span class="dv">4</span>),</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)),</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grp =</span> <span class="st">"group"</span>,</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"response"</span>,</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"pid"</span>,</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="st">"spearman"</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="fu">c</span>(<span class="st">"spearman"</span>, <span class="st">"pearson"</span>, <span class="st">"concordance"</span>),</span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">abline =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">limits_equal =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">trans =</span> <span class="st">"log10"</span>,</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="fl">0.06</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">coord =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.17</span>),</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">font_size =</span> <span class="dv">3</span>,</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="fl">0.04</span>,</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval_signif =</span> <span class="dv">2</span>,</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">est_signif =</span> <span class="dv">2</span>,</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">ci_signif =</span> <span class="dv">2</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="correlation_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally, the text placement is kept consistent when the axes are visually transformed:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorr</span>(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> response_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">abs</span>(response <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">^</span><span class="dv">4</span>),</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grp =</span> <span class="st">"group"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"response"</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"pid"</span>,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_method =</span> <span class="st">"spearman"</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">abline =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">limits_equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">trans =</span> <span class="st">"log10"</span>,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="fl">0.06</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="correlation_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -990,18 +997,18 @@ sample estimates:
 <h3 data-number="11.5.1" class="anchored" data-anchor-id="question-one"><span class="header-section-number">11.5.1</span> Question one</h3>
 <p>A lab wants to check that operator <code>B</code>, a trainee, can achieve the same results on the same assay as operator <code>A</code>. Read in the data by running the following command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>operator_tbl <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(<span class="at">operator =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, </span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="st">"B"</span>), <span class="at">measurement =</span> <span class="fu">c</span>(<span class="fl">5.86</span>, <span class="fl">0.0895</span>, <span class="fl">2.94</span>, <span class="fl">2.77</span>, <span class="fl">8.14</span>, <span class="fl">2.6</span>, <span class="fl">7.24</span>, </span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fl">9.06</span>, <span class="fl">9.49</span>, <span class="fl">0.731</span>, <span class="fl">7.55</span>, <span class="fl">2.86</span>, <span class="dv">1</span>, <span class="fl">9.54</span>, <span class="fl">4.16</span>, <span class="fl">4.55</span>, <span class="fl">9.71</span>, <span class="fl">5.84</span>, </span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fl">9.62</span>, <span class="fl">7.62</span>, <span class="fl">7.15</span>, <span class="fl">9.97</span>, <span class="fl">5.06</span>, <span class="fl">4.9</span>, <span class="fl">6.49</span>, <span class="fl">8.31</span>, <span class="fl">4.82</span>, <span class="fl">8.42</span>, <span class="fl">5.14</span>, </span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="fl">5.3</span>, <span class="fl">7.78</span>, <span class="fl">1.28</span>, <span class="fl">3.77</span>, <span class="fl">3.51</span>, <span class="fl">10.3</span>, <span class="fl">4.93</span>, <span class="fl">9.58</span>, <span class="fl">13.1</span>, <span class="fl">13.6</span>, <span class="fl">1.54</span>, </span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="fl">9.53</span>, <span class="fl">4.97</span>, <span class="fl">2.21</span>, <span class="fl">11.5</span>, <span class="fl">6.64</span>, <span class="fl">6.07</span>, <span class="fl">13.7</span>, <span class="fl">6.84</span>, <span class="dv">11</span>, <span class="fl">10.8</span>, <span class="fl">8.88</span>, </span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="fl">12.7</span>, <span class="fl">7.52</span>, <span class="fl">5.9</span>, <span class="fl">7.8</span>, <span class="fl">12.1</span>, <span class="fl">6.45</span>, <span class="fl">12.2</span>, <span class="fl">4.99</span>, <span class="fl">6.07</span>)), <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"tbl_df"</span>, </span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="st">"tbl"</span>, <span class="st">"data.frame"</span>), <span class="at">row.names =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">60</span>L))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>operator_tbl <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(<span class="at">operator =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="st">"B"</span>), <span class="at">measurement =</span> <span class="fu">c</span>(<span class="fl">5.86</span>, <span class="fl">0.0895</span>, <span class="fl">2.94</span>, <span class="fl">2.77</span>, <span class="fl">8.14</span>, <span class="fl">2.6</span>, <span class="fl">7.24</span>, </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fl">9.06</span>, <span class="fl">9.49</span>, <span class="fl">0.731</span>, <span class="fl">7.55</span>, <span class="fl">2.86</span>, <span class="dv">1</span>, <span class="fl">9.54</span>, <span class="fl">4.16</span>, <span class="fl">4.55</span>, <span class="fl">9.71</span>, <span class="fl">5.84</span>, </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fl">9.62</span>, <span class="fl">7.62</span>, <span class="fl">7.15</span>, <span class="fl">9.97</span>, <span class="fl">5.06</span>, <span class="fl">4.9</span>, <span class="fl">6.49</span>, <span class="fl">8.31</span>, <span class="fl">4.82</span>, <span class="fl">8.42</span>, <span class="fl">5.14</span>, </span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="fl">5.3</span>, <span class="fl">7.78</span>, <span class="fl">1.28</span>, <span class="fl">3.77</span>, <span class="fl">3.51</span>, <span class="fl">10.3</span>, <span class="fl">4.93</span>, <span class="fl">9.58</span>, <span class="fl">13.1</span>, <span class="fl">13.6</span>, <span class="fl">1.54</span>, </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fl">9.53</span>, <span class="fl">4.97</span>, <span class="fl">2.21</span>, <span class="fl">11.5</span>, <span class="fl">6.64</span>, <span class="fl">6.07</span>, <span class="fl">13.7</span>, <span class="fl">6.84</span>, <span class="dv">11</span>, <span class="fl">10.8</span>, <span class="fl">8.88</span>, </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="fl">12.7</span>, <span class="fl">7.52</span>, <span class="fl">5.9</span>, <span class="fl">7.8</span>, <span class="fl">12.1</span>, <span class="fl">6.45</span>, <span class="fl">12.2</span>, <span class="fl">4.99</span>, <span class="fl">6.07</span>)), <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"tbl_df"</span>, </span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="st">"tbl"</span>, <span class="st">"data.frame"</span>), <span class="at">row.names =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">60</span>L))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="a">
 <li>Calculate the appropriate correlation coefficient.</li>
@@ -1014,26 +1021,26 @@ sample estimates:
 <p>We are interested in knowing whether two genes are associated. We do not know the nature of the relationship, if there is one.</p>
 <p>Read the data in, as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gene_tbl <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(<span class="at">gene =</span> <span class="fu">c</span>(<span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, </span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, </span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, </span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, </span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, </span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, </span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>), <span class="at">expression =</span> <span class="fu">c</span>(<span class="fl">5.85800305008888</span>, </span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0894579570740461</span>, <span class="fl">2.93739611981437</span>, <span class="fl">2.77374957920983</span>, <span class="fl">8.13574214931577</span>, </span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="fl">2.60427771368995</span>, <span class="fl">7.24405892658979</span>, <span class="fl">9.06092151300982</span>, <span class="fl">9.49040221050382</span>, </span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="fl">0.73144469410181</span>, <span class="fl">7.54675026983023</span>, <span class="fl">2.8600062080659</span>, <span class="fl">1.00053521571681</span>, </span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="fl">9.5406877505593</span>, <span class="fl">4.15607118513435</span>, <span class="fl">4.55102417618036</span>, <span class="fl">9.71055655973032</span>, </span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="fl">5.83987979684025</span>, <span class="fl">9.6220462443307</span>, <span class="fl">7.6170240319334</span>, <span class="fl">201.591007212395</span>, </span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0164353615310555</span>, <span class="fl">25.7277804258383</span>, <span class="fl">21.2952232089115</span>, <span class="fl">538.541568097937</span>, </span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="fl">17.8319216170362</span>, <span class="fl">381.30708631164</span>, <span class="fl">743.86015840029</span>, <span class="fl">854.678654517749</span>, </span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="fl">0.107886637441148</span>, <span class="fl">431.354200915445</span>, <span class="fl">23.558977358528</span>, <span class="fl">2.3092288669259</span>, </span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="fl">869.726714251939</span>, <span class="fl">72.3804140205039</span>, <span class="fl">93.9770546568619</span>, <span class="fl">916.911928248853</span>, </span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="fl">200.074244601714</span>, <span class="fl">889.917326105173</span>, <span class="fl">443.17271786801</span>)), <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"tbl_df"</span>, </span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="st">"tbl"</span>, <span class="st">"data.frame"</span>), <span class="at">row.names =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">40</span>L))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>gene_tbl <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(<span class="at">gene =</span> <span class="fu">c</span>(<span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="st">"UNDERMINER4"</span>, <span class="st">"UNDERMINER4"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, </span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>, </span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="st">"TROGLODYTE7"</span>, <span class="st">"TROGLODYTE7"</span>), <span class="at">expression =</span> <span class="fu">c</span>(<span class="fl">5.85800305008888</span>, </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0894579570740461</span>, <span class="fl">2.93739611981437</span>, <span class="fl">2.77374957920983</span>, <span class="fl">8.13574214931577</span>, </span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="fl">2.60427771368995</span>, <span class="fl">7.24405892658979</span>, <span class="fl">9.06092151300982</span>, <span class="fl">9.49040221050382</span>, </span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="fl">0.73144469410181</span>, <span class="fl">7.54675026983023</span>, <span class="fl">2.8600062080659</span>, <span class="fl">1.00053521571681</span>, </span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="fl">9.5406877505593</span>, <span class="fl">4.15607118513435</span>, <span class="fl">4.55102417618036</span>, <span class="fl">9.71055655973032</span>, </span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="fl">5.83987979684025</span>, <span class="fl">9.6220462443307</span>, <span class="fl">7.6170240319334</span>, <span class="fl">201.591007212395</span>, </span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0164353615310555</span>, <span class="fl">25.7277804258383</span>, <span class="fl">21.2952232089115</span>, <span class="fl">538.541568097937</span>, </span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="fl">17.8319216170362</span>, <span class="fl">381.30708631164</span>, <span class="fl">743.86015840029</span>, <span class="fl">854.678654517749</span>, </span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="fl">0.107886637441148</span>, <span class="fl">431.354200915445</span>, <span class="fl">23.558977358528</span>, <span class="fl">2.3092288669259</span>, </span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="fl">869.726714251939</span>, <span class="fl">72.3804140205039</span>, <span class="fl">93.9770546568619</span>, <span class="fl">916.911928248853</span>, </span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="fl">200.074244601714</span>, <span class="fl">889.917326105173</span>, <span class="fl">443.17271786801</span>)), <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"tbl_df"</span>, </span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="st">"tbl"</span>, <span class="st">"data.frame"</span>), <span class="at">row.names =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">40</span>L))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="a">
 <li>Calculate the most appropriate correlation coefficient. Is it statistically significant?</li>
@@ -1047,15 +1054,15 @@ sample estimates:
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> <span class="dv">15</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>x_all_match <span class="ot">&lt;-</span> <span class="fu">runif</span>(n_obs, <span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>y_all_match <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="sc">+</span> x_all_match <span class="sc">*</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n_obs, <span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>var_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-2"</span>), <span class="at">each =</span> n_obs),</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(x_all_match, y_all_match)</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dput</span>(var_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>x_all_match <span class="ot">&lt;-</span> <span class="fu">runif</span>(n_obs, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>y_all_match <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="sc">+</span> x_all_match <span class="sc">*</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n_obs, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>var_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-2"</span>), <span class="at">each =</span> n_obs),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(x_all_match, y_all_match)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dput</span>(var_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>structure(list(variable = c("exciting-thing-1", "exciting-thing-1", 
@@ -1079,23 +1086,23 @@ sample estimates:
 </div>
 <p>Read the data in as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>var_tbl <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(<span class="at">variable =</span> <span class="fu">c</span>(<span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, </span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, </span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, </span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>), <span class="at">value =</span> <span class="fu">c</span>(<span class="fl">5.85800305008888</span>, <span class="fl">0.0894579570740461</span>, <span class="fl">2.93739611981437</span>, </span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="fl">2.77374957920983</span>, <span class="fl">8.13574214931577</span>, <span class="fl">2.60427771368995</span>, <span class="fl">7.24405892658979</span>, </span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="fl">9.06092151300982</span>, <span class="fl">9.49040221050382</span>, <span class="fl">0.73144469410181</span>, <span class="fl">7.54675026983023</span>, </span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="fl">2.8600062080659</span>, <span class="fl">1.00053521571681</span>, <span class="fl">9.5406877505593</span>, <span class="fl">4.15607118513435</span>, </span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="fl">62.4522288284119</span>, <span class="fl">8.01564342234369</span>, <span class="fl">41.4918552015465</span>, <span class="fl">59.8149071489473</span>, </span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="fl">86.1053092224815</span>, <span class="fl">40.6163456528487</span>, <span class="fl">87.4571949887254</span>, <span class="fl">96.3563217676658</span>, </span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="fl">92.8071441398129</span>, <span class="fl">16.2900278303966</span>, <span class="fl">99.4289883901294</span>, <span class="fl">36.7089255281769</span>, </span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">9.78185363090419</span>, <span class="fl">93.4135192204788</span>, <span class="fl">37.4412720963096</span>)), <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"tbl_df"</span>, </span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="st">"tbl"</span>, <span class="st">"data.frame"</span>), <span class="at">row.names =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">30</span>L))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>var_tbl <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(<span class="at">variable =</span> <span class="fu">c</span>(<span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-1"</span>, </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-1"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, </span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, </span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span>, <span class="st">"exciting-thing-2"</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>), <span class="at">value =</span> <span class="fu">c</span>(<span class="fl">5.85800305008888</span>, <span class="fl">0.0894579570740461</span>, <span class="fl">2.93739611981437</span>, </span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="fl">2.77374957920983</span>, <span class="fl">8.13574214931577</span>, <span class="fl">2.60427771368995</span>, <span class="fl">7.24405892658979</span>, </span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="fl">9.06092151300982</span>, <span class="fl">9.49040221050382</span>, <span class="fl">0.73144469410181</span>, <span class="fl">7.54675026983023</span>, </span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="fl">2.8600062080659</span>, <span class="fl">1.00053521571681</span>, <span class="fl">9.5406877505593</span>, <span class="fl">4.15607118513435</span>, </span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="fl">62.4522288284119</span>, <span class="fl">8.01564342234369</span>, <span class="fl">41.4918552015465</span>, <span class="fl">59.8149071489473</span>, </span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="fl">86.1053092224815</span>, <span class="fl">40.6163456528487</span>, <span class="fl">87.4571949887254</span>, <span class="fl">96.3563217676658</span>, </span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="fl">92.8071441398129</span>, <span class="fl">16.2900278303966</span>, <span class="fl">99.4289883901294</span>, <span class="fl">36.7089255281769</span>, </span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">9.78185363090419</span>, <span class="fl">93.4135192204788</span>, <span class="fl">37.4412720963096</span>)), <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"tbl_df"</span>, </span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="st">"tbl"</span>, <span class="st">"data.frame"</span>), <span class="at">row.names =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">30</span>L))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="a">
 <li>Calculate the most appropriate correlation coefficient. Is it statistically significant?</li>
