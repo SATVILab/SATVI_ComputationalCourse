@@ -26,6 +26,7 @@ book:
     - github.qmd
     - vscode.qmd
     - hypothesistesting.qmd
+    - correlation.qmd
     - recordings.qmd
     - summary.qmd
     - references.qmd

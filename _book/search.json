@@ -410,153 +410,213 @@
     ]
   },
   {
-    "objectID": "inference.html",
-    "href": "inference.html",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html",
+    "href": "hypothesistesting.html",
+    "title": "9  Hypothesis testing",
     "section": "",
     "text": "9.1 Why bother with statistics?\nSuppose we have a spreadsheet with two variables:\nCode\nset.seed(123)\nx_vec &lt;- runif(100, 0, 1)\ny_vec &lt;- x_vec + rnorm(100, 0, 0.1)\ndata_tbl_bother &lt;- tibble::tibble(\n  x = x_vec,\n  y = y_vec\n)\nCode\np_bother &lt;- ggplot(data_tbl_bother, aes(x = x, y = y)) +\n  geom_point(colour = \"dodgerblue\", alpha = 0.8) +\n  theme_cowplot_custom() +\n  labs(x = \"Variable 1\", y = \"Variable 2\")\n# save plot\npath_p &lt;- file.path(path_dir_fig, \"p-why-bother-init.png\")\nggsave(path_p, p_bother, width = 10, height = 10, units = \"cm\")",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#why-bother-with-statistics",
-    "href": "inference.html#why-bother-with-statistics",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#why-bother-with-statistics",
+    "href": "hypothesistesting.html#why-bother-with-statistics",
+    "title": "9  Hypothesis testing",
     "section": "",
     "text": "9.1.1 Performing inference\nToday, we’ll talk about choosing appropriate statistical approaches to detect effects in our data.\nIn particular, we’ll mention useful R functions for performing these tasks, such as the following:\n\ncorr_test_obj &lt;- cor.test(data_tbl_bother$x, data_tbl_bother$y)\ncorr_test_obj\n\n\n    Pearson's product-moment correlation\n\ndata:  data_tbl_bother$x and data_tbl_bother$y\nt = 28.992, df = 98, p-value &lt; 2.2e-16\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.9211609 0.9636474\nsample estimates:\n      cor \n0.9463529 \n\n\nWe will also discuss how to extract the key information (estimate, p-value, etc.) and present it in a more readable format:\n\n\n\nCorrelation\nConfidence interval\nP-value\n\n\n\n\n0.946\n0.921 to 0.964\n0",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#understanding-terms",
-    "href": "inference.html#understanding-terms",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#understanding-terms",
+    "href": "hypothesistesting.html#understanding-terms",
+    "title": "9  Hypothesis testing",
     "section": "9.2 Understanding terms",
     "text": "9.2 Understanding terms\n\n9.2.1 Hypothesis testing\n\nPurpose: detect differences\nExamples:\n\nIs the correlation between two variables different from zero?\nIs the effect of a drug different from a placebo?\n\nPrimary tool for accounting for uncertainty: P-value\n\n\n\n9.2.2 Estimation\n\nPurpose: obtain best estimate for a given value from the data\nExamples:\n\nWhat is the correlation between two variables?\nWhat is the effect of a drug?\n\nPrimary tool for accounting for uncertainty: confidence intervals\n\n::: {.content-visible when-format=“html”}\n\n\nDetails",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#relationship-to-the-data",
-    "href": "inference.html#relationship-to-the-data",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#relationship-to-the-data",
+    "href": "hypothesistesting.html#relationship-to-the-data",
+    "title": "9  Hypothesis testing",
     "section": "9.3 Relationship to the data",
     "text": "9.3 Relationship to the data\n\nP-values measure the compatibility of the data with the null hypothesis\nConfidence intervals provide a range of values that will contain the true value with a certain probability\n\nFor example, a 95% confidence interval [0.04, 0.5] says that 95% of the time, the true value will fall within the interval [0.04, 0.5]\n\n\n\n9.3.0.1 Hypothesis testing\n\nNull hypothesis (\\(H_0\\)): The default assumption\n\nTypically, that there is no effect/difference\nFor example:\n\nThe correlation between two variables is zero\nThe effect of a drug is no different from a placebo\n\n\nThe null hypothesis is tested against the alternative hypothesis (\\(H_1\\))\n\nFor example:\n\nThe correlation between two variables is not zero\nThe effect of a drug is different from a placebo\n\n\nP-value:\n\nThe probability of observing a value at least as extreme as what we did observe, given that the null hypothesis is true\n\n\n\n:::",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#the-primary-challenge",
-    "href": "inference.html#the-primary-challenge",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#the-primary-challenge",
+    "href": "hypothesistesting.html#the-primary-challenge",
+    "title": "9  Hypothesis testing",
     "section": "9.4 The primary challenge",
     "text": "9.4 The primary challenge\nThe main difficulty in performing inference well lies in choosing the appropriate method for the task at hand. Inappropriate choices can be disastrous. Here, for example, two different correlation coefficients will give very different results, because one’s assumptions make it vulnerable to outliers:",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#side-skipping-the-difficulties",
-    "href": "inference.html#side-skipping-the-difficulties",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#side-skipping-the-difficulties",
+    "href": "hypothesistesting.html#side-skipping-the-difficulties",
+    "title": "9  Hypothesis testing",
     "section": "9.5 Side-skipping the difficulties",
     "text": "9.5 Side-skipping the difficulties\nThe easiest way to avoid making erroneous assumptions is to not make any. This is the reason for the undying (and well-deserved) popularity of non-parametric methods, which make no assumptions about the underlying distribution of the data. Chief among them are:\n\nCorrelation:\n\nThe Spearman rank correlation\n\nHypothesis testing:\n\nThe Wilcoxon rank-sum test (Mann-Whitney/Mann-Whitney U/Wilcoxon-Mann-Whitney/…)\nThe Kruskal-Wallis test\n\nConfidence intervals:\n\nThe bootstrap method\n\n\nFor this section, we will focus on hypothesis testing.",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#spearman-rank-correlation",
-    "href": "inference.html#spearman-rank-correlation",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#spearman-rank-correlation",
+    "href": "hypothesistesting.html#spearman-rank-correlation",
+    "title": "9  Hypothesis testing",
     "section": "9.6 Spearman rank correlation",
     "text": "9.6 Spearman rank correlation\nThe Spearman rank correlation test is a non-parametric test that assesses the strength and direction of association between two ranked variables.\nIt is robust against outliers because it uses *ranks$ instead of the actual values of the variables.\n\n9.6.1 Ranks\nHere is what ranks look like, as a table:\n\nCode\nrank_tbl &lt;- tibble(\n  Value = data_tbl_error$x[seq_len(5)] |&gt; signif(2)\n) |&gt;\n  mutate(\n    Rank = rank(Value)\n  )\nrank_tbl |&gt; knitr::kable()\n\n\n\n\nValue\nRank\n\n\n\n\n0.29\n1\n\n\n0.79\n3\n\n\n0.41\n2\n\n\n0.88\n4\n\n\n0.94\n5\n\n\n\nHere’s what the look like, plotted:\n\n\nCode\np_error &lt;- ggplot(data_tbl_error, aes(x = x, y = y)) +\n  geom_point(colour = \"dodgerblue\", alpha = 0.8) +\n  theme_cowplot_custom() +\n  labs(x = \"Variable 1\", y = \"Variable 2\")\np_error_ranked &lt;- ggplot(\n  data_tbl_error |&gt;\n    dplyr::mutate(x = rank(x), y = rank(y)),\n  aes(x = x, y = y)) +\n  geom_point(colour = \"dodgerblue\", alpha = 0.8) +\n  theme_cowplot_custom() +\n  labs(x = \"Variable 1 (ranks)\", y = \"Variable 2 (ranks)\")\np_grid_error_rank &lt;- plot_grid(\n  p_error + labs(title = \"Original\"),\n  p_error_ranked + labs(title = \"Ranked\"),\n  nrow = 1\n)\n# save plot\npath_p &lt;- file.path(path_dir_fig, \"p-error-rank.png\")\nggsave(path_p, p_grid_error_rank, width = 14, height = 10, units = \"cm\")\n\n\n\n\n9.6.2 Test\nTo perform the Spearman rank correlation test, we can use the cor.test function with the method argument set to \"spearman\":\n\ncor_test_obj_spearman &lt;- cor.test(\n  data_tbl_error$x, data_tbl_error$y, method = \"spearman\"\n)\n\nHere are the results, which are quite messy:\n\n\nCode\ncor_test_obj_spearman\n\n\n\n    Spearman's rank correlation rho\n\ndata:  data_tbl_error$x and data_tbl_error$y\nS = 1834, p-value = 0.4054\nalternative hypothesis: true rho is not equal to 0\nsample estimates:\n       rho \n-0.1909091 \n\n\nTo extract the correlation and p-value, we can use the following code:\n\n\nCode\ncorr_spearman &lt;- cor_test_obj_spearman$estimate\ncorr_spearman\n\n\n       rho \n-0.1909091 \n\n\nCode\np_value_spearman &lt;- cor_test_obj_spearman$p.value\np_value_spearman\n\n\n[1] 0.4053961\n\n\nIt is both difficult and pointless to remember the exact syntax for extracting the correlation and p-value from the cor_test_obj_spearman object.\nOf course, one could always ask ChatGPT. Here’s the answer it gave me.\nBut typically it is a bit quicker to just look what is in the object and extract it. When you get complicated output like when printing the cor_test_obj_spearman object, you can use the following code to see what is in the object:\n\n\nCode\ncorr_test_obj_spearman |&gt; attributes()\n\n\n$names\n[1] \"statistic\"   \"parameter\"   \"p.value\"     \"estimate\"    \"null.value\" \n[6] \"alternative\" \"method\"      \"data.name\"  \n\n$class\n[1] \"htest\"\n\n\nIf we are not sure what these names mean exactly, typically they are listed in the help file of the function:\n\n\nCode\n?cor.test\n\n\nThey’re under the Value header (would need to scroll down a bit, comes right before examples):\n\nCode\nknitr::include_graphics(\"images/inference/help_file.png\")\n\n\n\ncorr_tbl_spearman &lt;- data.frame(\n  `est` = cor_test_obj_spearman$estimate,\n  `p_val` = cor_test_obj_spearman$p.value\n)\ncorr_tbl_spearman\n\n           est     p_val\nrho -0.1909091 0.4053961\n\n\nThis is not an attractive table. We can make it more presentable with the following code:\n\nCode\ncorr_tbl_spearman &lt;- corr_tbl_spearman |&gt;\n  # show only significant digits\n  mutate(\n    Correlation = est |&gt; signif(3),\n    `P-value` = p_val |&gt; signif(3)\n  ) |&gt;\n  dplyr::select(-c(est, p_val))\n# don't display the row names\nrownames(corr_tbl_spearman) &lt;- NULL\n# display using `kable` function:\ncorr_tbl_spearman |&gt; kable()\n\n\n\n\nCorrelation\nP-value\n\n\n\n\n-0.191\n0.405\n\n\n\nNote that for the kable function to produce good output, you need to have the chunk option results: asis set.\n\n\n9.6.3 Alternatives\nWe’ll talk about the Pearson correlation coefficient and the Concordance correlation coefficient next week.",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#wilcoxon-rank-sum-test",
-    "href": "inference.html#wilcoxon-rank-sum-test",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#wilcoxon-rank-sum-test",
+    "href": "hypothesistesting.html#wilcoxon-rank-sum-test",
+    "title": "9  Hypothesis testing",
     "section": "9.7 Wilcoxon rank-sum test",
     "text": "9.7 Wilcoxon rank-sum test\nThe Wilcoxon rank-sum test is a non-parametric test that assesses whether two independent samples come from the same distribution.\nAs with the Spearman’s correlation coefficient, it is robust against outliers because it uses ranks instead of the actual values of the variables.\n\n9.7.1 Example\nSuppose that we have twenty samples from two groups:\n\n\nCode\nset.seed(4)\nx_vec &lt;- rnorm(20, 0, 1)\ny_vec &lt;- rnorm(20, 0.5, 1)\nsample_tbl_mw &lt;- tibble(group_1 = x_vec, group_2 = y_vec)\nsample_tbl_mw |&gt; head()\n\n\n# A tibble: 6 × 2\n  group_1 group_2\n    &lt;dbl&gt;   &lt;dbl&gt;\n1   0.217   2.04 \n2  -0.542   0.665\n3   0.891   1.81 \n4   0.596   1.79 \n5   1.64    1.09 \n6   0.689   0.217\n\n\nWe can compare if their medians (roughly speaking) are different using the Wilcoxon rank-sum test:\n\nwilcox_obj &lt;- wilcox.test(sample_tbl_mw$group_1, sample_tbl_mw$group_2)\nwilcox_obj\n\n\n    Wilcoxon rank sum exact test\n\ndata:  sample_tbl_mw$group_1 and sample_tbl_mw$group_2\nW = 145, p-value = 0.1417\nalternative hypothesis: true location shift is not equal to 0\n\n\nAgain, we don’t remember where the output is:\n\n\nCode\nwilcox_obj |&gt; attributes()\n\n\n$names\n[1] \"statistic\"   \"parameter\"   \"p.value\"     \"null.value\"  \"alternative\"\n[6] \"method\"      \"data.name\"  \n\n$class\n[1] \"htest\"\n\n\nWe extract and format the p-value:\n\n\nCode\nwilcox_obj[[\"p.value\"]] |&gt; signif(3)\n\n\n[1] 0.142",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#paired-data",
-    "href": "inference.html#paired-data",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#paired-data",
+    "href": "hypothesistesting.html#paired-data",
+    "title": "9  Hypothesis testing",
     "section": "9.8 Paired data",
     "text": "9.8 Paired data\nWhen we have paired data, we typically have much more power to detect differences.\nFor example, suppose we have two measurements from each of twenty people, pre- and post-treatment:\n\n\nCode\nset.seed(4)\nbase_vec &lt;- runif(20, 0, 5)\npre_vec &lt;- base_vec + rnorm(20, 0, 0.5)\npost_vec &lt;- base_vec + rnorm(20, 1, 0.5)\npaired_tbl &lt;- tibble(\n  pre = pre_vec,\n  post = post_vec\n)\npaired_tbl |&gt; head()\n\n\n# A tibble: 6 × 2\n     pre  post\n   &lt;dbl&gt; &lt;dbl&gt;\n1 3.21    4.01\n2 0.0526  1.57\n3 1.66    2.09\n4 1.36    1.65\n5 4.09    5.50\n6 1.39    2.10\n\n\nIf we perform the (unpaired) Mann-Whitney, we don’t find a significant p-value:\n\nwilcox_obj &lt;- wilcox.test(paired_tbl$pre, paired_tbl$post)\nwilcox_obj$p.value |&gt; signif(3)\n\n[1] 0.201\n\n\nBut if we use the paired-test equivalent, it is highly significant:\n\n\nCode\nwilcox_obj_paired &lt;- wilcox.test(paired_tbl$pre, paired_tbl$post, paired = TRUE)\nwilcox_obj_paired$p.value |&gt; signif(3)\n\n\n[1] 0.000261\n\n\nThe reason is that a lot of the “noise” (variability apart from the treatment) is removed when we use paired data. Sources of such variability include sex, age, income, etc.",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#kruskal-wallis-test",
-    "href": "inference.html#kruskal-wallis-test",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#kruskal-wallis-test",
+    "href": "hypothesistesting.html#kruskal-wallis-test",
+    "title": "9  Hypothesis testing",
     "section": "9.9 Kruskal-Wallis test",
     "text": "9.9 Kruskal-Wallis test\nThe Kruskal-Wallis test is a non-parametric test that assesses whether three or more independent samples come from the same distribution.\nIt is a direct extension of the Mann-Whitney test to multiple groups.\n\n9.9.1 Example\nSuppose that we have add a third group to the previous example:\n\n\nCode\nset.seed(4)\nsample_tbl_kw &lt;- sample_tbl_mw |&gt;\n  mutate(\n    group_3 = rnorm(20, 4, 1)\n  )\nsample_tbl_kw |&gt; head()\n\n\n# A tibble: 6 × 3\n  group_1 group_2 group_3\n    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;\n1   0.217   2.04     4.22\n2  -0.542   0.665    3.46\n3   0.891   1.81     4.89\n4   0.596   1.79     4.60\n5   1.64    1.09     5.64\n6   0.689   0.217    4.69\n\n\nWe can compare if their medians (roughly speaking) are different using the Kruskal-Wallis test:\n\nkw_obj &lt;- kruskal.test(\n  list(\n    sample_tbl_kw$group_1,\n    sample_tbl_kw$group_2,\n    sample_tbl_kw$group_3\n  )\n)\n\nAgain, we can extract and format the p-value:\n\n\nCode\nkw_obj[[\"p.value\"]] |&gt; signif(3)\n\n\n[1] 1.74e-09",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#multiple-testing",
-    "href": "inference.html#multiple-testing",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#multiple-testing",
+    "href": "hypothesistesting.html#multiple-testing",
+    "title": "9  Hypothesis testing",
     "section": "9.10 Multiple testing",
     "text": "9.10 Multiple testing",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
     ]
   },
   {
-    "objectID": "inference.html#homework",
-    "href": "inference.html#homework",
-    "title": "9  Inference",
+    "objectID": "hypothesistesting.html#homework",
+    "href": "hypothesistesting.html#homework",
+    "title": "9  Hypothesis testing",
     "section": "9.11 Homework",
     "text": "9.11 Homework\n\nInstall the package DataTidy23RodoSTA2005SAssignment:\n\n\ninstall_github(\"MiguelRodo/DataTidy23RodoSTA2005SAssignment@410a5247d600ce462e7941065233b634574fca86\")\n\n\ndata(\"data_tidy_yield\", package = \"DataTidy23RodoSTA2005SAssignment\")\ndata_tidy_yield\n\n# A tibble: 125 × 13\n   FarmID  CropYield Rainfall TempC TempF Fertilizer   Sunlight SoilPH WindSpeed\n   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;\n 1 Farm001      23.1    150.   19.2  66.5 CornCare        10.7    4.25      2.72\n 2 Farm002      28.6     86.9  16.5  61.7 KernelKindle     8.28   3.21      8.71\n 3 Farm003      27.5    107.   20.1  68.2 CornCare        10.7    4.61      6.64\n 4 Farm004      28.1    141.   29.9  85.8 CornCare        13.0    4.03      1.17\n 5 Farm005      28.0     85.0  18.6  65.6 KernelKindle     7.05   5.69      1.40\n 6 Farm006      27.6    102.   20.2  68.3 CornCare        10.7    4.81      1.98\n 7 Farm007      29.5    184.   23.5  74.2 KernelKindle    10.7    3.25      2.67\n 8 Farm008      23.2    170.   28.5  83.3 KernelKindle     5.81   4.16      4.83\n 9 Farm009      28.1    185.   22.5  72.4 KernelKindle     7.05   3.42      4.27\n10 Farm010      26.1    167.   20.0  68.0 CornCare        10.7    3.04      8.68\n# ℹ 115 more rows\n# ℹ 4 more variables: DistanceToWater &lt;dbl&gt;, Altitude &lt;dbl&gt;,\n#   PesticideApplied &lt;chr&gt;, Irrigation &lt;chr&gt;\n\n\nIt contains (simulated) data on maize crop yield (CropYield) under various conditions.\n\nApply the appropriate test and display the results in a table for the following questions:\n\n\nQuestion 1. Does crop yield depend on whether pesticide was applied?\nQuestion 2. Does crop yield depend on the irrigation type?\nQuestion 3. Does crop yield depend on rainfall?\nQuestion 4. Apply the Bonferroni multiple comparison correction to the results of Question 1-3.",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inference</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Hypothesis testing</span>"
+    ]
+  },
+  {
+    "objectID": "correlation.html",
+    "href": "correlation.html",
+    "title": "10  Inference",
+    "section": "",
+    "text": "11 Correlation\nWhat does correlation measure?",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Inference</span>"
+    ]
+  },
+  {
+    "objectID": "correlation.html#different-strokes-for-different-folks",
+    "href": "correlation.html#different-strokes-for-different-folks",
+    "title": "10  Inference",
+    "section": "11.1 Different strokes for different folks",
+    "text": "11.1 Different strokes for different folks\n\n\nCode\n# generate data for each scenario\nset.seed(4)\n# Spearman: non-linear monotonic relationship\nx_spearman &lt;- runif(100, 0, 10)\ny_spearman &lt;- (x_spearman + 1)^5 + rnorm(100, 0, 3e3)\n\nset.seed(123)\n# Pearson: linear relationship\nx_pearson &lt;- runif(100, 0, 10)\ny_pearson &lt;- 2 * x_pearson + rnorm(100)\nx_example &lt;- x_pearson\ny_example &lt;- y_pearson\n\n\n# Concordance: linear relationship on y = x\nx_concordance &lt;- runif(100, 0, 10)\ny_concordance &lt;- x_concordance + rnorm(100, 0, 1)\n\n# Non-monotonic relationship\nx_nonmono &lt;- runif(100, 0, 10)\ny_nonmono &lt;- sin(x_nonmono) + rnorm(100, 0, 0.2)\n\ndata_spearman &lt;- tibble(\n  x = x_spearman, y = y_spearman, scenario = \"monotonic\"\n  )\ndata_pearson &lt;- tibble(\n  x = x_pearson, y = y_pearson, scenario = \"linear\"\n)\ndata_concordance &lt;- tibble(\n  x = x_concordance, y = y_concordance, scenario = \"matching\"\n)\ndata_nonmono &lt;- tibble(\n  x = x_nonmono, y = y_nonmono, scenario = \"non-monotonic\"\n)\nscenario_tbl &lt;- data_spearman |&gt;\n  dplyr::bind_rows(\n    data_pearson,\n    data_concordance,\n    data_nonmono\n  )\n\n\n\n\nCode\np_list &lt;- lapply(unique(scenario_tbl$scenario), function(scenario) {\n  data &lt;- scenario_tbl |&gt;\n    dplyr::filter(scenario == .env$scenario) |&gt;\n    dplyr::mutate(id = as.character(seq_len(dplyr::n()))) |&gt;\n    dplyr::mutate(y = y / sd(y), x = x / sd(x)) |&gt;\n    tidyr::pivot_longer(\n      cols = c(x, y),\n      names_to = \"grp\",\n      values_to = \"value\"\n    ) \n  if (scenario %in% c(\"linear\", \"monotonic\")) {\n    data &lt;- data |&gt;\n      dplyr::mutate(value = ifelse(grp == \"y\", value / 2, value))\n  }\n  UtilsGGSV::ggcorr(\n    data = data,\n    grp = \"grp\",\n    y = \"value\",\n    corr_method = c(\"spearman\", \"pearson\", \"concordance\"),\n    id = \"id\",\n    thm = theme_cowplot_custom(),\n    abline = TRUE,\n    grp_to_col = \"dodgerblue\",\n    skip = 0.07,\n    font_size = 3.5,\n    limits_equal = TRUE,\n    est_signif = 2,\n    pval_signif = 2,\n    ci_signif = 2,\n    point_alpha = 0.75\n  ) +\n  coord_equal() +\n  labs(title = switch(scenario,\n    monotonic = \"Monotonic\",\n    linear = \"Linear\",\n    matching = \"Matching\",\n    \"non-monotonic\" = \"Non-monotonic\"\n  ))\n})\np_grid &lt;- cowplot::plot_grid(\n  plotlist = p_list,\n  ncol = 2,\n  align = \"hv\"\n) +\n  theme(\n    panel.background = element_rect(fill = \"white\")\n  )\ncowplot::ggsave2(\n  filename = file.path(path_dir_fig, \"p-correlation_scenarios.png\"),\n  plot = p_grid,\n  width = 20,\n  height = 20,\n  units = \"cm\"\n)",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Inference</span>"
+    ]
+  },
+  {
+    "objectID": "correlation.html#relationship-to-inference",
+    "href": "correlation.html#relationship-to-inference",
+    "title": "10  Inference",
+    "section": "11.2 Relationship to inference",
+    "text": "11.2 Relationship to inference\n\nHypothesis testing: we can check if the data are compatible with the correlation being zero\nConfidence intervals: we can estimate a range of plausible values for the correlation",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Inference</span>"
+    ]
+  },
+  {
+    "objectID": "correlation.html#correlation-estimation-and-inference-in-r",
+    "href": "correlation.html#correlation-estimation-and-inference-in-r",
+    "title": "10  Inference",
+    "section": "11.3 Correlation estimation and inference in R",
+    "text": "11.3 Correlation estimation and inference in R\n\n11.3.1 Spearman and Pearson\nIn this case, we use the cor.test function (available by default in R), as we did last week:\n\ncor.test(x = x_pearson, y = y_pearson)\n\n\n    Pearson's product-moment correlation\n\ndata:  x_pearson and y_pearson\nt = 58.247, df = 98, p-value &lt; 2.2e-16\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.9790245 0.9904827\nsample estimates:\n     cor \n0.985863 \n\n\nBy default, the wilcox.test function uses the Pearson correlation:\n\ncor.test(x = x_example, y = y_example, method = \"pearson\")\n\n\n    Pearson's product-moment correlation\n\ndata:  x_example and y_example\nt = 58.247, df = 98, p-value &lt; 2.2e-16\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.9790245 0.9904827\nsample estimates:\n     cor \n0.985863 \n\n\nWe can specify the method to use the Spearman correlation:\n\ncor.test(x = x_example, y = y_example, method = \"spearman\")\n\n\n    Spearman's rank correlation rho\n\ndata:  x_example and y_example\nS = 2296, p-value &lt; 2.2e-16\nalternative hypothesis: true rho is not equal to 0\nsample estimates:\n      rho \n0.9862226 \n\n\nThe Spearman method lacks a confidence interval, in this case.\n\n\n11.3.2 Concordance correlation coefficient\nTo compute the concordance correlation coefficient, we can use the cccUst function from the cccrm package:\n\nccc_tbl &lt;- tibble(\n  value = c(x_example, y_example),\n  grp = rep(c(\"x\", \"y\"), each = length(x_example))\n)\nccc_obj &lt;- cccUst(\n  dataset = ccc_tbl, ry = \"value\", rmet = \"grp\", cl = 0.95\n)\nccc_obj\n\nCCC estimated by U-statistics: \n       CCC  LL CI 95%  UL CI 95%     SE CCC \n0.49139477 0.44480249 0.53533453 0.02310291 \n\n\nIt lacks a p-value, however.\nWe can also use the CCC function from the DescTools package:\n\nCCC(x_example, y_example)$rho.c\n\n        est    lwr.ci    upr.ci\n1 0.4913948 0.4194006 0.5572464\n\n\nThe confidence intervals, interestingly, are clearly narrower than for the cccrm package.\n\n11.3.2.1 Comparing confidence interval coverage\nLet’s compare the actual coverage percentages.\nSo we’ll see what percentage of time the confidence intervals actually contain the true correlation, across sample sizes and methods and nature of relationship.\n\n11.3.2.1.1 Key functions\nFirst, we define a function to calculate the concordance correlation coefficient on large datasets:\n\n\nCode\ncalc_ccc &lt;- function(x, y, n_test = 1e5) {\n  n_test &lt;- 1e5\n  n_est &lt;- length(x) / n_test\n  est_sum &lt;- rep(0, n_est)\n  lb_sum &lt;- rep(0, n_est)\n  ub_sum &lt;- rep(0, n_est)\n  for (i in seq_len(n_est)) {\n    ind_vec &lt;- seq((i - 1) * n_test + 1, n_test * i)\n    ccc_obj &lt;- CCC(x[ind_vec], y[ind_vec])$rho.c\n    est_sum &lt;- sum(est_sum, ccc_obj[[1]])\n    lb_sum &lt;- sum(lb_sum, ccc_obj[[2]])\n    ub_sum &lt;- sum(ub_sum, ccc_obj[[3]])\n  }\n  ccc_obj &lt;- c(est_sum, lb_sum, ub_sum) / n_est\n  ccc_obj\n}\n\n\nThen we’ll find a function to simulate the coverage:\n\n\nCode\nsimulate_coverage &lt;- function(x,\n                              y,\n                              lb,\n                              ub,\n                              seed,\n                              n_boot = 1e3, \n                              method = NULL,\n                              sample_size = NULL) {\n  method &lt;- if (is.null(method)) {\n    c(\"cccrm\", \"z-transform\", \"asymptotic\")\n  } else {\n    method\n  }\n  sample_size &lt;- if (is.null(sample_size)) {\n    c(5, 10, 20, 50, 100, 200, 500, 1e3, 2e3, 5e3, 1e4)[1:4]\n  } else {\n    sample_size\n  }\n  set.seed(seed)\n  sample_size_ind &lt;- sample_size[1]; method_ind &lt;- \"z-transform\"\n  purrr::map_df(sample_size, function(sample_size_ind) {\n    print(sample_size_ind)\n    purrr::map_df(method, function(method_ind) {\n      print(method_ind)\n      inc_vec &lt;- purrr::map_lgl(seq_len(n_boot), function(i) {\n        ind_vec &lt;- seq((i - 1) * sample_size_ind + 1, sample_size_ind * i)\n        boot_vec_x &lt;- x[ind_vec]\n        boot_vec_y &lt;- y[ind_vec]\n        boot_tbl &lt;- tibble(\n          value = c(boot_vec_x, boot_vec_y),\n          grp = rep(c(\"x\", \"y\"), each = sample_size_ind)\n        )\n        ci &lt;- if (method_ind == \"cccrm\") {\n          cccUst(\n            dataset = boot_tbl,\n            ry = \"value\",\n            rmet = \"grp\",\n            cl = 0.95\n          )[2:3]\n        } else {\n          CCC(boot_vec_x, boot_vec_y, ci = method_ind)$rho.c[2:3] |&gt; unlist()\n        }\n        ci_vec &lt;- seq(ci[1], ci[2], length.out = 1e2)\n        any(ci_vec &gt;= lb & ci_vec &lt;= ub)\n      })\n      tibble::tibble(\n        sample_size = sample_size_ind, method = method_ind, coverage = mean(inc_vec)\n      )\n    })\n  })\n}\n\n\n\n\n11.3.2.1.2 Calculation\nWe’ll now calculate covarage, under three scenarios:\n\nA matching relationship\nA linear but non-matching relationship\nA monotonic but non-linear relationship\n\n\n11.3.2.1.2.1 Matching\nFirst, let’s generate a large dataset, where can “know” the true correlation:\n\n\nCode\nset.seed(4)\nx_all_match &lt;- runif(n_obs_all, 0, 10)\ny_all_match &lt;- x_all_match + rnorm(n_obs_all, 0, 1)\nccc_vec_match &lt;- calc_ccc(x_all_match, y_all_match)\nccc_vec_match |&gt; signif(4)\n\n\nSo we know where the correlation coefficient lies quite precisely. So we’ll count any confidence interval that overlaps with this as correct.\n\n\nCode\nresults_tbl_match &lt;- simulate_coverage(\n  x = x_all_match,\n  y = y_all_match,\n  lb = ccc_vec_match[[2]],\n  ub = ccc_vec_match[[3]],\n  seed = 4,\n  n_boot = n_boot\n)\n\n\n\n\n\n11.3.2.1.3 Linear\nFirst, let’s generate a large dataset, where we can “know” the true correlation:\n\n\nCode\nset.seed(4)\nn_obs_all &lt;- 1e6\nx_all_linear &lt;- runif(n_obs_all, 0, 10)\ny_all_linear &lt;- 2 * x_all_linear + rnorm(100)\nccc_vec_linear &lt;- calc_ccc(x_all_linear, y_all_linear)\nccc_vec_linear |&gt; signif(4)\n\n\nSo we know where the correlation coefficient lies quite precisely. So we’ll count any confidence interval that overlaps with this as correct.\n\n\nCode\nresults_tbl_linear &lt;- simulate_coverage(\n  x = x_all_linear,\n  y = y_all_linear,\n  lb = ccc_vec_linear[[2]],\n  ub = ccc_vec_linear[[3]],\n  seed = 4,\n  n_boot = n_boot\n)\n\n\n\n\n11.3.2.1.4 Monotonic\n\n\nCode\nset.seed(4)\nn_obs_all &lt;- 1e6\n# Spearman: monotonic monotonic relationship\nx_all_monotonic &lt;- runif(n_obs_all, 0, 10)\ny_all_monotonic &lt;- (x_all_monotonic + 1)^5 + rnorm(n_obs_all, 0, 3e3)\ny_all_monotonic &lt;- y_all_monotonic / sd(y_all_monotonic) / 2\nccc_vec_monotonic &lt;- calc_ccc(x_all_monotonic, y_all_monotonic)\nccc_vec_monotonic |&gt; signif(4)\n\n\nSo we know where the correlation coefficient lies quite precisely. So we’ll count any confidence interval that overlaps with this as correct.\n\n\nCode\nresults_tbl_monotonic &lt;- simulate_coverage(\n  x = x_all_monotonic,\n  y = y_all_monotonic,\n  lb = ccc_vec_monotonic[[2]],\n  ub = ccc_vec_monotonic[[3]],\n  seed = 4,\n  n_boot = n_boot\n)\n\n\n\n\n\n11.3.2.2 Results\nHere is a plot of the results:\n\n\nCode\nplot_tbl &lt;- results_tbl_match |&gt;\n  dplyr::mutate(scenario = \"Matching\") |&gt;\n  dplyr::bind_rows(\n    results_tbl_linear |&gt;\n      dplyr::mutate(scenario = \"Linear\")\n  ) |&gt;\n  dplyr::bind_rows(\n    results_tbl_monotonic |&gt;\n      dplyr::mutate(scenario = \"Monotonic\")\n  ) |&gt;\n  dplyr::mutate(\n    sample_size_num = case_when(\n      sample_size == 5 ~ 1,\n      sample_size == 10 ~ 2,\n      sample_size == 20 ~ 3,\n      sample_size == 50 ~ 4\n    )\n  )\np &lt;- ggplot(\n  plot_tbl,\n  aes(x = sample_size_num, y = coverage, color = method)\n) +\n  geom_line(aes(color = method), lwd = 1.2) +\n  geom_point(colour = \"gray50\") +\n  geom_hline(yintercept = 0.95, linetype = \"dashed\") +\n  cowplot::theme_cowplot() +\n  cowplot::background_grid(major = \"xy\") +\n  theme(plot.background = element_rect(fill = \"white\")) +\n  theme(panel.background = element_rect(fill = \"white\")) +\n  scale_x_continuous(labels = c(5, 10, 20, 50)) +\n  facet_wrap(~scenario) +\n  theme(\n    strip.background = element_rect(fill = \"white\", colour = \"gray50\")\n  ) +\n  labs(x = \"Coverage\", y = \"Sample size\") +\n  scale_colour_manual(\n    values = c(\"cccrm\" = \"#66c2a5\", \"z-transform\" = \"#fc8d62\", \"asymptotic\" = \"#8da0cb\"),\n    name = \"Method\"\n  )\ncowplot::ggsave2(\n  filename = file.path(path_dir_fig, \"p-correlation_coverage.png\"),\n  plot = p,\n  width = 15,\n  height = 8,\n  units = \"cm\"\n)\n\n\n\nCode\nknitr::include_graphics(file.path(path_dir_fig, \"p-correlation_coverage.png\"))\n\n\n\n\n\n11.3.3 Conclusion\nAlways use the DescTools package for confidence interval estimation, as it’s coverage is practically useful and consistently better than the cccrm package. Either the z-transform or asymptotic methods are fine.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Inference</span>"
+    ]
+  },
+  {
+    "objectID": "correlation.html#plotting-correlation-coefficients",
+    "href": "correlation.html#plotting-correlation-coefficients",
+    "title": "10  Inference",
+    "section": "11.4 Plotting correlation coefficients",
+    "text": "11.4 Plotting correlation coefficients\n\n11.4.1 Straight ggplot2\nWe can plot the raw data, calculate the coefficient and add it manually:\n\n\n11.4.2 ggpubr\n\n\nCode\n# Load data\ndata(\"mtcars\")\ndf &lt;- mtcars\n\n# Scatter plot with correlation coefficient\n#:::::::::::::::::::::::::::::::::::::::::::::::::\nsp &lt;- ggscatter(df, x = \"wt\", y = \"mpg\",\n   add = \"reg.line\",  # Add regressin line\n   add.params = list(color = \"blue\", fill = \"lightgray\"), # Customize reg. line\n   conf.int = TRUE # Add confidence interval\n   )\n# Add correlation coefficient\nsp + stat_cor(method = \"pearson\", label.x = 3, label.y = 30)\n\n\n\n\n\n\n\n\n\nIt does not support the concordance correlation coefficient, however.\n\n\n11.4.3 UtilsGGSV::ggcorr\nThis is the function I’ve developed over the years to help with quality assurance at SATVI. When we want to check whether two people running the same assay on the same participants get the same result, we use the concordance correlation coefficient. However, it can also do the Spearman and Pearson correlation coefficients.\nInstall it using the following:\n\nif (!requireNamespace(\"remotes\", quietly = TRUE)) {\n  utils::install.packages(\"remotes\")\n}\nremotes::install_github(\"SATVILab/UtilsGGSV\")\n\nThe function ggcorr plots correlation coefficients (see ?ggcorr for more information):\n\n\nCode\nset.seed(3)\nresponse_vec_a &lt;- rnorm(5)\nresponse_tbl &lt;- data.frame(\n  group = rep(letters[1:3], each = 5),\n  response = c(\n    response_vec_a,\n    response_vec_a * 1.2 + rnorm(5, sd = 0.2),\n    response_vec_a * 2 + rnorm(5, sd = 2)\n  ),\n  pid = rep(paste0(\"id_\", 1:5), 3)\n)\n\nggcorr(\n  data = response_tbl |&gt; dplyr::filter(group %in% c(\"a\", \"b\")),\n  grp = \"group\",\n  y = \"response\",\n  id = \"pid\"\n)\n\n\n\n\n\n\n\n\n\nWe can display multiple correlation coefficients:\n\n\nCode\nggcorr(\n  data = response_tbl |&gt; dplyr::filter(group %in% c(\"a\", \"b\")),\n  grp = \"group\",\n  y = \"response\",\n  id = \"pid\",\n  corr_method = c(\"spearman\", \"pearson\")\n)\n\n\n\n\n\n\n\n\n\nWe can compare more than two groups:\n\n\nCode\nggcorr(\n  data = response_tbl,\n  grp = \"group\",\n  y = \"response\",\n  id = \"pid\",\n  corr_method = \"kendall\"\n)\n\n\n\n\n\n\n\n\n\nWe can compare more than two groups and multiple correlation coefficients:\n\n\nCode\nggcorr(\n  data = response_tbl,\n  grp = \"group\",\n  y = \"response\",\n  id = \"pid\",\n  corr_method = c(\"spearman\", \"pearson\")\n)\n\n\n\n\n\n\n\n\n\nSpecific functionality to make appropriate plots for the concordance correlation coefficient is available:\n\n\nCode\nggcorr(\n  data = response_tbl |&gt; dplyr::filter(group %in% c(\"a\", \"b\")),\n  grp = \"group\",\n  y = \"response\",\n  id = \"pid\",\n  corr_method = \"concordance\",\n  abline = TRUE,\n  limits_equal = TRUE\n)\n\n\n\n\n\n\n\n\n\nText in table can be moved around and resized:\n\n\nCode\nggcorr(\n  data = response_tbl |&gt; dplyr::filter(group %in% c(\"a\", \"b\")),\n  grp = \"group\",\n  y = \"response\",\n  id = \"pid\",\n  corr_method = c(\"spearman\", \"pearson\", \"concordance\"),\n  abline = TRUE,\n  limits_equal = TRUE,\n  coord = c(0.4, 0.17),\n  font_size = 3,\n  skip = 0.04,\n  pval_signif = 2,\n  est_signif = 2,\n  ci_signif = 2\n)\n\n\n\n\n\n\n\n\n\nFinally, the text placement is kept consistent when the axes are visually transformed:\n\n\nCode\nggcorr(\n  data = response_tbl |&gt; dplyr::mutate(response = abs(response + 1)^4),\n  grp = \"group\",\n  y = \"response\",\n  id = \"pid\",\n  corr_method = \"spearman\",\n  abline = TRUE,\n  limits_equal = TRUE,\n  trans = \"log10\",\n  skip = 0.06\n)\n\n\n\n\n\n\n\n\n\n\n\n11.4.4 Bootstrapping\nMaybe next time!",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Inference</span>"
+    ]
+  },
+  {
+    "objectID": "correlation.html#homework",
+    "href": "correlation.html#homework",
+    "title": "10  Inference",
+    "section": "11.5 Homework",
+    "text": "11.5 Homework\n\n11.5.1 Question one\nA lab wants to check that operator B, a trainee, can achieve the same results on the same assay as operator A. Read in the data by running the following command:\n\noperator_tbl &lt;- structure(list(operator = c(\"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \n\"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \n\"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"B\", \"B\", \"B\", \n\"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \n\"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \"B\", \n\"B\"), measurement = c(5.86, 0.0895, 2.94, 2.77, 8.14, 2.6, 7.24, \n9.06, 9.49, 0.731, 7.55, 2.86, 1, 9.54, 4.16, 4.55, 9.71, 5.84, \n9.62, 7.62, 7.15, 9.97, 5.06, 4.9, 6.49, 8.31, 4.82, 8.42, 5.14, \n5.3, 7.78, 1.28, 3.77, 3.51, 10.3, 4.93, 9.58, 13.1, 13.6, 1.54, \n9.53, 4.97, 2.21, 11.5, 6.64, 6.07, 13.7, 6.84, 11, 10.8, 8.88, \n12.7, 7.52, 5.9, 7.8, 12.1, 6.45, 12.2, 4.99, 6.07)), class = c(\"tbl_df\", \n\"tbl\", \"data.frame\"), row.names = c(NA, -60L))\n\n\nCalculate the appropriate correlation coefficient.\nPlot the raw data and the appropriate correlation coefficient.\nInterpret the results.\n\n\n\n11.5.2 Question two\nWe are interested in knowing whether two genes are associated. We do not know the nature of the relationship, if there is one.\nRead the data in, as follows:\n\ngene_tbl &lt;- structure(list(gene = c(\"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \n\"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \n\"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \n\"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \"UNDERMINER4\", \n\"UNDERMINER4\", \"UNDERMINER4\", \"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \n\"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \n\"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \n\"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \"TROGLODYTE7\", \n\"TROGLODYTE7\", \"TROGLODYTE7\"), expression = c(5.85800305008888, \n0.0894579570740461, 2.93739611981437, 2.77374957920983, 8.13574214931577, \n2.60427771368995, 7.24405892658979, 9.06092151300982, 9.49040221050382, \n0.73144469410181, 7.54675026983023, 2.8600062080659, 1.00053521571681, \n9.5406877505593, 4.15607118513435, 4.55102417618036, 9.71055655973032, \n5.83987979684025, 9.6220462443307, 7.6170240319334, 201.591007212395, \n0.0164353615310555, 25.7277804258383, 21.2952232089115, 538.541568097937, \n17.8319216170362, 381.30708631164, 743.86015840029, 854.678654517749, \n0.107886637441148, 431.354200915445, 23.558977358528, 2.3092288669259, \n869.726714251939, 72.3804140205039, 93.9770546568619, 916.911928248853, \n200.074244601714, 889.917326105173, 443.17271786801)), class = c(\"tbl_df\", \n\"tbl\", \"data.frame\"), row.names = c(NA, -40L))\n\n\nCalculate the most appropriate correlation coefficient. Is it statistically significant?\nPlot the raw data and the appropriate correlation coefficient.\nInterpret the results.\n\n\n\n11.5.3 Question three\nWe have been reliably informed that two variables are linearly related (last question imagination levels here). Read the data in as follows:\n\n\nCode\nset.seed(4)\nn_obs &lt;- 15\nx_all_match &lt;- runif(n_obs, 0, 10)\ny_all_match &lt;- 5 + x_all_match * 10 + rnorm(n_obs, 0, 10)\nvar_tbl &lt;- tibble(\n  variable = rep(c(\"exciting-thing-1\", \"exciting-thing-2\"), each = n_obs),\n  value = c(x_all_match, y_all_match)\n)\ndput(var_tbl)\n\n\nstructure(list(variable = c(\"exciting-thing-1\", \"exciting-thing-1\", \n\"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \n\"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \n\"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \n\"exciting-thing-1\", \"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \n\"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \n\"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \n\"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\"\n), value = c(5.85800305008888, 0.0894579570740461, 2.93739611981437, \n2.77374957920983, 8.13574214931577, 2.60427771368995, 7.24405892658979, \n9.06092151300982, 9.49040221050382, 0.73144469410181, 7.54675026983023, \n2.8600062080659, 1.00053521571681, 9.5406877505593, 4.15607118513435, \n62.4522288284119, 8.01564342234369, 41.4918552015465, 59.8149071489473, \n86.1053092224815, 40.6163456528487, 87.4571949887254, 96.3563217676658, \n92.8071441398129, 16.2900278303966, 99.4289883901294, 36.7089255281769, \n-9.78185363090419, 93.4135192204788, 37.4412720963096)), class = c(\"tbl_df\", \n\"tbl\", \"data.frame\"), row.names = c(NA, -30L))\n\n\nRead the data in as follows:\n\nvar_tbl &lt;- structure(list(variable = c(\"exciting-thing-1\", \"exciting-thing-1\", \n\"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \n\"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \n\"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \"exciting-thing-1\", \n\"exciting-thing-1\", \"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \n\"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \n\"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \n\"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\", \"exciting-thing-2\"\n), value = c(5.85800305008888, 0.0894579570740461, 2.93739611981437, \n2.77374957920983, 8.13574214931577, 2.60427771368995, 7.24405892658979, \n9.06092151300982, 9.49040221050382, 0.73144469410181, 7.54675026983023, \n2.8600062080659, 1.00053521571681, 9.5406877505593, 4.15607118513435, \n62.4522288284119, 8.01564342234369, 41.4918552015465, 59.8149071489473, \n86.1053092224815, 40.6163456528487, 87.4571949887254, 96.3563217676658, \n92.8071441398129, 16.2900278303966, 99.4289883901294, 36.7089255281769, \n-9.78185363090419, 93.4135192204788, 37.4412720963096)), class = c(\"tbl_df\", \n\"tbl\", \"data.frame\"), row.names = c(NA, -30L))\n\n\nCalculate the most appropriate correlation coefficient. Is it statistically significant?\nPlot the raw data and the appropriate correlation coefficient.\nInterpret the results.\nCongratulate yourself for uncovering this important relationship!\n\n\n\n11.5.4 Question four\nComplete that blank section detailing how to plot the correlation coefficient using ggplot2 directly above. Bonus marks (and immortality) for contributing the answer via GitHub to the repo (https://github.com/SATVILab/SATVI_ComputationalCourse).",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Inference</span>"
     ]
   },
   {
     "objectID": "recordings.html",
     "href": "recordings.html",
-    "title": "10  Session Recordings",
+    "title": "11  Session Recordings",
     "section": "",
-    "text": "10.1 Description\nOn this page you will find links to the Microsoft Teams recordings for each session. You will only be able to access these recordings if you already have institutional access via Teams. If you would like to access the recordings, but do not have access, please email the course instructors.",
+    "text": "11.1 Description\nOn this page you will find links to the Microsoft Teams recordings for each session. You will only be able to access these recordings if you already have institutional access via Teams. If you would like to access the recordings, but do not have access, please email the course instructors.",
     "crumbs": [
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Session Recordings</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Session Recordings</span>"
     ]
   },
   {
     "objectID": "recordings.html#session-recordings",
     "href": "recordings.html#session-recordings",
-    "title": "10  Session Recordings",
-    "section": "10.2 2024 Session Recordings",
-    "text": "10.2 2024 Session Recordings\n\n10.2.1 Session 1: Intro to R and swirl\n05 MAR 2024\nSession 1 Video Recording\n\n\n10.2.2 Session 2: MaRcus Training Course lesson 1\n19 MAR 2024\nSession 2 Video Recording\n\n\n10.2.3 Session 3: MaRcus Training Course lesson 2\n26 MAR 2024\nSession 3 Video Recording\n\n\n10.2.4 Session 4: MaRcus Training Course lesson 3\n02 APR 2024\nSession 4 Video Recording\nNote - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.\n\n\n10.2.5 Session 5: MaRcus Training Course lesson 5\n09 APR 2024\nSession 5 Video Recording\n\n\n10.2.6 Session 6: MaRcus Training Course lesson 6\n30 APR 2024\nSession 6 Video Recording\n\n\n10.2.7 Session 7: MaRcus Training Course lesson 7\n07 MAY 2024\nSession 7 Video Recording\n\n\n10.2.8 Session 8: Exporting data from R\n21 MAY 2024\nSession 8 Video Recording",
+    "title": "11  Session Recordings",
+    "section": "11.2 2024 Session Recordings",
+    "text": "11.2 2024 Session Recordings\n\n11.2.1 Session 1: Intro to R and swirl\n05 MAR 2024\nSession 1 Video Recording\n\n\n11.2.2 Session 2: MaRcus Training Course lesson 1\n19 MAR 2024\nSession 2 Video Recording\n\n\n11.2.3 Session 3: MaRcus Training Course lesson 2\n26 MAR 2024\nSession 3 Video Recording\n\n\n11.2.4 Session 4: MaRcus Training Course lesson 3\n02 APR 2024\nSession 4 Video Recording\nNote - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.\n\n\n11.2.5 Session 5: MaRcus Training Course lesson 5\n09 APR 2024\nSession 5 Video Recording\n\n\n11.2.6 Session 6: MaRcus Training Course lesson 6\n30 APR 2024\nSession 6 Video Recording\n\n\n11.2.7 Session 7: MaRcus Training Course lesson 7\n07 MAY 2024\nSession 7 Video Recording\n\n\n11.2.8 Session 8: Exporting data from R\n21 MAY 2024\nSession 8 Video Recording",
     "crumbs": [
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Session Recordings</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Session Recordings</span>"
     ]
   },
   {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "11  Summary",
+    "title": "12  Summary",
     "section": "",
     "text": "We hope you have enjoyed the course! Remember that the best way to learn how to code is to experiment and use coding languages as much as possible. Just like learning a foreign language, learning to code works best with daily practice.\nIf you have any questions, feedback, or suggestions, please contact the course instructors.\nBest of luck on your computational journey!",
     "crumbs": [
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Summary</span>"
     ]
   },
   {
