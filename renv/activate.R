@@ -2,8 +2,8 @@
 local({
 
   # the requested version of renv
-  version <- "1.0.7.9000"
-  attr(version, "sha") <- "5125714cf11bc20345c2051483ebd237dad5e62c"
+  version <- "1.0.9.9000"
+  attr(version, "sha") <- "6c6dc7d1783d3d33855757435e114733e5984a40"
 
   # the project directory
   project <- Sys.getenv("RENV_PROJECT")
@@ -133,16 +133,17 @@ local({
   
   renv_ansify_enhanced <- function(text) {
   
+    # R help links
+    pattern <- "`\\?(renv::(?:[^`])+)`"
+    replacement <- "`\033]8;;ide:help:\\1\a?\\1\033]8;;\a`"
+    text <- gsub(pattern, replacement, text, perl = TRUE)
+  
     # runnable code
     pattern <- "`(renv::(?:[^`])+)`"
     replacement <- "`\033]8;;ide:run:\\1\a\\1\033]8;;\a`"
     text <- gsub(pattern, replacement, text, perl = TRUE)
   
-    # R help links
-    pattern <- "`(\\?renv::(?:[^`])+)`"
-    replacement <- "`\033]8;;ide:help:\\1\a\\1\033]8;;\a`"
-    text <- gsub(pattern, replacement, text, perl = TRUE)
-  
+    # return ansified text
     text
   
   }
