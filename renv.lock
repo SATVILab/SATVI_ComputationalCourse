@@ -74,6 +74,20 @@
       ],
       "Hash": "64ff3427f559ce3f2597a4fe13255cb6"
     },
+    "DataTidyILC": {
+      "Package": "DataTidyILC",
+      "Version": "1.5.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "DataTidyILC",
+      "RemoteUsername": "SATVILab",
+      "RemoteSha": "feb890a80dfdbc3929c81d4ac84e115165ed6556",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "b29846483a81a87d7977d4d9df447355"
+    },
     "MASS": {
       "Package": "MASS",
       "Version": "7.3-61",
@@ -186,6 +200,44 @@
         "Rcpp"
       ],
       "Hash": "c232938949fcd8126034419cc529333a"
+    },
+    "UtilsCytoRSV": {
+      "Package": "UtilsCytoRSV",
+      "Version": "0.1.5",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "UtilsCytoRSV",
+      "RemoteUsername": "SATVILab",
+      "RemoteSha": "d7e3ff298e2979d88b4458589e187ed9302322c8",
+      "Requirements": [
+        "R",
+        "cowplot",
+        "dplyr",
+        "ggplot2",
+        "purrr",
+        "stringr",
+        "tibble"
+      ],
+      "Hash": "409f15d42721e344b42e4705d5ff7217"
+    },
+    "UtilsDataRSV": {
+      "Package": "UtilsDataRSV",
+      "Version": "0.1.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "UtilsDataRSV",
+      "RemoteUsername": "SATVILab",
+      "RemoteSha": "c7018542b8a4739faf68d06ec617310f5b1f57c2",
+      "Requirements": [
+        "dplyr",
+        "magrittr",
+        "rlang",
+        "stringr",
+        "tibble"
+      ],
+      "Hash": "3c008f2c650a6d5a4c7feb9247788e13"
     },
     "UtilsGGSV": {
       "Package": "UtilsGGSV",
@@ -920,6 +972,28 @@
       ],
       "Hash": "0080607b4a1a7b28979aecef976d8bc2"
     },
+    "janitor": {
+      "Package": "janitor",
+      "Version": "2.2.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "dplyr",
+        "hms",
+        "lifecycle",
+        "lubridate",
+        "magrittr",
+        "purrr",
+        "rlang",
+        "snakecase",
+        "stringi",
+        "stringr",
+        "tidyr",
+        "tidyselect"
+      ],
+      "Hash": "5baae149f1082f466df9d1442ba7aa65"
+    },
     "jquerylib": {
       "Package": "jquerylib",
       "Version": "0.1.4",
@@ -1359,6 +1433,20 @@
       ],
       "Hash": "76c9e04c712a05848ae7a23d2f170a40"
     },
+    "remotes": {
+      "Package": "remotes",
+      "Version": "2.5.0",
+      "Source": "Repository",
+      "Repository": "https://p3m.dev/cran/latest",
+      "Requirements": [
+        "R",
+        "methods",
+        "stats",
+        "tools",
+        "utils"
+      ],
+      "Hash": "3ee025083e66f18db6cf27b56e23e141"
+    },
     "renv": {
       "Package": "renv",
       "Version": "1.0.9.9000",
@@ -1557,6 +1645,18 @@
         "stringr"
       ],
       "Hash": "3838071b66e0c566d55cc26bd6e27bf4"
+    },
+    "snakecase": {
+      "Package": "snakecase",
+      "Version": "0.11.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "stringi",
+        "stringr"
+      ],
+      "Hash": "58767e44739b76965332e8a4fe3f91f1"
     },
     "stringi": {
       "Package": "stringi",

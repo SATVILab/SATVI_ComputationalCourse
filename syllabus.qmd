@@ -241,9 +241,9 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Homework:** 
 
-### Background subtraction 
+### Processing gated cytometry data
 
-**Topic:** Learning how to apply a function for background subtraction 
+**Topic:** Processing gated cytometry count and frequency data, exported from FlowJo
 
 **Instructor:** Miguel Rodo: miguel.rodo@uct.ac.za
 

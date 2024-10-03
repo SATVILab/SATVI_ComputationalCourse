@@ -516,7 +516,7 @@ kw_obj[["p.value"]] |> signif(3)
 ```{r}
 #| eval: false
 #| code-fold: false
-install_github("MiguelRodo/DataTidy23RodoSTA2005SAssignment@410a5247d600ce462e7941065233b634574fca86")
+install_github("MiguelRodo/DataTidyRodoSTA2005S@410a5247d600ce462e7941065233b634574fca86")
 ```
 
 ```{r}
