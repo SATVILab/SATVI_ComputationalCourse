@@ -1,31 +1,61 @@
-# note: to re-use this in future:
-# 1. Copy this file to `.github/workflows` folder in your own repo.
-# 2. Make sure that the token (`PUSH_TO_PROJECT_TOKEN`)
-#    supplied to the GitHub Action has the correct scopes
-#    (google to check what they are, or just give it all scopes).
-# 3. Swop the `<user/org>/<repo>` name to the relevant one
-#    (i.e. swop `SATVILab/SATVI_ComputationalCourse` throughout
-#     with the correct owner and repo)
-# 4. Replace the project id (around line 52, `PVT_kwDOBQmAD84Apuw5`)
-#    with the project id of the relevant project. 
-#    To get that project id, do the following (in bash):
-#    i. install `gh`: `sudo apt update -y; sudo apt install -y gh`
-#    ii. install `gh-projects` extension: `gh extension install github/gh-projects`
-#    iii.  id: `gh projects list` (if it's your own project), or 
-#                 `gh projects list --org <org_name>` (e.g. `gh projects list --org SATVILab`)
-#                 if it's an organisation's project. 
-#    iv. Replace the project id in line 52 with the id for the relevant project in the
-#        last column of the table outputted from the previous line.concurrency: 
-# 5. Add, commit and push this file to GitHub.concurrency: 
-# 6. Go to the `Actions` tab on your repo on GitHub, 
-#    click on the `Add Issues to Project` action (on the left),
-#    and then click `Run workflow` (on the right).
-# 7. Wait for the action to run, and check if it works (tick if yes, cross if not).
+# name: Add Issues to Project
+
+# This GitHub Actions workflow adds issues from the repository to a specified GitHub Project.
+#
+# Usage Instructions:
+#
+# 1. **Copy the Workflow File**
+#    - Copy this file into your repository's `.github/workflows` directory.
+#    - Name it appropriately, for example, `add-issues-to-project.yml`.
+#
+# 2. **Set Up the Personal Access Token (PAT)**
+#    - Ensure you have a repository secret named `PUSH_TO_PROJECT_TOKEN` with a PAT that has the necessary scopes:
+#      - `repo`: Full control of private repositories.
+#      - `admin:org`: Read and write access to organization projects (if working with organization projects).
+#      - `workflow`: To interact with GitHub Actions workflows.
+#      - `read:project` and `write:project`: For project access.
+#    - To create the PAT:
+#      1. Go to **GitHub Settings** > **Developer settings** > **Personal access tokens** > **Tokens (classic)**.
+#      2. Click **Generate new token**.
+#      3. Select the required scopes.
+#      4. Generate and copy the token.
+#      5. In your repository, go to **Settings** > **Secrets and variables** > **Actions** > **Secrets**.
+#      6. Add a new secret named `PUSH_TO_PROJECT_TOKEN` and paste the PAT.
+#
+# 3. **Trigger the Workflow**
+#    - Navigate to the **Actions** tab in your repository.
+#    - Select the **Add Issues to Project** workflow.
+#    - Click on **Run workflow**.
+#    - You will be prompted to provide the following inputs:
+#      - **project_name**: The exact name of your project as it appears on GitHub.
+#      - **org_name**: (Optional) The name of your organization if the project is an organization project.
+#        - If `org_name` is provided, the workflow treats the project as an organization project.
+#        - If `org_name` is left blank, the workflow treats the project as a user project.
+#
+# 4. **Monitor the Workflow**
+#    - The workflow will authenticate using the provided PAT.
+#    - It will automatically determine the project ID based on the provided inputs.
+#    - It will fetch all issues from your repository.
+#    - It will check which issues are not already in the project and add them accordingly.
+#    - You can view the progress and logs in the **Actions** tab.
+#
+# 5. **Troubleshooting**
+#    - **Project Not Found**: If you receive an error stating the project is not found, double-check the project name and ensure it matches exactly, including case sensitivity.
+#    - **Authentication Errors**: Verify that the PAT has the necessary permissions and is correctly set as a repository secret.
+#    - **Permissions**: For organization projects, ensure that the user associated with the PAT has access to the organization and the project.
+#    - **API Rate Limits**: Be mindful of GitHub's API rate limits if working with a large number of issues or projects.
 
 name: Add Issues to Project
 
 on:
   workflow_dispatch:
+    inputs:
+      project_name:
+        description: 'Name of the project'
+        required: true
+      org_name:
+        description: 'Organization name (if project is an organization project)'
+        required: false
 
 jobs:
   add-issues-to-project:
@@ -35,10 +65,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up GitHub CLI
+    - name: Set up GitHub CLI and jq
       run: |
         sudo apt update -y
-        sudo apt install -y gh
+        sudo apt install -y gh jq
 
     - name: Authenticate with PAT
       env:
@@ -48,23 +78,48 @@ jobs:
         unset GITHUB_TOKEN
         echo "$PUSH_TO_PROJECT_TOKEN" | gh auth login --with-token
 
+    - name: Get project ID
+      id: get-project-id
+      env:
+        PROJECT_NAME: ${{ github.event.inputs.project_name }}
+        ORG_NAME: ${{ github.event.inputs.org_name }}
+      run: |
+        if [ -z "${ORG_NAME}" ]; then
+          # Treat as user project
+          project_id=$(gh projects list --user "${{ github.actor }}" --json title,id --jq '.[] | select(.title=="'"${PROJECT_NAME}"'") | .id')
+          if [ -z "${project_id}" ]; then
+            # Try fetching from all accessible projects
+            project_id=$(gh projects list --json title,id --jq '.[] | select(.title=="'"${PROJECT_NAME}"'") | .id')
+          fi
+        else
+          # Treat as organization project
+          project_id=$(gh projects list --org "${ORG_NAME}" --json title,id --jq '.[] | select(.title=="'"${PROJECT_NAME}"'") | .id')
+        fi
+
+        if [ -z "${project_id}" ]; then
+          echo "Error: Project '${PROJECT_NAME}' not found."
+          exit 1
+        fi
+
+        echo "Project ID: ${project_id}"
+        echo "project_id=${project_id}" >> $GITHUB_ENV
+
     - name: Get issues from repository
       id: get-issues
       run: |
-        issues=$(gh issue list --repo SATVILab/SATVI_ComputationalCourse --json number --jq '.[].number' | tr '\n' ' ')
+        issues=$(gh issue list --repo "${{ github.repository }}" --json number --jq '.[].number' | tr '\n' ' ')
         echo "issues=$issues" >> $GITHUB_ENV
 
     - name: Add issues to project if not already present
       env:
         ISSUES: ${{ env.issues }}
         PUSH_TO_PROJECT_TOKEN: ${{ secrets.PUSH_TO_PROJECT_TOKEN }}
+        PROJECT_ID: ${{ env.project_id }}
       run: |
-        project_id="PVT_kwDOBQmAD84Apuw5"  # Your project ID
-
-        # Get the list of content IDs (issue node IDs) already in the project
+        # Initialize variables
         existing_issue_ids=()
         has_next_page=true
-        end_cursor="null"
+        end_cursor=""
 
         while [ "$has_next_page" = true ]; do
           # Fetch project items with pagination
@@ -88,12 +143,17 @@ jobs:
                   }
                 }
               }
-            }' -f projectId="$project_id" -f after="$end_cursor")
+            }' -F projectId="$PROJECT_ID" -F after="$end_cursor")
 
           # Extract issue IDs and pagination info
-          existing_issue_ids+=($(echo "$response" | jq -r '.data.node.items.nodes[].content | select(.__typename=="Issue") | .id'))
+          existing_issue_ids+=($(echo "$response" | jq -r '.data.node.items.nodes[].content | select(. != null and .__typename == "Issue") | .id'))
           has_next_page=$(echo "$response" | jq -r '.data.node.items.pageInfo.hasNextPage')
           end_cursor=$(echo "$response" | jq -r '.data.node.items.pageInfo.endCursor')
+
+          # Handle null end_cursor
+          if [ "$end_cursor" = "null" ]; then
+            end_cursor=""
+          fi
         done
 
         # Convert existing_issue_ids to a string for easier comparison
@@ -102,7 +162,7 @@ jobs:
         # Loop through each issue in the repository
         for issue in $ISSUES; do
           # Get the issue node ID
-          issue_node_id=$(gh issue view $issue --repo SATVILab/SATVI_ComputationalCourse --json id --jq '.id')
+          issue_node_id=$(gh issue view $issue --repo "${{ github.repository }}" --json id --jq '.id')
 
           # Check if the issue is already in the project
           if [[ " ${existing_issue_ids_str[@]} " =~ " $issue_node_id " ]]; then
@@ -116,7 +176,7 @@ jobs:
                     id
                   }
                 }
-              }' -f projectId=$project_id -f contentId=$issue_node_id
+              }' -f projectId="$PROJECT_ID" -f contentId="$issue_node_id"
             echo "Added issue #$issue to the project."
           fi
         done
