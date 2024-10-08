@@ -93,20 +93,22 @@ jobs:
         ORG_NAME: ${{ github.event.inputs.org_name }}
       run: |
         if [ -z "${ORG_NAME}" ]; then
-          # Treat as user project
+          echo "Listing user projects:"
+          gh projects list --format json
           project_number=$(gh projects list --format json | jq '.projects[] | select(.title=="'"${PROJECT_NAME}"'") | .number')
         else
-          # Treat as organization project
+          echo "Listing organization projects:"
+          gh projects list --org "${ORG_NAME}" --format json
           project_number=$(gh projects list --org "${ORG_NAME}" --format json | jq '.projects[] | select(.title=="'"${PROJECT_NAME}"'") | .number')
         fi
 
-        if [ -z "${project_id}" ]; then
+        if [ -z "${project_number}" ]; then
           echo "Error: Project '${PROJECT_NAME}' not found."
           exit 1
         fi
 
-        echo "Project ID: ${project_id}"
-        echo "project_id=${project_id}" >> $GITHUB_ENV
+        echo "Project ID: ${project_number}"
+        echo "project_number=${project_number}" >> $GITHUB_ENV
 
     - name: Get issues from repository
       id: get-issues
