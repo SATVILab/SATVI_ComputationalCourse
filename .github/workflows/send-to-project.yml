@@ -46,6 +46,8 @@ jobs:
       env:
         PUSH_TO_PROJECT_TOKEN: ${{ secrets.PUSH_TO_PROJECT_TOKEN }}
       run: |
+        unset GH_TOKEN
+        unset GITHUB_TOKEN
         echo "$PUSH_TO_PROJECT_TOKEN" | gh auth login --with-token
 
     - name: Get issues from repository
