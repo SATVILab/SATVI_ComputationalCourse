@@ -1,0 +1,71 @@
+name: Add Issues to Project
+
+# note: to re-use this in future:
+# 1. Copy this file to `.github/workflows` folder in your own repo.
+# 2. Make sure that the token (`GITHUB_TOKEN`)
+#    supplied to the GitHub Action has the correct scopes
+#    (google to check what they are, or just give it all scopes).
+# 3. Swop the `<user/org>/<repo>` name to the relevant one
+#    (i.e. swop `SATVILab/SATVI_ComputationalCourse` throughout
+#     with the correct owner and repo)
+# 4. Replace the project id (around line 52, `PVT_kwDOBQmAD84Apuw5`)
+#    with the project id of the relevant project. 
+#    To get that project id, do the following (in bash):
+#    i. install `gh`: `sudo apt update -y; sudo apt install -y gh`
+#    ii. install `gh-projects` extension: `gh extension install github/gh-projects`
+#    iii.  id: `gh projects list` (if it's your own project), or 
+#                 `gh projects list --org <org_name>` (e.g. `gh projects list --org SATVILab`)
+#                 if it's an organisation's project. 
+#    iv. Replace the project id in line 52 with the id for the relevant project in the
+#        last column of the table outputted from the previous line.concurrency: 
+# 5. Add, commit and push this file to GitHub.concurrency: 
+# 6. Go to the `Actions` tab on your repo on GitHub, 
+#    click on the `Add Issues to Project` action (on the left),
+#    and then click `Run workflow` (on the right).
+# 7. Wait for the action to run, and check if it works (tick if yes, cross if not).
+
+on:
+  workflow_dispatch:
+
+jobs:
+  add-issues-to-project:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up GitHub CLI
+      run: |
+        sudo apt update -y
+        sudo apt install -y gh
+
+    - name: Authenticate with PAT
+      env:
+        ORG_PAT: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "$ORG_PAT" | gh auth login --with-token
+
+    - name: Get issues from repository
+      id: get-issues
+      run: |
+        issues=$(gh issue list --repo SATVILab/SATVI_ComputationalCourse --json number --jq '.[].number' | tr '\n' ' ')
+        echo "issues=$issues" >> $GITHUB_ENV
+
+    - name: Add issues to project
+      env:
+        ISSUES: ${{ env.issues }}
+      run: |
+        project_id="PVT_kwDOBQmAD84Apuw5"  # Your project ID
+        for issue in $ISSUES; do
+          issue_node_id=$(gh issue view $issue --repo SATVILab/SATVI_ComputationalCourse --json id --jq '.id')
+          gh api graphql -f query='
+            mutation($projectId: ID!, $contentId: ID!) {
+              addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
+                item {
+                  id
+                }
+              }
+            }' -f projectId=$project_id -f contentId=$issue_node_id
+          echo "Added issue #$issue to the project."
+        done
