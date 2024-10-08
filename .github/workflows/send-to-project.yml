@@ -69,6 +69,7 @@ jobs:
       run: |
         sudo apt update -y
         sudo apt install -y gh jq
+        gh extension install github/gh-projects
 
     - name: Authenticate with PAT
       env:
