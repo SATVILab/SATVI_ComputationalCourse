@@ -53,9 +53,11 @@ on:
       project_name:
         description: 'Name of the project'
         required: true
+        default: 
       org_name:
         description: 'Organization name (if project is an organization project)'
         required: false
+        default: SATVILab
 
 jobs:
   add-issues-to-project:
