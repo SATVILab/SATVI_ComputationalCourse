@@ -24,6 +24,8 @@ name: Add Issues to Project
 #    and then click `Run workflow` (on the right).
 # 7. Wait for the action to run, and check if it works (tick if yes, cross if not).
 
+name: Add Issues to Project
+
 on:
   workflow_dispatch:
 
@@ -55,6 +57,7 @@ jobs:
     - name: Add issues to project
       env:
         ISSUES: ${{ env.issues }}
+        PUSH_TO_PROJECT_TOKEN: ${{ secrets.PUSH_TO_PROJECT_TOKEN }}
       run: |
         project_id="PVT_kwDOBQmAD84Apuw5"  # Your project ID
         for issue in $ISSUES; do
@@ -66,6 +69,6 @@ jobs:
                   id
                 }
               }
-            }' -f projectId=$project_id -f contentId=$issue_node_id
+            }' -f projectId=$project_id -f contentId=$issue_node_id --header "Authorization: token $PUSH_TO_PROJECT_TOKEN"
           echo "Added issue #$issue to the project."
         done
