@@ -71,13 +71,18 @@ jobs:
       run: |
         sudo apt update -y
         sudo apt install -y gh jq
-        gh extension install github/gh-projects
 
     - name: Authenticate with PAT
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      run: |
+        run: |
         echo "$GH_TOKEN" | gh auth login --with-token
+        
+    - name: Install gh-projects extension
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        gh extension install github/gh-projects
 
     - name: Get project ID
       id: get-project-id
