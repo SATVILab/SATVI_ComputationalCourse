@@ -24,8 +24,6 @@ name: Add Issues to Project
 #    and then click `Run workflow` (on the right).
 # 7. Wait for the action to run, and check if it works (tick if yes, cross if not).
 
-name: Add Issues to Project
-
 on:
   workflow_dispatch:
 
