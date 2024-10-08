@@ -24,6 +24,8 @@ name: Add Issues to Project
 #    and then click `Run workflow` (on the right).
 # 7. Wait for the action to run, and check if it works (tick if yes, cross if not).
 
+name: Add Issues to Project
+
 on:
   workflow_dispatch:
 
@@ -54,21 +56,69 @@ jobs:
         issues=$(gh issue list --repo SATVILab/SATVI_ComputationalCourse --json number --jq '.[].number' | tr '\n' ' ')
         echo "issues=$issues" >> $GITHUB_ENV
 
-    - name: Add issues to project
+    - name: Add issues to project if not already present
       env:
         ISSUES: ${{ env.issues }}
         PUSH_TO_PROJECT_TOKEN: ${{ secrets.PUSH_TO_PROJECT_TOKEN }}
       run: |
         project_id="PVT_kwDOBQmAD84Apuw5"  # Your project ID
-        for issue in $ISSUES; do
-          issue_node_id=$(gh issue view $issue --repo SATVILab/SATVI_ComputationalCourse --json id --jq '.id')
-          gh api graphql -f query='
-            mutation($projectId: ID!, $contentId: ID!) {
-              addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
-                item {
-                  id
+
+        # Get the list of content IDs (issue node IDs) already in the project
+        existing_issue_ids=()
+        has_next_page=true
+        end_cursor=""
+
+        while [ "$has_next_page" = true ]; do
+          # Fetch project items with pagination
+          response=$(gh api graphql -f query='
+            query($projectId: ID!, $after: String) {
+              node(id: $projectId) {
+                ... on ProjectV2 {
+                  items(first: 100, after: $after) {
+                    pageInfo {
+                      hasNextPage
+                      endCursor
+                    }
+                    nodes {
+                      content {
+                        __typename
+                        ... on Issue {
+                          id
+                        }
+                      }
+                    }
+                  }
                 }
               }
-            }' -f projectId=$project_id -f contentId=$issue_node_id --header "Authorization: token $PUSH_TO_PROJECT_TOKEN"
-          echo "Added issue #$issue to the project."
+            }' -f projectId="$project_id" -f after="$end_cursor")
+
+          # Extract issue IDs and pagination info
+          existing_issue_ids+=($(echo "$response" | jq -r '.data.node.items.nodes[].content | select(__typename=="Issue") | .id'))
+          has_next_page=$(echo "$response" | jq -r '.data.node.items.pageInfo.hasNextPage')
+          end_cursor=$(echo "$response" | jq -r '.data.node.items.pageInfo.endCursor')
+        done
+
+        # Convert existing_issue_ids to a string for easier comparison
+        existing_issue_ids_str="${existing_issue_ids[*]}"
+
+        # Loop through each issue in the repository
+        for issue in $ISSUES; do
+          # Get the issue node ID
+          issue_node_id=$(gh issue view $issue --repo SATVILab/SATVI_ComputationalCourse --json id --jq '.id')
+
+          # Check if the issue is already in the project
+          if [[ " $existing_issue_ids_str " =~ " $issue_node_id " ]]; then
+            echo "Issue #$issue is already in the project. Skipping."
+          else
+            # Add the issue to the project
+            gh api graphql -f query='
+              mutation($projectId: ID!, $contentId: ID!) {
+                addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
+                  item {
+                    id
+                  }
+                }
+              }' -f projectId=$project_id -f contentId=$issue_node_id
+            echo "Added issue #$issue to the project."
+          fi
         done
