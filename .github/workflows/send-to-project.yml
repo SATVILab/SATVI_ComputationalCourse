@@ -41,10 +41,8 @@ jobs:
         sudo apt install -y gh
 
     - name: Authenticate with PAT
-      env:
-        ORG_PAT: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        echo "$ORG_PAT" | gh auth login --with-token
+        echo "$GH_TOKEN" | gh auth login --with-token
 
     - name: Get issues from repository
       id: get-issues
