@@ -41,8 +41,10 @@ jobs:
         sudo apt install -y gh
 
     - name: Authenticate with PAT
+      env:
+        PUSH_TO_PROJECT_TOKEN: ${{ secrets.PUSH_TO_PROJECT_TOKEN }}
       run: |
-        echo "$GH_TOKEN" | gh auth login --with-token
+        echo "$PUSH_TO_PROJECT_TOKEN" | gh auth login --with-token
 
     - name: Get issues from repository
       id: get-issues
