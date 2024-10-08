@@ -1,5 +1,3 @@
-name: Add Issues to Project
-
 # note: to re-use this in future:
 # 1. Copy this file to `.github/workflows` folder in your own repo.
 # 2. Make sure that the token (`PUSH_TO_PROJECT_TOKEN`)
