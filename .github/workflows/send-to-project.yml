@@ -9,7 +9,7 @@
 #    - Name it appropriately, for example, `add-issues-to-project.yml`.
 #
 # 2. **Set Up the Personal Access Token (PAT)**
-#    - Ensure you have a repository secret named `GH_TOKEN` with a PAT that has the necessary scopes:
+#    - Ensure you have a repository secret named `PUSH_TO_PROJECT_TOKEN` with a PAT that has the necessary scopes:
 #      - `repo`: Full control of private repositories.
 #      - `admin:org`: Read and write access to organization projects (if working with organization projects).
 #      - `workflow`: To interact with GitHub Actions workflows.
@@ -20,7 +20,7 @@
 #      3. Select the required scopes.
 #      4. Generate and copy the token.
 #      5. In your repository, go to **Settings** > **Secrets and variables** > **Actions** > **Secrets**.
-#      6. Add a new secret named `GH_TOKEN` and paste the PAT.
+#      6. Add a new secret named `PUSH_TO_PROJECT_TOKEN` and paste the PAT.
 #
 # 3. **Trigger the Workflow**
 #    - Navigate to the **Actions** tab in your repository.
@@ -74,13 +74,15 @@ jobs:
 
     - name: Authenticate with PAT
       env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        PUSH_TO_PROJECT_TOKEN: ${{ secrets.PUSH_TO_PROJECT_TOKEN }}
       run: |
-        echo "$GH_TOKEN" | gh auth login --with-token
+        unset GH_TOKEN
+        unset GITHUB_TOKEN
+        echo "$PUSH_TO_PROJECT_TOKEN" | gh auth login --with-token
         
     - name: Install gh-projects extension
       env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        PUSH_TO_PROJECT_TOKEN: ${{ secrets.PUSH_TO_PROJECT_TOKEN }}
       run: |
         gh extension install github/gh-projects
 
@@ -119,7 +121,7 @@ jobs:
     - name: Add issues to project if not already present
       env:
         ISSUES: ${{ env.issues }}
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        PUSH_TO_PROJECT_TOKEN: ${{ secrets.PUSH_TO_PROJECT_TOKEN }}
         PROJECT_ID: ${{ env.project_id }}
       run: |
         # Initialize variables
