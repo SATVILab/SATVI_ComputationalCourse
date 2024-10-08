@@ -75,7 +75,7 @@ jobs:
     - name: Authenticate with PAT
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
+      run: |
         echo "$GH_TOKEN" | gh auth login --with-token
         
     - name: Install gh-projects extension
