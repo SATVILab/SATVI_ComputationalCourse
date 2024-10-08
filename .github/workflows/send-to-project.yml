@@ -64,7 +64,7 @@ jobs:
         # Get the list of content IDs (issue node IDs) already in the project
         existing_issue_ids=()
         has_next_page=true
-        end_cursor=""
+        end_cursor="null"
 
         while [ "$has_next_page" = true ]; do
           # Fetch project items with pagination
@@ -91,7 +91,7 @@ jobs:
             }' -f projectId="$project_id" -f after="$end_cursor")
 
           # Extract issue IDs and pagination info
-          existing_issue_ids+=($(echo "$response" | jq -r '.data.node.items.nodes[].content | select(__typename=="Issue") | .id'))
+          existing_issue_ids+=($(echo "$response" | jq -r '.data.node.items.nodes[].content | select(.__typename=="Issue") | .id'))
           has_next_page=$(echo "$response" | jq -r '.data.node.items.pageInfo.hasNextPage')
           end_cursor=$(echo "$response" | jq -r '.data.node.items.pageInfo.endCursor')
         done
@@ -105,7 +105,7 @@ jobs:
           issue_node_id=$(gh issue view $issue --repo SATVILab/SATVI_ComputationalCourse --json id --jq '.id')
 
           # Check if the issue is already in the project
-          if [[ " $existing_issue_ids_str " =~ " $issue_node_id " ]]; then
+          if [[ " ${existing_issue_ids_str[@]} " =~ " $issue_node_id " ]]; then
             echo "Issue #$issue is already in the project. Skipping."
           else
             # Add the issue to the project
