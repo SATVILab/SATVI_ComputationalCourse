@@ -2,7 +2,7 @@ name: Add Issues to Project
 
 # note: to re-use this in future:
 # 1. Copy this file to `.github/workflows` folder in your own repo.
-# 2. Make sure that the token (`GITHUB_TOKEN`)
+# 2. Make sure that the token (`PUSH_TO_PROJECT_TOKEN`)
 #    supplied to the GitHub Action has the correct scopes
 #    (google to check what they are, or just give it all scopes).
 # 3. Swop the `<user/org>/<repo>` name to the relevant one
