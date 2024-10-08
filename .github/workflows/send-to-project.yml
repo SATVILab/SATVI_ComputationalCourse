@@ -96,19 +96,23 @@ jobs:
           echo "Listing user projects:"
           gh projects list --format json
           project_number=$(gh projects list --format json | jq '.projects[] | select(.title=="'"${PROJECT_NAME}"'") | .number')
+          project_id=$(gh projects list --format json | jq '.projects[] | select(.title=="'"${PROJECT_NAME}"'") | .id')
         else
           echo "Listing organization projects:"
           gh projects list --org "${ORG_NAME}" --format json
           project_number=$(gh projects list --org "${ORG_NAME}" --format json | jq '.projects[] | select(.title=="'"${PROJECT_NAME}"'") | .number')
+          project_id=$(gh projects list --org "${ORG_NAME}" --format json | jq '.projects[] | select(.title=="'"${PROJECT_NAME}"'") | .id')
         fi
 
-        if [ -z "${project_number}" ]; then
+        if [ -z "${project_number}" || -z "${project_id}" ]; then
           echo "Error: Project '${PROJECT_NAME}' not found."
           exit 1
         fi
 
-        echo "Project ID: ${project_number}"
+        echo "Project number: ${project_number}"
+        echo "Project id: ${project_id}"
         echo "project_number=${project_number}" >> $GITHUB_ENV
+        echo "project_id=${project_id}" >> $GITHUB_ENV
 
     - name: Get issues from repository
       id: get-issues
