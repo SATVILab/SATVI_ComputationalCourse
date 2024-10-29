@@ -27,6 +27,7 @@ book:
     - vscode.qmd
     - hypothesistesting.qmd
     - correlation.qmd
+    - automatedGatingTraining.qmd
     - recordings.qmd
     - summary.qmd
     - references.qmd
