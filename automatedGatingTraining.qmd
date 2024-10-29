@@ -1,12 +1,13 @@
 ---
+
 title: "Automated gating of  low Cytometry Data in R"
-format:
-  html:
-    code-fold: true
-    embed-resources: true
+format: html
+prefer-html: true
+author: SATVI Computational Group
+date: today
 ---
 
-
+```{r, eval = FALSE}
 library(cytoUtils)
 library(flowCore)#This packages are not being imported for some reason
 library(openCyto)#This packages are not being imported for some reason
@@ -460,3 +461,4 @@ results_location = ""#absolute path of the folder you want to save the analysed 
       write.csv(summary_df, paste(temp_sampleBatch,"Results_DF.csv",sep = "_"),row.names = FALSE)
 }
 
+```
