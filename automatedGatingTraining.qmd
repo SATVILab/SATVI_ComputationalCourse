@@ -1,13 +1,18 @@
 ---
-
-title: "Automated gating of  low Cytometry Data in R"
+title: "Automated gating of flow Cytometry Data in R"
 format: html
 prefer-html: true
 author: SATVI Computational Group
 date: today
 ---
 
-```{r, eval = FALSE}
+This is an example script for running the automated gating pipeline to obtain frequencies of antigen-specific CD4 and CD8 T cells.
+
+Contact Munya Musvosvi at munyaradzi.musvovi@uct.ac.za for assistance, or log issues at [UtilsAutoGating](https://github.com/SATVILab/UtilsAutogating/issues).
+
+```{r}
+#| echo: true
+#| eval: false
 library(cytoUtils)
 library(flowCore)#This packages are not being imported for some reason
 library(openCyto)#This packages are not being imported for some reason
