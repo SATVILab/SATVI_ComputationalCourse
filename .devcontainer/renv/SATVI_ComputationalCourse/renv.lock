@@ -3,49 +3,12 @@
     "Version": "4.4.1",
     "Repositories": [
       {
-        "Name": "BioCcontainers",
-        "URL": "https://bioconductor.org/packages/3.19/container-binaries/bioconductor_docker"
-      },
-      {
-        "Name": "BioCsoft",
-        "URL": "https://bioconductor.org/packages/3.19/bioc"
-      },
-      {
-        "Name": "BioCann",
-        "URL": "https://bioconductor.org/packages/3.19/data/annotation"
-      },
-      {
-        "Name": "BioCexp",
-        "URL": "https://bioconductor.org/packages/3.19/data/experiment"
-      },
-      {
-        "Name": "BioCworkflows",
-        "URL": "https://bioconductor.org/packages/3.19/workflows"
-      },
-      {
-        "Name": "BioCbooks",
-        "URL": "https://bioconductor.org/packages/3.19/books"
-      },
-      {
         "Name": "CRAN",
         "URL": "https://p3m.dev/cran/latest"
       }
     ]
   },
-  "Bioconductor": {
-    "Version": "3.19"
-  },
   "Packages": {
-    "BiocManager": {
-      "Package": "BiocManager",
-      "Version": "1.30.25",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "utils"
-      ],
-      "Hash": "3aec5928ca10897d7a0a1205aae64627"
-    },
     "DBI": {
       "Package": "DBI",
       "Version": "1.2.3",
@@ -73,6 +36,21 @@
         "promises"
       ],
       "Hash": "64ff3427f559ce3f2597a4fe13255cb6"
+    },
+    "DataTidyILC": {
+      "Package": "DataTidyILC",
+      "Version": "1.5.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "DataTidyILC",
+      "RemoteUsername": "SATVILab",
+      "RemoteRef": "feb890a80dfdbc3929c81d4ac84e115165ed6556",
+      "RemoteSha": "feb890a80dfdbc3929c81d4ac84e115165ed6556",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "a008678b21c6c4fc35840ad8a6d2389f"
     },
     "MASS": {
       "Package": "MASS",
@@ -205,7 +183,7 @@
         "stringr",
         "tibble"
       ],
-      "Hash": "409f15d42721e344b42e4705d5ff7217"
+      "Hash": "cdc520d714c59804e3fd88be32ce8899"
     },
     "UtilsDataRSV": {
       "Package": "UtilsDataRSV",
@@ -223,7 +201,7 @@
         "stringr",
         "tibble"
       ],
-      "Hash": "3c008f2c650a6d5a4c7feb9247788e13"
+      "Hash": "d071db8d58a2a10a6e8229f62a4cfce2"
     },
     "UtilsGGSV": {
       "Package": "UtilsGGSV",
@@ -236,7 +214,6 @@
       "RemotePkgRef": "SATVILab/UtilsGGSV",
       "RemoteSha": "27cb948740bfd92c01688274cd13083acccbb0f6",
       "Requirements": [
-        "R",
         "cowplot",
         "dplyr",
         "ggplot2",
@@ -246,7 +223,7 @@
         "scales",
         "tibble"
       ],
-      "Hash": "d1892f237aa71093f17b7f75b06c47a6"
+      "Hash": "853bee6db1875e731f7175b4a3304ac9"
     },
     "askpass": {
       "Package": "askpass",
@@ -1423,7 +1400,7 @@
       "Package": "remotes",
       "Version": "2.5.0",
       "Source": "Repository",
-      "Repository": "https://p3m.dev/cran/latest",
+      "Repository": "RSPM",
       "Requirements": [
         "R",
         "methods",
@@ -1446,7 +1423,7 @@
       "Requirements": [
         "utils"
       ],
-      "Hash": "43fc3c19f37fa1214c6c9a9e69d07445"
+      "Hash": "38e081bae38a6f00b29b6a51c832c05b"
     },
     "reprex": {
       "Package": "reprex",
