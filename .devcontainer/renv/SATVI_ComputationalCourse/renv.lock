@@ -39,18 +39,17 @@
     },
     "DataTidyILC": {
       "Package": "DataTidyILC",
-      "Version": "1.5.2",
+      "Version": "1.8.1",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "DataTidyILC",
       "RemoteUsername": "SATVILab",
-      "RemoteRef": "feb890a80dfdbc3929c81d4ac84e115165ed6556",
-      "RemoteSha": "feb890a80dfdbc3929c81d4ac84e115165ed6556",
+      "RemoteSha": "9a560772cbe0ec2bf4a546f09671f2d7326ee720",
       "Requirements": [
         "R"
       ],
-      "Hash": "a008678b21c6c4fc35840ad8a6d2389f"
+      "Hash": "eb8269eb55277deabd051a0ba4a2a4ec"
     },
     "MASS": {
       "Package": "MASS",
