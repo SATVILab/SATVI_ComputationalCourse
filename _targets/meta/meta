@@ -1,0 +1,11 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+.main|function|3d03d59d8dd2b52a|||||||||||||||
+.QuartoInlineRender|function|dd5604662d8349b4|||||||||||||||
+.Random.seed|object|2ed4eb5cd4a13c39|||||||||||||||
+data|stem|5b1975148d86399c|93c14f880b0104b8|2c530c1562a7fbd1|33550471||t20038.5635137927s|31552477bf9a9faa|15356379|rds|local|vector|||0.083||
+file_content|object|eb1c1cd99e5320ec|||||||||||||||
+file_path|object|c8d77e5682967286|||||||||||||||
+model|stem|cea8fb0a0422b961|693e4c90d947b5eb|1fd21bb9cf823d5c|808688450||t20038.5785419879s|097df6ed47d18f96|107|rds|local|vector|||0.385||
+model_summary|object|c0fed4b95b080b93|||||||||||||||
+time_end|object|fbe75196fbef5388|||||||||||||||
+time_start|object|e4065068ebe6e73e|||||||||||||||
