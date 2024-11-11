@@ -1,9 +1,6 @@
 name: 'Pre-build Dev Container'
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
