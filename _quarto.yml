@@ -30,6 +30,8 @@ book:
     - automatedGatingTraining.qmd
     - recordings.qmd
     - summary.qmd
+    - drafts.qmd
+    - draft-targets.qmd
     - references.qmd
 
 bibliography: references.bib

@@ -1,0 +1,261 @@
+---
+title: "Reproducible Pipelines with `targets`"
+format:
+  html:
+    code-fold: false
+---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = TRUE,
+  comment = "#>",
+  fig.path = "images/drafts-targets-"
+)
+```
+
+# Introduction to `targets`
+
+In data analysis projects, ensuring reproducibility is crucial. The `targets` package in R provides a powerful framework for building reproducible, scalable, and efficient data pipelines. This tutorial will guide you through the basics of using `targets` to manage your analysis workflow.
+
+## Purpose
+
+The primary purpose of using `targets` is to **prevent rerunning parts of the pipeline if their dependencies haven't changed**. This optimization saves time and computational resources by only executing the necessary steps when data or code modifications occur.
+
+## Getting Started
+
+### Installation
+
+First, install the `targets` package from CRAN if you haven't already:
+
+```{r}
+install.packages("targets")
+library(targets)
+```
+
+### Initialization
+
+```{r}
+#| include: false
+if (file.exists("_targets.R")) {
+  unlink("_targets.R")
+}
+if (dir.exists("_targets")) {
+  unlink("_targets", recursive = TRUE)
+}
+```
+
+Load the `targets` package and initialize a new `targets` pipeline in your project directory:
+
+```{r}
+#| eval: false
+library(targets)
+use_targets()
+```
+
+```{r}
+#| include: false
+# Read the file
+file_path <- "_targets.R"
+file_content <- readLines(file_path)
+
+# Replace the specific line
+file_content <- gsub("1000", "1e6", file_content)
+file_content <- gsub("100", "1e6", file_content)
+
+# Write the updated content back to the file
+writeLines(file_content, file_path)
+```
+
+This command creates a `_targets.R` script, with helpful setup instructions.
+
+Here is a slightly reduced version of it:
+
+```r
+# Created by use_targets().
+# Follow the comments below to fill in this target script.
+# Then follow the manual to check and run the pipeline:
+#   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
+
+# Load packages required to define the pipeline:
+library(targets)
+
+# Set target options:
+tar_option_set(
+  packages = c("tibble") # Packages that your targets need for their tasks.
+)
+
+# Run the R scripts in the R/ folder with your custom functions:
+tar_source()
+
+# tar_source("other_functions.R") # Source other scripts as needed.
+
+# Replace the target list below with your own:
+list(
+  tar_target(
+    name = data,
+    command = tibble(x = rnorm(1e4), y = rnorm(1e4))
+    # format = "qs" # Efficient storage for general data objects.
+  ),
+  tar_target(
+    name = model,
+    command = coefficients(lm(y ~ x, data = data))
+  )
+)
+```
+
+## Running the pipeline
+
+We then run this pipeline using `tar_make()`.
+We do that below, and time how long the pipeline takes to execute:
+
+```{r}
+time_start <- proc.time()[3]
+tar_make()
+time_end <- proc.time()[3]
+(time_end - time_start) |> signif(2)
+```
+
+Now, we can rerun it, and it will take less time:
+
+```{r}
+time_start <- proc.time()[3]
+tar_make()
+time_end <- proc.time()[3]
+(time_end - time_start) |> signif(2)
+```
+
+It doesn't drive it down to zero as `targets` has some overhead (e.g., checking dependencies), but it's obviously faster.
+This difference becomes dramatic when slow-running steps are involved.
+
+If we adjust the pipeline, then `tar_make()` will rerun what is required:
+
+```{r}
+# Read the file
+file_path <- "_targets.R"
+file_content <- readLines(file_path)
+
+# Replace the specific line
+file_content <- gsub("y ~ x", "y ~ x - 1", file_content)
+
+# Write the updated content back to the file
+writeLines(file_content, file_path)
+
+# Run the pipeline
+time_start <- proc.time()[3]
+tar_make()
+time_end <- proc.time()[3]
+(time_end - time_start) |> signif(2)
+```
+
+The time is still faster than before, as we didn't simulate the data, but it's slower than when the model fit was cached.
+
+```{r}
+#| include: false
+# Read the file
+file_path <- "_targets.R"
+file_content <- readLines(file_path)
+
+# Replace the specific line
+file_content <- gsub("y ~ x - 1", "y ~ x", file_content)
+
+# Write the updated content back to the file
+writeLines(file_content, file_path)
+```
+
+## Accessing Outputs
+
+After running the pipeline, you can access the outputs of the targets using:
+
+- **`tar_load(<name>)`**: Loads the target object into the R environment.
+  
+  ```{r}
+  tar_load(model)
+  summary(model)
+  ```
+  
+- **`tar_read(<name>)`**: Reads the target object without loading it into the environment.
+  
+  ```{r}
+  model_summary <- tar_read(model)
+  summary(model_summary)
+  ```
+
+## Debugging the Pipeline
+
+Debugging is an essential part of developing a `targets` pipeline.
+However, you cannot directly debug a `targets` pipeline by default (it runs the code "separately" from the R console).
+
+Here are two methods to debug your pipeline.
+
+### Option 1: Using `browser()`
+
+Insert `browser()` into the function where you want to inspect the pipeline's state.
+
+```{r}
+#| eval: false
+#| echo: true
+tar_target(
+  model,
+  {
+    browser()
+    lm_model <- lm(value_log ~ predictor, data = data_processed)
+    lm_model
+  }
+)
+```
+
+Run the pipeline with:
+
+```{r}
+targets::tar_make(callr_function = NULL)
+```
+
+This allows you to interactively debug the target execution.
+
+### Option 2: Loading Everything
+
+Load all targets into the environment to inspect and interact with them directly.
+
+```{r}
+targets::tar_load_everything()
+```
+
+This approach is useful for exploratory debugging and inspecting intermediate results.
+
+For example, after running `targets::tar_load_everything()`, you can access the data object directly. You can then play around with the code to fit the model, having the data at hand. 
+
+## More niche topics
+
+### Multiple pipelines
+
+Within a given project, one may define multiple pipelines.
+
+### Forced Execution
+
+Sometimes, you may want a target to **always rerun**, regardless of whether its dependencies have changed. Use `tar_cue(cue = "always")` to enforce this behavior.
+
+```{r, eval=FALSE}
+tar_target(
+  figure,
+  {
+    plot <- ggplot(data_processed, aes(x = predictor, y = value_log)) +
+      geom_point() +
+      geom_smooth(method = "lm") +
+      theme_minimal()
+    ggsave("figures/model_plot.png", plot)
+    plot
+  },
+  cue = tar_cue("always")
+)
+```
+
+This ensures that the `figure` target is always executed when `tar_make()` is run.
+
+Sometimes you just need to do this, e.g. `targets` can't pick up that the data has changed or the output has been wiped in between runs.
+
+## Further Resources
+
+- **Home Page**: [Dynamic Function-Oriented Make-Like Declarative Pipelines • targets](https://docs.ropensci.org/targets/)
+- **Detailed User Manual**: [The {targets} R package user manual](https://books.ropensci.org/targets/)
