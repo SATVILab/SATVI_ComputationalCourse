@@ -511,7 +511,7 @@ kw_obj[["p.value"]] |> signif(3)
 
 ## Homework
 
-1. Install the package `DataTidy23RodoSTA2005SAssignment`:
+1. Install the package `DataTidyRodoSTA2005S`:
 
 ```{r}
 #| eval: false
