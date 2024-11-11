@@ -10,7 +10,8 @@
     },
     "ghcr.io/MiguelRodo/DevContainerFeatures/config-r:2": {
       "debug": true,
-      "debugRenv": true
+      "debugRenv": true,
+			"pkgExclude": "DataTidyILC"
     },
 		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
 			"installDevTools": false,
