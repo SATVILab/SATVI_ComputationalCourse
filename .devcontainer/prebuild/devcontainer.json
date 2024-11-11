@@ -1,0 +1,15 @@
+{
+  "image": "ghcr.io/satvilab/satvi_computationalcourse",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "quarto.quarto",
+        "REditorSupport.r",
+        "mathematic.vscode-pdf",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "bierner.markdown-preview-github-styles"
+      ]
+    }
+  }
+}
