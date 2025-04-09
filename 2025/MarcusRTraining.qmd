@@ -1,0 +1,123 @@
+---
+title: "MaRcus R Training"
+format: html
+---
+
+## Description
+
+The Marcus R Training program was developed by Hasse Walum of Emory University. The program will cover the following:
+
+1. Importing data 
+2. Basic data visualization 
+3. Exporting and saving plots
+4. Data transformation
+5. R Markdown basics
+6. Summarizing data
+7. String manipulation and data joining
+
+Rather than reinventing what is covered in the Marcus R Training program, we have been granted permission to use the materials for our SATVI Computational Course. 
+
+Over the next 6 weeks, we will refer to the Marcus R Training materials for our sessions. 
+
+## Content access
+
+The course and all associated resources are available at:
+
+[https://haswal.github.io/MaRcus/index.html](https://haswal.github.io/MaRcus/index.html)
+
+## Homework
+
+Please refer to the [MaRcus R Training Program](https://haswal.github.io/MaRcus/index.html) session guides to access your homework assignments. 
+
+## FAQ
+
+#### Session 1
+
+**Q1: What are the best ways to set your working directory?**
+
+    A: There are a few ways to do this:
+    
+        1. If you are using Mac, you can navigate to the directory you would like to work in using Finder. Right click the directory and hold down the "option" key. You will see an option pop up that reads "Copy path/to/directory as Pathname". Select this option to copy the pathname, then paste it into R using setwd(). This option is generally recommended. 
+
+        2. You can also set the working directory using point and click in RStudio. To do so, navigte to the "Session" tab in RStudio, then to "Set Working Directory". Follow the options to set the working directory as desired. 
+
+        3. A note about setting working directories in scripts. It is good practice to avoid using absolute file paths in your scripts, including setwd(). This means if you have your data on your PC under the filepath "User/Documents/ProjectA/analysis/data", for example, as much as possible, avoid writing this complete path into your code. This becomes problematic if you ever need to run your code on a different machine or HPC, or if a collaborator needs to run your code and has a different file structure. R will not be able to find your data if it is not stored in exactly the same place on every machine. A better option is to set your working directory using the R console (do not setwd() in the saved script). In the console, set your working directory to whatever folder contains your generic subdirectories (i.e. "data", "output"), in this example, the "analysis" folder. Then when you run your script, all you need to include when you specify a filepath is "data" or "output". So, if you ever run the script on a different machine, the user can store the relevant files anywhere they want, as long as they have subdirectories "data" and "output". 
+
+
+**Q2: When generating a plot using ggplot2, does the name used in the script for the row or column we want to plot have to match the col or rowname of the associated dataframe exactly?**
+
+    A: Yes. The names must match exactly because R searches the dataframe for col or rownames as you specify them. If you have a typo or a lower vs uppercase, it won't find that row or column in the dataframe. Also be aware of any col or rownames that include spaces. Spaces in col and rownames can confuse R into thinking you are indicating more than one name. To avoid this, if you need to specify a col or rowname that includes a space, you must place single back ticks around the full name to indicate to R that this is one complete col or rowname. For example, if you have a column called Sample Name, you must write it into your script as 'Sample Name' for ggplot2 to work properly. 
+
+
+**Q3: What is the difference between facet_wrap() and facet_grid()?**
+
+    A: Both are options that can be applied to ggplot2. facet_wrap() wraps a 1d sequence of panels into 2d. It is best used if you want to display data in a rectangular arrangement. It is used when you want to plot one variable. facet_grid() will create a panel matrix defined by numbers of rows and columns. It is ideal for plotting multiple variables that should be visualized separately for the same data. For example, if you want to plot time vs. weight, and time vs. height, you can use facet_grid() to plot both comparisons in a grid layout. Including a ~ either before or after each variable will change the orientation of variables plotted in the grid (i.e. the variable placed before the ~ will be plotted on the row, the variable placed after the ~ will be plotted on the column).
+
+
+**Q4: When should I specify aes globally vs. locally?**
+
+    A: In general, specify aes in mapping (global) so that the specifications are applied to all of the data. If you need something more fine-tuned, you can write it into geom_point (lobal), where it will be applied only to that geom_point. 
+
+
+**Q5: What are HEX codes?**
+
+    A: HEX codes are unique alphanumeric codes assigned to specific colors. They can be used to assign specific colors to your data points when you plot in R. There are also pre-defined color schemes (i.e. printer-friendly, colorblind safe) that you can select. To find more information on HEX codes or colorshemes, visit [https://colorbrewer2.org](https://colorbrewer2.org)
+
+
+**Q6: What are your recommendations for using Chat GPT for help with coding?**
+
+    A: Chat GPT is a quickly growing tool used by coders. It can be very helpful for designing / troubleshooting code. We recommend using Chat GPT when you are stuck before spending hours sifting through other online sites. Information given by Chat GPT can and should be verified with the original sources. We caution against allowing Chat GPT to do your work for you! It is best to become proficient and understand coding languages independently and using Chat GPT as an assistant. Relying on it entirely will ultimately be to your detriment. When you do use Chat GPT, read the descriptions and explanations it gives and make you understand thoroughly so you can use it yourself next time. If you do need help in a hurry, you can ask Chat GPT to keep responses brief by typing "No yapping." Always say please and thank you to Chat GPT for offering such superb assistance!
+
+
+#### Session 2
+
+**Q1: What is the difference between top and bottom windows in R Studio?**
+
+    A: It can help to think of this an analogy: In R Studio, the top left (script) is your recipe, bottom left (console) is your kitchen, top right (environment) is your pantry. The script window shows your saved scripts that you can use each time you need to run the analysis. You can make edits and save just like you might for your favourite recipe. The console is where you do the work. As you run lines of your script, you will see that in the console below, each line is copied into the console and run in real time. Here you can see the script running and any warnings and outputs. The environment, like a pantry, is where all of the necessary "ingredients" to run your script are kept. Just as you would before you start cooking, as you go through your script, you will load necessary items (i.e. data / metadata) into your environment so that when the recipe calls for it, it is there and ready to go. The final bottom right window serves a few functions. It can show file paths, plot outputs, packages etc. We encourage everyone to familiarize themselves with each window to better understand their functionalities. Happy cooking! I mean coding. 
+
+
+**Q2: Can you plot confidence intervals automatically using geom_errorbar or do you have to calculate them separately first?**
+
+    A: Confidence intervals should be calculated separately. 
+
+
+#### Session 3
+
+**Q1: How can you save the contents of the R console when I finish a session?**
+
+    A1: You can save the contents of the base R console using the 'sink()' function. Here you will specify the file path where you want the file to be saved. sink() will then save the console contents as a .txt file in your specified directory. sink must sandwich your code that you want to save.
+
+    For example: 
+
+    sink("output/console_content.txt")
+
+    Run code of your choice
+
+    sink()
+
+    A2: If using RStudio, you can do this via point and click. Navigate to "History" in the top right window. Click "Save". You must do this before ending the session. The "Save" option that comes up upon closing the session will save a hidden . Rdata file, not your console output as a separate file. 
+
+
+**Q2: How does 'filter()' work?**
+
+    A: The 'filter()' function from the 'dplyr' package is used to subset data frames based on specified conditions. Specify the data frame and condition as follows:
+
+    filter(.data, condition)
+
+    Here .data is any data frame in your environment that you want to filter. Condition needs to be specified to filter the data frame however you need. filter() will search through each column (or a specified column) until it finds a row that meets the specified condition. Any row that has a value that meets your condition will be removed. Typically when we filter we assign the filtered data frame to a new name, or overwrite the original data frame. For example:
+
+    filtered.data <- filter(original.data, original.data$frequency > 0.05)
+
+    filtered.data have rows with frequency > 0.05 removed. 
+
+
+**Q3: What is the difference between a function and an operator?**
+
+    A: A function is a chunk of code that is designed to perform a specific task. They typically wrap multiple arguments and use complex logic that is inefficient to rewrite each time it is needed. A function streamlines the process so all you have to do is call the function, specify a small number of options. This is typically done in one line of code. 
+
+    Alternatively, an operator is a simple symbol that is used to perform arithmetic, logical, or rational operations on data. For example a '+' is an arithmetic operator for addition. 
+
+
+**Q4: Why does the 'is.na()' function work if the NA in my data frame is uppercase? Isn't it case-specific?**
+
+    A: Though most things in R are case specific, is.na() isn't actually looking for the specific "NA" text. NA comes up as an empty or missing value. Therefore, even though we see NA as uppercase, in R it comes up as a missing value, so the case of the text doesn't matter. Where is.na() finds a missing value, it will return a value of 'TRUE'. Actual values will be returned as 'FALSE'

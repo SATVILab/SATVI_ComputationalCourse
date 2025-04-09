@@ -1,0 +1,263 @@
+---
+title: "Exporting and Importing Data Formats in R"
+format: html
+editor: visual
+---
+
+## Description
+
+This script will demonstrate methods for exporting and importing various data and plot formats from an R script. We will be using the built-in "iris" and "mtcars" datasets available in R. We encourage you to go through these steps with a dataset of your own and export formats that are relevant to your study. This session will cover commonly needed formats, including .xlsx, .csv, .pdf, .png, and .jpeg. However, there are many additional data formats that can be used and we recommend exploring these independently. Keep in mind that there are many different ways to do similar things in R, i.e. multiple packages to export to .xlsx. This script is intended to provide some helpful examples, but is not comprehensive.
+
+### Clear environment
+
+```{r, results='hide'}
+ls()
+rm(list=ls())
+```
+
+### Set output directory
+
+```{r, warning=FALSE}
+dir.create("output")
+dir_save <- "output/"
+```
+
+### Load libraries
+
+```{r, message=FALSE}
+library(tidyverse) # Needed for 'glimpse()'
+library(openxlsx) # Needed to export data.frame to .xlsx
+library(dplyr) # Needed to convert rownames to column and simultaneously delete rownames
+library(rio) # Needed for 'import' function 
+library(readxl) # Needed for alternative method for importing .xlsx
+```
+
+### Load datasets
+
+We will load the built-in "iris" and "mtcars" datasets for demonstration purposes.
+
+```{r}
+data("iris")
+data("mtcars")
+```
+
+### Examine data structure
+
+```{r}
+head(iris)
+head(mtcars)
+
+glimpse(iris)
+glimpse(mtcars)
+
+class(iris)
+class(mtcars)
+```
+
+### Export data to .xlsx
+
+Here we will use dir_save to specify where we want to save our files. Alternatively, you can write out the full path to your output directory.
+
+```{r}
+# To export a single data.frame to .xlsx 
+
+write.xlsx(iris, paste0(dir_save, "iris_data.xlsx"))
+
+
+# To export multiple data.frames into different sheets, create a list of data.frames to be used as the object for write.xlsx
+
+data.frames <- list('Sheet1' = iris, 'Sheet2' = mtcars)
+write.xlsx(data.frames, file = paste0(dir_save, "iris_mtcars_data.xlsx"))
+
+
+# Write to .xlsx including colnames and rownames for all sheets
+
+write.xlsx(data.frames, file = paste0(dir_save, "iris_mtcars_data_colrow.xlsx"), colNames = TRUE, rowNames = TRUE)
+
+
+# Alternatively, convert rownames from specific data.frames to a named column and export without rownames
+
+mtcars <- tibble::rownames_to_column(mtcars, "Model")
+data.frames <- list('Sheet1' = iris, 'Sheet2' = mtcars)
+write.xlsx(data.frames, file = paste0(dir_save, "iris_mtcars_data_rownamestocol.xlsx"))
+```
+
+### Export data to .csv
+
+```{r}
+# Let's first export iris as is and restore mtcars to its original format before exporting to .csv
+
+write.csv(iris, file = paste0(dir_save, "iris_data.csv"))
+
+mtcars <- column_to_rownames(mtcars, var = "Model")
+write.csv(mtcars, file = paste0(dir_save, "mtcars_data.csv"))
+
+# You'll notice that the default for write.csv is to set col.names and row.names = TRUE
+
+write.csv(mtcars, file = paste0(dir_save, "mtcars_data_colrowfalse.csv"), col.names = FALSE, row.names = FALSE)
+
+# When using write.csv, colnames will still be written. If you want to eliminate colnames, use write.table
+
+write.table(mtcars, file = paste0(dir_save, "mtcars_data_colfalse.csv"), col.names = FALSE, row.names = FALSE)
+
+```
+
+### Import data from .xlsx
+
+```{r}
+# Import a data.frame from a specific sheet in a .xlsx file
+
+df.iris.xlsx <- read.xlsx(xlsxFile = "output/iris_mtcars_data_colrow.xlsx",
+                     sheet = 1,
+                     rowNames = TRUE)
+
+class(df.iris.xlsx)
+
+head(df.iris.xlsx)
+
+# A common alternative method relies on the 'readxl' package, but functions differently
+
+df.mtcars.xlsx <- read_xlsx("output/iris_mtcars_data_colrow.xlsx",
+                    sheet = 2)
+
+class(df.mtcars.xlsx)
+head(df.mtcars.xlsx)
+
+# Using this method, you will need to convert to a data.frame before you can set rownames
+
+df.mtcars.xlsx <- as.data.frame(df.mtcars.xlsx)
+rownames(df.mtcars.xlsx) <- df.mtcars.xlsx[[1]]
+df.mtcars.xlsx <- df.mtcars.xlsx[-1]
+head(df.mtcars.xlsx)
+
+```
+
+### Import data from .csv
+
+```{r}
+# Import the iris data.frame as is. Below are two alternative methods.
+
+df.iris.csv <- read.csv("output/iris_data.csv")
+
+df.iris.csv <- import("output/iris_data.csv")
+
+# Import and set colnames
+
+df.iris.csv <- read.table("output/iris_data.csv", row.names = 1, header = TRUE, sep = ",")
+
+head(df.iris.csv)
+
+df.mtcars.csv <- read.table("output/mtcars_data.csv", row.names = 1, header = TRUE, sep = ",")
+
+head(df.mtcars.csv)
+
+```
+
+### Plot data and export
+
+```{r, message=FALSE, warning=FALSE}
+# Create a plot and save using ggplot followed by ggsave
+  
+ggplot(data = df.iris.csv, 
+                mapping = aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point(aes(color = Petal.Width)) +
+  geom_smooth(method="lm") +
+  labs(title = "Petal vs. Sepal Length", subtitle = "Separated by Species", x = "Sepal Length", y = "Petal Length") + 
+  facet_wrap(~Species, 
+             scales = "free_x") +
+  theme(plot.title = element_text(face = "bold"))
+
+ggsave("output/iris_ggplot.pdf", width = 7, height = 7)
+ggsave("output/iris_ggplot.png", width = 7, height = 7)
+ggsave("output/iris_ggplot.jpeg", width = 7, height = 7)
+
+# Alternatively, assign the plot to an object, then print and dev.off. Whereas the first method is compatible with plots made using ggplot, this method will work for any type of plot. 
+
+plot <- ggplot(data = df.iris.csv, 
+                mapping = aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point(aes(color = Petal.Width)) +
+  geom_smooth(method="lm") +
+  labs(title = "Petal vs. Sepal Length", subtitle = "Separated by Species", x = "Sepal Length", y = "Petal Length") + 
+  facet_wrap(~Species, 
+             scales = "free_x") +
+  theme(plot.title = element_text(face = "bold"))
+
+pdf("output/iris_plot.pdf", width = 7, height = 7)
+print(plot)
+invisible(capture.output(dev.off()))
+
+png(filename = "output/iris_plot.png", width = 1500, height = 1500, res = 300)
+print(plot)
+invisible(capture.output(dev.off()))
+
+jpeg("output/iris_plot.jpeg", width = 1500, height = 1500, res = 300)
+print(plot)
+invisible(capture.output(dev.off()))
+
+```
+
+### Save what has been done to an .Rdata file
+
+In some cases, it may be helpful to save a specific object or everything in your environment to an .Rdata file that can be imported all at once to be used in a different pipeline or at a later time. You can save as either an RData object or as an RDS object.
+
+```{r}
+# To save a specific object
+
+save(df.iris.csv, file = paste0(dir_save, "df.iris.csv.RData"))
+
+# To save all data and values in your R environment to an RData file
+
+save.image(paste0(dir_save, "Data_Export_Tutorial.RData"))
+```
+
+You can then load that .RData file back into R and start back up where you left off.
+
+```{r, results='hide'}
+# First clear the environment so we can see how RData files are loaded
+
+ls()
+rm(list=ls())
+
+# Now load your .RData objects
+
+load("output/Data_Export_Tutorial.RData")
+```
+
+You can do the same thing for single objects saved as .RDS
+
+```{r, results='hide'}
+saveRDS(df.iris.csv, file = paste0(dir_save, "df.iris.csv.rds"))
+
+ls()
+rm(list=ls())
+
+# Now load your .RDS objects
+
+reloaded_data <- readRDS("output/df.iris.csv.rds")
+```
+
+There is a workaround to save and reload an entire environment as .RDS, but it is a bit more involved and requires the use of loops, which is beyond the scope of this session. We will cover loops in a later session.
+
+## Homework
+
+For this homework assignment, you will be using a script that you write yourself! If you have data for your own study, we suggest writing a simple script that is relevant to the analyses you will need to do. The only requirements are that you should use data that can be imported / exported in a table or dataframe format and plotted. If you do not have data of your own yet, you can use a built in dataset available from R. To find built in datasets use the following command:
+
+```{verbatim, eval = FALSE}
+data()
+```
+
+Now perform the following steps:
+
+1.  Clear your environment.
+2.  Set your working directory. This should be in a location where you perform work related to this course.
+3.  Set output directory. This should be a subdirectory within your working directory where you want to save any files that you generate. You can create this manually in your normal file finder or create it using R as is done in the script above.
+4.  Load libraries that are necessary for your script.
+5.  Load your dataset. Either import your own data or load one of the built in datasets.
+6.  Examine data structure.
+7.  Plot your data however you like! Refer to previous sessions for ideas and guidance.
+8.  Save your plots as pdf, png, and jpeg.
+9.  Export your data file as .xlsx and .csv. Confirm that your row and colnames are in the correct position.
+10. Save a relevant object from your environment as .Rdata and .rds.
+11. Load your .Rdata and .rds files back into R.
+12. Consult the internet or ChatGPT and find at least one alternative method to import, export, and save your data or plots. Try these out.
+13. Save your script.

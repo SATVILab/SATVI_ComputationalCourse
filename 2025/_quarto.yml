@@ -1,0 +1,47 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "SATVI Computational Course"
+  subtitle: "Session Guide"
+  author: "SATVI Computational Group"
+  date: "2025"
+  downloads: pdf
+  navbar:
+    search: true
+    background: light
+  sidebar:
+    border: true
+    logo: images/satvi_logo.png
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - syllabus.qmd
+    - installations.qmd
+    - swirl.qmd
+    - MarcusRTraining.qmd
+    - dataexport.qmd
+    - quartodocs.qmd
+    - github.qmd
+    - vscode.qmd
+    #- hypothesistesting.qmd
+    #- correlation.qmd
+    - automatedGatingTraining.qmd
+    - recordings.qmd
+    - summary.qmd
+    - drafts.qmd
+    #- draft-targets.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  #pdf:
+    #documentclass: scrreprt
+
+
+
+

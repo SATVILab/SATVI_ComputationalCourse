@@ -1,0 +1,868 @@
+---
+title: "Processing Flow Cytometry Data in R"
+format:
+  html:
+    code-fold: true
+    embed-resources: true
+---
+
+```{r}
+#| include: false
+library(tibble)
+library(ggplot2)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Flow cytometry data often comes with complex formatting and nomenclature that can make downstream analysis challenging. This guide walks through the steps to process gated flow cytometry data exported from software like FlowJo into a format suitable for analysis in R.
+
+## Introduction
+
+Flow cytometry experiments generate data that includes frequencies (or counts) of of cell populations, possibly both phenotypic and antigen-specific:
+
+```{r}
+# Read the CSV file
+data_raw <- readr::read_csv(
+  "_data_raw/processinggateddata/example.csv"
+  )
+
+dim(data_raw)
+
+# View the first few rows
+head(data_raw[1:3, 1:5])
+```
+
+### Difficulties
+
+There are several data formatting challenges:
+
+- *Awkward Column Names*: Columns like `TUBE NAME` and `CD4G+T+2+` require backticks to reference in R.
+- *Many columns*: Makes programming more involved and error-prone
+- *Mixed response column types*: both phenotypic and antigen-specific
+
+There are a few calculationd we'll typically want to do:
+
+- *Calculate frequencies*: If we start with counts, we may want to convert these to frequencies
+  - For example, if 6 CD4 T cells are IFNg+IL2+TNF+ and 967 are CD4 T cells, we'll want to convert these to frequencies (e.g. 6 / 967 * 1e2 =  0.62).
+- *Subtract background*: If we have unstimulated samples, we'll want to subtract these from the stimulated samples.
+- *Summarize over markers*: We might want to sum frequencies over certain markers or combinations.
+
+Finally, we may wish to distribute the data in a version-controlled manner, so that we can track changes over time and others (including our future selves) can re-use it.
+
+As there are many calculations we need to perform, it is easy to make mistakes. We'll check for these throughout.
+
+We'll walk through these steps in the following sections.
+
+### Example output
+
+I use a data package for saving and distributing the processed ILC data:
+
+```{r}
+if (!requireNamespace("DataTidyILC", quietly = TRUE)) {
+  if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+  }
+  remotes::install_github("SATVILab/DataTidyILC")
+}
+data("ilc_satvi_2023_1_3_tbl", package = "DataTidyILC")
+ilc_satvi_2023_1_3_tbl
+```
+
+## 1. Raw Data
+
+### Versioning
+
+A brief note on versioning raw data:
+
+- The gates may change over time (does your supervisor's name start with `N` and rhyme with `emehz`?:P)- Keep all versions of the raw data.
+  - The files are small
+  - I prefer versioned folders (e.g. `version_1`, `version_2`)
+    - More readable
+    - File names are changed from what you exported (or received in an email)
+- Keep a log of where the raw data came from:
+  - If you're keeping the files in Git, then your commits can tell you where you got the data from. But it's cumbersome to search through commits.
+  - I sometimes keep a GitHub issue tracking where raw data are from (e.g. `https://github.com/SATVILab/Project24TBVaccSexDiff/issues/59`).
+  - Keeping notes in the `qmd`/`rmd` file itself is probably the most practical, as you don't need to create a separate thing (e.g. a GitHub issue or log file).
+  - A note in the raw data file (e.g. `LOG.txt`) is also a good idea.
+- By standardising the outputs (e.g. checking that each new version of the data produces the expected number of samples and cytokine combinations), you make it easier for the raw data to be changed and mistakes to be picked up earlier in the process, rather than at analysis time.
+
+### Handling Decimal Symbols
+
+Be cautious with decimal symbols, especially if your locale settings use commas instead of periods.
+
+By default, `R` treats "." as the decimal symbol. If the exported excel file instead uses ".", you can use the `OutDec` option to specify the decimal symbol.
+
+```{r}
+#| eval: false
+# 1. Ensure decimal points are correctly interpreted
+options(OutDec = ",")
+# read in data
+data_raw <- read.csv("flow_cytometry_data.csv")
+# reset decimal point
+options(OutDec = ".")
+
+# 2. Alternatively, specify the decimal symbol when reading the CSV
+# (but not all functions may support this)
+data_raw <- read.csv(
+  "flow_cytometry_data.csv",
+  dec = ","
+)
+```
+
+### Inspecting raw data
+
+Let's look at the dataframe:
+
+```{r}
+data_raw
+```
+
+There are many columns, and we can't view all of them.
+We can use the `view_cols` function from the `SATVILab/UtilsDataRSV` package.
+How it complements the `head` function:
+
+- Displays if any entries have NAs
+- Displays randomly sampled unique entries
+- Can always see all the columns
+
+```{r}
+if (!requireNamespace("UtilsDataRSV", quietly = TRUE)) {
+  if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+  }
+  remotes::install_github("SATVILab/UtilsDataRSV")
+}
+UtilsDataRSV::view_cols(data_raw)
+```
+
+## 2. Cleaning up the sample information
+
+### Regular expressions
+
+When formatting these data, we'll often need to use regular expressions to work with the strings. We may need to *detect* or *substitute*:
+- *Detection*: checking if a given string contains a pattern. For example, regarding the population `CD4+G+T-2+`:
+  - Is it a CD8 T cell?
+  ```{r}
+  grepl("^CD8", "CD4+G+T-2+")
+  # equivalently, using the `stringr` package
+  stringr::str_detect("CD4+G+T-2+", "^CD8")
+  ```
+  - Does it express IFN$\gamma$? ``
+  ```{r}
+  grepl("G\\+", "CD4+G+T-2+")
+  # equivalently, using the `stringr` package
+  stringr::str_detect("CD4+G+T-2+", "G\\+")
+  ```
+- *Substitution*: replacing a pattern with another. For example:
+  - Replace `+` and `-` with `p` and `n`, respectively?
+  ```{r}
+  x <- gsub("\\+", "p", "CD4+G+T-2+")
+  gsub("\\-", "n", x)
+  # equivalently, using the `stringr` package
+  x <- stringr::str_replace_all("CD4+G+T-2+", "\\+", "p")
+  stringr::str_replace_all(x, "-", "n")
+  ```
+
+You can use either base R (`grepl`, `gsub`) or the `stringr` package (`str_detect`, `str_replace_all`). I started with `stringr` but now prefer base R because when you write packages, you try to avoid adding dependencies and `stringr` is a painfully-large dependency.
+
+**Tutorial**: I learnt (and re-learnt) regular expressions in various places, but the most helpful is https://regexone.com/. You are given tasks and an online coding environment, so you can learn by doing. You can then get going as soon as possible.
+
+**Cheating**: ChatGPT is amazing at regular expressions. HOWEVER, it is not hard to make mistakes (even if you could tell ChatGPT what you want), so you need to always check the output. If you don't have at least a passing familiarity with regular expressions, it can be hard to trust what ChatGPT gives you (in your own mind). 
+
+Certainly! Below is a rewritten version of your regular expressions overview tailored for an R Quarto (`.qmd`) file. It includes explanations and practical examples using R code chunks.
+
+#### Key operators in regular expressions
+
+##### `^` and `$`: Start and End of a String
+
+- **`^`** asserts the start of a string.
+- **`$`** asserts the end of a string.
+
+```{r start-end-example, echo=TRUE}
+# Sample vector of strings
+texts <- c("Hello World", "Hello", "World Hello", "Hi there")
+
+# Match strings that start with "Hello"
+starts_with_hello <- grep("^Hello", texts, value = TRUE)
+print(starts_with_hello)
+#> [1] "Hello World" "Hello"
+
+# Match strings that end with "Hello"
+ends_with_hello <- grep("Hello$", texts, value = TRUE)
+print(ends_with_hello)
+#> [1] "World Hello"
+```
+
+##### `[]`: Character Classes
+
+- **`[]`** defines a set of characters to match.
+
+```{r character-classes-example, echo=TRUE}
+# Sample vector of strings
+words <- c("apple", "banana", "cherry", "date", "fig", "grape")
+
+# Match words containing any vowel
+vowel_words <- grep("[aeiou]", words, value = TRUE)
+print(vowel_words)
+#> [1] "apple"  "banana" "cherry" "date"   "fig"    "grape"
+
+# Match words starting with a consonant
+consonant_start <- grep("^[bcdfghjklmnpqrstvwxyz]", words, ignore.case = TRUE, value = TRUE)
+print(consonant_start)
+#> [1] "banana" "cherry" "date"   "fig"    "grape"
+```
+
+##### `+`, `*`, `?`: Quantifiers
+
+- **`+`** matches one or more occurrences.
+- **`*`** matches zero or more occurrences.
+- **`?`** matches zero or one occurrence.
+
+```{r quantifiers-example, echo=TRUE}
+# Sample vector of strings
+items <- c("a", "aa", "aaa", "b", "bb", "ab", "aab")
+
+# '+' Quantifier: Match one or more 'a's
+one_or_more_a <- grep("a+", items, value = TRUE)
+print(one_or_more_a)
+#> [1] "a"   "aa"  "aaa" "aab"
+
+# '*' Quantifier: Match zero or more 'b's
+zero_or_more_b <- grep("b*", items, value = TRUE)
+print(zero_or_more_b)
+#> [1] "a"   "aa"  "aaa" "b"   "bb"  "ab"  "aab"
+
+# '?' Quantifier: Match zero or one 'a'
+zero_or_one_a <- grep("^a?$", items, value = TRUE)
+print(zero_or_one_a)
+#> [1] "a" "b"
+```
+
+##### `\\`: Escape Character in R for Special Regex Characters
+
+- **`\\`** is used to escape special regex characters in R strings.
+
+```{r escape-character-example, echo=TRUE}
+# Sample vector of filenames
+filenames <- c("report.pdf", "data.csv", "image.jpeg", "notes.txt", "archive.tar.gz")
+
+# Match filenames with a literal dot followed by 'txt'
+txt_files <- grep("\\.txt$", filenames, value = TRUE)
+print(txt_files)
+#> [1] "notes.txt"
+
+# Match filenames with a literal dot followed by any extension
+any_extension <- grep("\\.", filenames, value = TRUE)
+print(any_extension)
+#> [1] "report.pdf"    "data.csv"      "image.jpeg"    "notes.txt"    
+#> [5] "archive.tar.gz"
+```
+
+### Tidy the column names
+
+```{r}
+data_raw[, 1:3]
+```
+
+We'll rename the columns to make them easier to work with:
+
+```{r}
+data_raw <- data_raw |>
+  dplyr::rename(
+    fcs = `...1`,
+    sample_id = SampleID,
+    stim = `TUBE NAME`
+  )
+data_raw
+```
+
+The `janitor::clean_names` function also does a nice job, usually:
+
+```{r}
+test_tbl <- tibble::tibble(
+  "A B" = 1:3,
+  "C-D" = 4:6,
+  "E.F" = 7:9,
+  "G+H" = 10:12
+)
+test_tbl
+```
+
+```{r}
+test_tbl |>
+  janitor::clean_names()
+```
+
+Unfortunately in our case, replacing `-` and `+` with underscores is incorrect:
+
+```{r}
+data_raw[1, 5:6] 
+data_raw[1, 5:6] |>
+  janitor::clean_names()
+```
+
+### Tidying the column entries
+
+Let's force all the entries to lower case:
+
+```{r}
+data_raw <- data_raw |>
+  dplyr::mutate(across(c(sample_id, stim), tolower))
+data_raw
+```
+
+Let's have a look at the sample names:
+
+```{r}
+unique(data_raw$sample_id)
+```
+
+Let's remove the space:
+
+```{r}
+data_raw <- data_raw |>
+  dplyr::mutate(
+    sample_id = stringr::str_replace_all(sample_id, " ", "_")
+  )
+```
+
+Let's have a look at the sample names:
+
+```{r}
+unique(data_raw$sample_id)
+```
+
+Let's look at the stim names:
+
+```{r}
+unique(data_raw$stim)
+```
+
+Let's replace the dash:
+
+```{r}
+data_raw <- data_raw |>
+  dplyr::mutate(
+    stim = gsub("-", "_", stim)
+  )
+```
+
+Let's look at the stim names:
+
+```{r}
+unique(data_raw$stim)
+```
+
+### Checking
+
+Let's extract just the sample information:
+
+```{r}
+sample_tbl <- data_raw |>
+  dplyr::select(fcs, sample_id, stim) |>
+  dplyr::distinct()
+```
+
+Let's check that it looks okay:
+```{r}
+UtilsDataRSV::view_cols(sample_tbl)
+```
+
+We could add in more detailed checks, such as checking that each sample has the same number of stimulations:
+
+```{r}
+n_stim_unique <- sample_tbl |>
+  dplyr::group_by(fcs, sample_id) |>
+  dplyr::summarise(count = length(unique(stim)), .groups = "drop") |>
+  dplyr::pull(count) |>
+  unique()
+if (length(n_stim_unique) > 1) {
+  stop("Different number of stimulations for each sample")
+}
+```
+
+The above check means that if we update the data, we don't have to manually do these checks each time. We can just run the script and it will tell us if something is wrong. It won't pick up everything, of course, but it at least means that a minimal check is done, even when we're in a hurry.
+
+To generate these checks, you can probably just write a comment and get Copilot to do it for you (or put this into ChatGPT, but Copilot at least knows the names of your objects):
+
+```r
+# check that each level of the sample_id column has exactly the same number of unique stimulations, and error out if not
+```
+
+We'll rejoin this with the frequency data using the `fcs` column later.
+
+## 3. Cleaning up the frequency data
+
+```{r}
+freq_tbl <- data_raw |>
+  dplyr::select(-fcs)
+freq_tbl
+```
+
+We can see that there are phenotypic frequencies, as well as antigen-specific frequencies. We'll need to separate these out.
+
+For the purpose of today, we'll just look at CD4 T cells:
+
+```{r}
+freq_tbl_ag_cd4 <- freq_tbl |>
+  dplyr::select(
+    c(sample_id, stim, starts_with("CD4"))
+  ) |>
+  dplyr::select(
+    -`CD4+`
+  )
+freq_tbl_ag_cd4
+```
+
+### Preliminary tidying
+
+Let's convert it to long format first:
+
+```{r}
+freq_tbl_ag_cd4 <- freq_tbl_ag_cd4 |>
+  tidyr::pivot_longer(
+    cols = -c(sample_id, stim),
+    names_to = "marker",
+    values_to = "frequency"
+  )
+freq_tbl_ag_cd4
+```
+
+Typically, it's useful to separate out the phenotype lable from the cytokine combination. We'll also conver these to lower case:
+
+```{r}
+freq_tbl_ag_cd4 <- freq_tbl_ag_cd4 |>
+  dplyr::mutate(
+    pop_parent = stringr::str_sub(marker, 1, 3) |>
+      tolower(),
+    pop_child = stringr::str_remove(marker, "^CD4") |>
+      tolower()
+  ) |>
+  dplyr::select(
+    sample_id, stim, pop_parent, pop_child, frequency
+  )
+freq_tbl_ag_cd4
+```
+
+Let's also remove the triple negative:
+
+```{r}
+freq_tbl_ag_cd4 <- freq_tbl_ag_cd4 |>
+  dplyr::filter(
+    pop_child != "g-t-2-"
+  )
+```
+
+### Performing background subtraction
+
+We can use the `subtract_background` function from `UtilsCytoRSV`:
+
+```{r}
+if (!requireNamespace("UtilsCytoRSV", quietly = TRUE)) {
+  remotes::install_github("SATVILab/UtilsCytoRSV")
+}
+library(UtilsCytoRSV)
+```
+
+#### Help file
+
+```
+?subtract_background
+```
+
+```r
+Subtract background
+
+Description:
+
+     Subtract the unstim measurement from one or more columns.
+
+Usage:
+
+     subtract_background(.data, grp = NULL, stim, resp, uns, remove_uns = TRUE)
+     
+Arguments:
+
+   .data: dataframe. Contains columns for subtraction.
+
+     grp: character vector. Columns in ‘.data’ to group by.
+
+    stim: character. Column in ‘.data’ specifying stimulation.
+
+    resp: character vector. Column(s) in ‘data’ to subtract background
+          from.
+
+     uns: character. String in ‘stim’ that indicates the unstim
+          condition.
+
+remove_uns: logical. If ‘TRUE’, then the unstim rows are removed.
+
+Value:
+
+     A dataframe.
+
+```
+
+Let's run the example, which has 3 stims (one unstim) for each of two samples:
+
+```{r}
+.data_test <- data.frame(
+  pid = rep(c("a", "b"), each = 3),
+  stim = c("mtb", "ebv", "uns") |>
+    c("uns", "ebv", "mtb"),
+  resp1 = 1:6,
+  resp2 = 17:12 * 2
+)
+.data_test
+```
+
+We subtract background:
+
+```{r}
+data_out <- subtract_background(
+  .data = .data_test,
+  grp = "pid",
+  stim = "stim",
+  uns = "uns",
+  resp = c("resp1", "resp2"),
+  remove_uns = FALSE
+)
+data_out
+```
+
+Typically, you would want the `unstim` frequency removed, so we'll set `remove_uns = TRUE`:
+
+```{r}
+subtract_background(
+  .data = .data_test,
+  grp = "pid",
+  stim = "stim",
+  uns = "uns",
+  resp = c("resp1", "resp2"),
+  remove_uns = TRUE
+)
+```
+
+#### Applying to our data
+
+Let's apply this to our data. Let's first at a sample and cytokine combination with a non-zero unstim:
+
+```{r}
+freq_tbl_ag_cd4 |>
+  dplyr::filter(
+    sample_id == "hd20011_ct",
+    pop_child == "g-t+2-"
+  )
+```
+
+Now we apply the background subtraction:
+
+```{r}
+freq_tbl_ag_cd4 <- freq_tbl_ag_cd4 |>
+  subtract_background(
+    grp = c("sample_id", "pop_child"),
+    stim = "stim",
+    uns = "uns",
+    resp = "frequency",
+    remove_uns = TRUE
+  )
+```
+
+Let's look at the first sample and cytokine combination again:
+
+```{r}
+freq_tbl_ag_cd4 |>
+  dplyr::filter(
+    sample_id == "hd20011_ct",
+    pop_child == "g-t+2-"
+  )
+``` 
+
+### Calculate single-cytokine frequencies
+
+Let's save our frequencies of cells expressing a cytokine combination:
+
+```{r}
+freq_tbl_ag_cd4_combn <- freq_tbl_ag_cd4 |>
+  dplyr::mutate(
+    pop_type = "combination"
+  ) |>
+  dplyr::select(
+    sample_id, stim, pop_type, pop_parent, pop_child, frequency
+  )
+```
+
+Now we want to calculate the frequency of cells that express a single cytokine.
+For that, we can use the `UtilsCytoRSV::sum_over_markers` function.
+
+#### Help file
+
+```r
+?sum_over_markers
+```
+
+```r
+Description:
+
+     Calculate summed proportion/frequencies
+
+Usage:
+
+     sum_over_markers(
+       .data,
+       grp = NULL,
+       cmbn,
+       levels = c("+", "-"),
+       markers_to_sum = NULL,
+       markers_to_keep = NULL,
+       resp,
+       out_of_range = c(0, 1)
+     )
+     
+Arguments:
+
+   .data: dataframe. Each row pertains to one.
+
+     grp: character vector. Names of columns in ‘.data’ that together
+          define individual groups within which responses must be
+          summed (for example, participant ID and stim). If ‘NULL’,
+          then no grouping is done. Default is ‘NULL’.
+
+    cmbn: character. Column specifying marker/channel combination.
+
+  levels: character vector of length 2. Indicators for the expression
+          and non-expression. Default is ‘c("+", "-")’.
+
+markers_to_sum, markers_to_keep: character vector. Markers to sum
+          over/markers to not keep. Specify either one. If both are
+          specified, then markers_to_sum is used and markers_to_keep is
+          ignored. Default is ‘NULL’. Note that only ‘markers_to_sum’
+          is implemented thus far.
+
+markers_to_keep: character vector. Markers to not sum over. Overridden
+          by ‘markers_to_sum’, if that is not ‘NULL’. Default for
+          ‘markers_to_keep’ is ‘NULL’. Note that ‘markers_to_keep’ is
+          not implemented yet.
+
+    resp: character vector. Names of columns to sum over (may specify
+          more than one, e.g. unstim and stim columns).
+
+out_of_range: numeric vector of length 2. specifies values that are
+          considered out of range. Nothing happens as yet if values are
+          out of range - still needs to be implemented.
+
+Details:
+
+     If cytokine combinations are expressed in COMPASS format (in other
+     words separate cytokines by & and specify non-expression by !),
+     then use `compassutils::convert_cyt_combn_format` to convert to
+     "standard format", e.g. "IFNg+IL2+".
+```
+
+Let's run the example.
+
+This example starts with count data:
+
+```{r}
+data("data_count")
+data_count
+```
+
+So, we can use the `calc_freq` function to convert this to frequencies (`calc_prop` for proportions):
+
+```{r}
+data_freq <- data_count |>
+  calc_freq(
+    den = "count_pop_den",
+    num = "count_pop_num"
+  )
+data_freq
+```
+
+We can remove the count columns:
+
+```{r}
+data_freq <- data_freq |>
+  dplyr::select(-c(count_pop_den, count_pop_num)) |>
+  dplyr::arrange(SubjectID, VisitType, stim, cyt_combn)
+```
+
+Now, let's calculate the TNF+ frequency:
+
+```{r}
+sum_over_markers(
+  .data = data_freq,
+  # groups specifying individual samples
+  grp = c("SubjectID", "VisitType", "stim"),
+  # name of column containing cytokine combination
+  cmbn = "cyt_combn",
+  # just list the cytokine you want to sum over
+  markers_to_sum = c("IFNg", "IL2", "IL17"),
+  # list how negativity/positivity is indicated
+  # (e.g. could be c("n", "p"))
+  levels = c("-", "+"),
+  # name of column containing response variable
+  resp = "freq"
+)
+```
+
+#### Applying to our data
+
+So, in our data, we have three cytokine combinations we want to do this for.
+So we'll do this in a loop:
+
+```{r}
+cyt_vec <- c("g", "t", "2")
+freq_list <- list()
+for (i in seq_along(cyt_vec)) {
+  cyt <- cyt_vec[[i]]
+  freq_tbl_ag_cd4_curr <- sum_over_markers(
+    .data = freq_tbl_ag_cd4,
+    grp = c("sample_id", "stim", "pop_parent"),
+    cmbn = "pop_child",
+    # cytokines other than the one
+    # we want the frequency for
+    markers_to_sum = setdiff(cyt_vec, cyt),
+    levels = c("-", "+"),
+    resp = "frequency"
+  )
+  freq_tbl_ag_cd4_curr <- freq_tbl_ag_cd4_curr |>
+    dplyr::mutate(
+      pop_type = "single"
+    ) |>
+    dplyr::select(
+      sample_id, stim, pop_type, pop_parent, pop_child, frequency
+    )
+  freq_list[[i]] <- freq_tbl_ag_cd4_curr
+}
+freq_list[[2]]
+freq_tbl_ag_cd4_single <- dplyr::bind_rows(freq_list)
+freq_tbl_ag_cd4_single
+```
+
+### Changing order of cytokines
+
+Sometimes, we will want to change the order of the cytokines, e.g. from `g-t-2+` to `g-2-t+`.
+This might be personal preference, or when merging data from different trials.
+
+I never added a function to `UtilsCytoRSV` to do this (primarily because I didn't feel like writing up help files and test cases), but here is something that will work for our data:
+```{r}
+cyt_vec <- c("g", "t", "2")
+# we want g first, t third and 2 last
+cyt_order <- c(1, 3, 2)
+cyt_combn_vec <- c("g-t-2+", "g+t-2-")
+pos_neg_ind <- c("-", "+")
+
+reorder_markers <- function(cyt_combn,
+                            cyt_order,
+                            pos_neg_ind = NULL) {
+  # cyt_combn: vector of cytokine combinations
+  # cyt_order: vector of individual cytokines,
+  # in the order you want them to appear
+  # pos_neg_ind: indicators for positivity and negativity.
+  # defaults to NULL, in which case it's assumed they're length 1.
+  # get positions in original space
+  start_vec_pos <- sapply(
+    cyt_order,
+    function(y) {
+      stringr::str_locate(cyt_combn, y)[1]
+    }
+  ) |>
+    stats::setNames(cyt_order)
+  if (!is.null(pos_neg_ind)) {
+    length_ind <- unique(nchar(pos_neg_ind))
+    if (!length(length_ind) == 1) {
+      stop("Different lengths of positive and negative indicators")
+    }
+  } else {
+    length_ind <- 1
+  }
+  end_vec_pos <- start_vec_pos + nchar(cyt_order) + length_ind - 1
+
+  # order in which we want cytokines to appear
+  sapply(seq_along(cyt_combn), function(i) {
+    x <- cyt_combn[[i]]
+    x_rep <- NULL
+    for (cyt in cyt_order) {
+      x_rep <- paste0(
+        x_rep,
+        stringr::str_sub(
+          x, start_vec_pos[[cyt]], end_vec_pos[[cyt]]
+        )
+      )
+    }
+    x_rep
+  }
+  )
+}
+
+```
+
+```{r}
+freq_tbl_ag_cd4_combn |>
+  dplyr::mutate(
+    cyt_combn_2 = reorder_markers(
+      cyt_combn = pop_child,
+      cyt_order = c("g", "2", "t")
+    )
+  )
+```
+
+## 4. Combining the data
+
+```{r}
+freq_tbl_ag_cd4 <- dplyr::bind_rows(
+  freq_tbl_ag_cd4_combn,
+  freq_tbl_ag_cd4_single
+)
+freq_tbl_ag_cd4
+```
+
+## 5. Distributing the data
+
+### Via an R package
+
+First, we need to create a package. We can use `usethis::create_package` to do this.
+
+```r
+usethis::create_package
+```
+
+This will create (amongst other things) a file named `DESCRIPTION`. Edit the `Package` name field:
+
+```description
+Package: Analysis24TBVaccSexDiffPeak
+Title: Detect differences in vaccine-induced responses by sex
+Version: 0.1.1
+Authors@R: person("Miguel", "Rodo", , "miguel.rodo@uct.ac.za", role = c("aut", "cre"))
+Maintainer: Miguel Rodo <miguel.rodo@uct.ac.za>
+Description: Detect differences in vaccine-induced responses by sex
+License: {{ License }}
+URL: https://github.com/SATVILab/Analysis24TBVaccSexDiffPeak/#readme
+BugReports: https://github.com/SATVILab/Analysis24TBVaccSexDiffPeak/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+```
+
+Now, save the data in an appropriate way for packages:
+
+```r
+usethis::use_data(freq_tbl_ag_cd4, overwrite = TRUE)
+```
+
+At this point, you can install this package locally, using devtools:
+
+```r
+devtools::install()
+```
+
+If your folder is versioned using Git and linked to GitHub, then commit and push the changes.
+Afterwards, you can install the package and load the data anywhere as follows:
+
+```r
+remotes::install_github("<org_or_user_name>/<repo_name>")
+data("freq_tbl_ag_cd4", package = "<repo_name>")
+```
+
+
+

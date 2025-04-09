@@ -1,0 +1,469 @@
+---
+title: "Automated gating of flow Cytometry Data in R"
+format: html
+prefer-html: true
+author: SATVI Computational Group
+date: today
+---
+
+This is an example script for running the automated gating pipeline to obtain frequencies of antigen-specific CD4 and CD8 T cells.
+
+Contact Munya Musvosvi at munyaradzi.musvovi@uct.ac.za for assistance, or log issues at [UtilsAutoGating](https://github.com/SATVILab/UtilsAutogating/issues).
+
+```{r}
+#| echo: true
+#| eval: false
+library(cytoUtils)
+library(flowCore)#This packages are not being imported for some reason
+library(openCyto)#This packages are not being imported for some reason
+library(ggcyto)#This packages are not being imported for some reason
+library(magick)
+library(CytoML)
+library(rio)
+library(PeacoQC)
+#devtools::install_github("RGLab/cytoUtils")
+#BiocManager::install(c("SummarizedExperiment", "SingleCellExperiment", "TreeSummarizedExperiment"))
+
+fcs_location = ""#absolute path to the folder with the fcs files and the FlowJo workspace
+results_location = ""#absolute path of the folder you want to save the analysed data
+
+  fcs_files = list.files(fcs_location,full.names = T,pattern = ".fcs")
+  fcs_files = fcs_files[!grepl("Compensation Controls",fcs_files,fixed = T)]
+  fcs_files = fcs_files[grepl(".fcs",fcs_files,fixed = T)]
+  wsp_location = list.files(fcs_location,full.names = T,pattern = ".wsp")
+  if(length(wsp_location)>1){
+    wsp_location = wsp_location[order(file.info(wsp_location)$mtime,decreasing = T)][1]#Selects the most up to date .wsp
+  }
+
+  fcs_temp = load_cytoset_from_fcs(fcs_files[1])
+  markers_in_fcs_files = as.data.frame(markernames(fcs_temp))
+  colnames(markers_in_fcs_files) = "marker"
+
+  base_lineage_gating =data.frame(
+    alias = c("boundary", "singlets", "SSCneg", "lymph", "cd3.gate", "cd8.neg", "cd4.neg", "cd4.gate", "cd8.gate"),
+    pop = c("+", "+", "-", "+", "+", "-", "-", "+", "+"),
+    parent = c("root", "boundary", "singlets", "SSCneg", "lymph", "cd3.gate", "cd3.gate", "cd8.neg", "cd4.neg"),
+    dims = c("FSC-A,FSC-H", "FSC-A,FSC-H", "SSC-A,", "FSC-A,SSC-A", "CD3", "CD8", "CD4", "CD4", "CD8"),
+    gating_method = c("boundary", "singletGate", "gate_mindensity2", "gate_flowclust_2d", "gate_mindensity2", "gate_mindensity2", "gate_mindensity2", "gate_mindensity2", "gate_mindensity2"),
+    gating_args = c("max=c(256000,256000),min=c(20000,20000)", "", "peaks=2,min=30000,max=230000,gate_range = c(40000,200000)", "K=1,quantile=.9", "min=0.5,max=3.5", "peaks= 2,min =0.5,max=3.5", "peaks= 2,min =0.5,max=3.5", "peaks= 2, min=0.5, max=3.5,gate_range=c(1,3)", "peaks= 2, min=0.5, max=3.5,gate_range=c(1,3)"),
+    collapseDataForGating = rep(TRUE, 9),
+    groupBy = rep("pid", 9),
+    preprocessing_method = c("ppmyGate", "ppmyGate", "ppmyGate", NA, "ppmyGate", "ppmyGate", "ppmyGate", "ppmyGate", "ppmyGate"),
+    preprocessing_args = rep(NA, 9),
+    stringsAsFactors = FALSE)
+
+  if(sum(markers_in_fcs_files$marker%in%c("IFNG","IFNg","IFN-g","IFNy","IFN-y","IFN-gamma","IFNgamma"))==1){
+    IFNG = "yes"
+  }else{
+    IFNG = "no"
+  }
+
+  if(sum(markers_in_fcs_files$marker%in%c("IL2","IL-2"))==1){
+    IL2 = "yes"
+  }else{
+    IL2 = "no"
+  }
+
+  if(sum(markers_in_fcs_files$marker%in%c("TNF","TNF-a","TNFa","TNF-alpha","TNFalpha"))==1){
+    TNF = "yes"
+  }else{
+    TNF = "no"
+  }
+
+  if(sum(markers_in_fcs_files$marker%in%c("IL22","IL-22"))==1){
+    IL22 = "yes"
+  }else{
+    IL22 = "no"
+  }
+
+  if(sum(markers_in_fcs_files$marker%in%c("IL17","IL-17"))==1){
+    IL17 = "yes"
+  }else{
+    IL17 = "no"
+  }
+
+  if(IFNG=="yes"){
+    cytokine_IFNG = data.frame(
+      alias = c("cd4IFNG", "cd8IFNG"),
+      pop = c("+", "+"),
+      parent = c("cd4.gate", "cd8.gate"),
+      dims = c("IFNG", "IFNG"),
+      gating_method = c("gate_tail", "gate_tail"),
+      gating_args = c("auto_tol = TRUE, bias = 0.3", "auto_tol = TRUE, bias = 0.3"),
+      collapseDataForGating = c(TRUE, TRUE),
+      groupBy = c("pid", "pid"),
+      preprocessing_method = c("ppmyGate", "ppmyGate"),
+      preprocessing_args = c(NA, NA),
+      stringsAsFactors = FALSE)
+  }else{
+    cytokine_IFNG = NULL
+  }
+
+  if(TNF=="yes"){
+    cytokine_TNF = data.frame(
+      alias = c("cd4TNF", "cd8TNF"),
+      pop = c("+", "+"),
+      parent = c("cd4.gate", "cd8.gate"),
+      dims = c("TNF", "TNF"),
+      gating_method = c("gate_tail", "gate_tail"),
+      gating_args = c("auto_tol = TRUE, bias = 0.3", "auto_tol = TRUE, bias = 0.3"),
+      collapseDataForGating = c(TRUE, TRUE),
+      groupBy = c("pid", "pid"),
+      preprocessing_method = c("ppmyGate", "ppmyGate"),
+      preprocessing_args = c(NA, NA),
+      stringsAsFactors = FALSE)
+  }else{
+    cytokine_TNF = NULL
+  }
+
+  if(IL2=="yes"){
+    cytokine_IL2 = data.frame(
+      alias = c("cd4IL2", "cd8IL2"),
+      pop = c("+", "+"),
+      parent = c("cd4.gate", "cd8.gate"),
+      dims = c("IL2", "IL2"),
+      gating_method = c("gate_tail", "gate_tail"),
+      gating_args = c("auto_tol = TRUE, bias = 0.3", "auto_tol = TRUE, bias = 0.3"),
+      collapseDataForGating = c(TRUE, TRUE),
+      groupBy = c("pid", "pid"),
+      preprocessing_method = c("ppmyGate", "ppmyGate"),
+      preprocessing_args = c(NA, NA),
+      stringsAsFactors = FALSE)
+  }else{
+    cytokine_IL2 = NULL
+  }
+
+  if(IL17=="yes"){
+    cytokine_IL17 = data.frame(
+      alias = c("cd4IL17", "cd8IL17"),
+      pop = c("+", "+"),
+      parent = c("cd4.gate", "cd8.gate"),
+      dims = c("IL17", "IL17"),
+      gating_method = c("gate_tail", "gate_tail"),
+      gating_args = c("auto_tol = TRUE, bias = 0.3", "auto_tol = TRUE, bias = 0.3"),
+      collapseDataForGating = c(TRUE, TRUE),
+      groupBy = c("pid", "pid"),
+      preprocessing_method = c("ppmyGate", "ppmyGate"),
+      preprocessing_args = c(NA, NA),
+      stringsAsFactors = FALSE)
+  }else{
+    cytokine_IL17 = NULL
+  }
+
+  if(IL22=="yes"){
+    cytokine_IL22 = data.frame(
+      alias = c("cd4IL22", "cd8IL22"),
+      pop = c("+", "+"),
+      parent = c("cd4.gate", "cd8.gate"),
+      dims = c("IL22", "IL22"),
+      gating_method = c("gate_tail", "gate_tail"),
+      gating_args = c("auto_tol = TRUE, bias = 0.3", "auto_tol = TRUE, bias = 0.3"),
+      collapseDataForGating = c(TRUE, TRUE),
+      groupBy = c("pid", "pid"),
+      preprocessing_method = c("ppmyGate", "ppmyGate"),
+      preprocessing_args = c(NA, NA),
+      stringsAsFactors = FALSE)
+  }else{
+    cytokine_IL22 = NULL
+  }
+
+  cytokine_gating = rbind.data.frame(cytokine_IFNG,cytokine_TNF,cytokine_IL2,cytokine_IL17,cytokine_IL22)
+
+  cd4_boolean = data.frame(
+    alias = c("*", "cd4_total_cytokine"),
+    pop = c("*", "+"),
+    parent = c("cd4.gate", "cd4.gate"),
+    dims = c("IFNg,TNF", "IFNg,TNF"),
+    gating_method = c("polyFunctions", "boolGate"),
+    gating_args = c(paste(paste("cd4.gate/",subset(cytokine_gating,cytokine_gating$parent=="cd4.gate")$alias,sep = ""),collapse = ":"), paste(paste("cd4.gate/",subset(cytokine_gating,cytokine_gating$parent=="cd4.gate")$alias,sep = ""),collapse = "|")),
+    collapseDataForGating = c(TRUE, TRUE),
+    groupBy = c("pid", "pid"),
+    preprocessing_method = c("ppmyGate", "ppmyGate"),
+    preprocessing_args = c(NA, NA),
+    stringsAsFactors = FALSE)
+
+  cd8_boolean = data.frame(
+    alias = c("*", "cd8_total_cytokine"),
+    pop = c("*", "+"),
+    parent = c("cd8.gate", "cd8.gate"),
+    dims = c("IFNg,TNF", "IFNg,TNF"),
+    gating_method = c("polyFunctions", "boolGate"),
+    gating_args = c(paste(paste("cd8.gate/",subset(cytokine_gating,cytokine_gating$parent=="cd8.gate")$alias,sep = ""),collapse = ":"), paste(paste("cd8.gate/",subset(cytokine_gating,cytokine_gating$parent=="cd8.gate")$alias,sep = ""),collapse = "|")),
+    collapseDataForGating = c(TRUE, TRUE),
+    groupBy = c("pid", "pid"),
+    preprocessing_method = c("ppmyGate", "ppmyGate"),
+    preprocessing_args = c(NA, NA),
+    stringsAsFactors = FALSE)
+
+  temp_gating_strategy = rbind.data.frame(base_lineage_gating,cytokine_gating,cd4_boolean,cd8_boolean)
+
+  temp_file <- tempfile(fileext = ".csv")
+  write.csv(temp_gating_strategy, temp_file, row.names = FALSE)
+
+  gating_strategy <- gatingTemplate(temp_file)#use
+  temp_gating <- read.csv(temp_file)
+
+  metadata <- NULL
+  for(i in 1:length(fcs_files)){
+    temp_meta = as.data.frame(fcs_files[i])
+    colnames(temp_meta) ="file_location"
+    temp_keywords =keyword(read.FCS(fcs_files[i]))
+    temp_meta$batch = temp_keywords$`$SRC`
+    temp_meta$stimulation = gsub("/","_",temp_keywords$`TUBE NAME`,fixed = T)
+    temp_meta$stimulation = gsub("\\\\","_",temp_meta$stimulation,fixed = T)
+    temp_meta$file_name = temp_keywords$`$FIL`
+    metadata = rbind.data.frame(metadata,temp_meta)
+  }
+
+  batches_to_analyse <- unique(metadata$batch)
+
+  .ppmyGate <- function(fs, gs, gm, channels=NA,groupBy=NA,isCollapse=NA, ...) {
+    xChannel = channels[1]
+    yChannel = channels[1]
+    d <- c()
+    for(i in c(1:length(fs))) {
+      d <- c(d,rep.int(pData(fs[i])$control,nrow(exprs(fs[[i]]))))
+    }
+    return(as.logical(d))
+  }
+  register_plugins(fun=.ppmyGate, methodName='ppmyGate', dep=NA, "preprocessing")
+
+  .polyGate <- function(fr, pp_res, channels, filterId="polygate", ...){
+    args <- list(...)
+    g <- data.frame(x=args$x, y=args$y)
+    colnames(g) <- channels
+    flowCore::polygonGate(.gate=g, filterId=filterId)
+  }
+  register_plugins(fun=.polyGate, methodName='polyGate', dep=NA)
+
+  .myGate <- function(fr, pp_res, channels=NA, filterId="ppgate", ...){
+    my_gate <- tailgate(fr[pp_res,],channel=channels, filter_id=filterId, ...)
+    return(my_gate)
+  }
+  register_plugins(fun=.myGate,methodName='myGate',dep=NA)
+
+
+  for(temp_sampleBatch in batches_to_analyse){
+
+    if(!is.null(results_location)){
+      results_folder_path =  file.path(results_location, paste(temp_sampleBatch,"results",sep = "_"))
+    }else{
+      results_folder_path = file.path(fcs_location, paste(temp_sampleBatch,"results",sep = "_"))
+    }
+
+    dir.create(results_folder_path, showWarnings = F)
+    setwd(results_folder_path)
+
+    summary_df = NULL
+      temp_key <- subset(metadata, metadata$batch == temp_sampleBatch)
+      sample_outputPath = file.path(results_folder_path,paste0("flow_results_",temp_sampleBatch))#Where I want the
+      dir.create(sample_outputPath, showWarnings = F)
+      for(i in 1:dim(temp_key)[1]){
+        temp_key[i,]$file_location <- fcs_files[grepl(temp_key[i,]$file_name, fcs_files,fixed = T)]
+      }
+
+        ws = open_flowjo_xml(wsp_location)
+        comp_mat = flowjo_to_gatingset(ws,name="Compensation",execute = F)[1]
+        comp_mat = gs_get_compensations(comp_mat[[1]])
+        comp_mat = as.data.frame(comp_mat[[1]]@spillover)
+        comp_mat = as.matrix(comp_mat)
+
+      for(i in 1:dim(comp_mat)[1]){
+        colnames(comp_mat)[i] = unlist(strsplit(colnames(comp_mat)[i]," :",fixed = T))[1]
+        rownames(comp_mat)[i] = unlist(strsplit(rownames(comp_mat)[i]," :",fixed = T))[1]
+      }
+
+      colnames(comp_mat) = gsub("Comp-","",colnames(comp_mat),fixed = T)
+      rownames(comp_mat) = gsub("Comp-","",rownames(comp_mat),fixed = T)
+
+      fcsFiles <- temp_key$file_location
+      temp_fcs  <- load_cytoset_from_fcs(fcsFiles)
+
+      temp_flowset <- cytoset_to_flowSet(temp_fcs)
+
+      temp_key$name <- temp_key$file_name
+
+      pData(temp_fcs)$pid <- temp_sampleBatch
+
+      temp_stim_order <- NULL
+      for (i in pData(temp_fcs)$name) {
+        temp_stim_order <- c(temp_stim_order, subset(temp_key, temp_key$name == i)$stimulation)
+      }
+
+      pData(temp_fcs)$stimulation <- temp_stim_order
+      pData(temp_fcs)$study_visit <- unique(subset(temp_key, temp_key$name == i)$study_visit)
+
+      pData(temp_fcs)$control <- ifelse(pData(temp_fcs)$stimulation%in%c("UNS","unstim","Unstim"), "TRUE", "FALSE")
+
+      if(unique(grepl("/",colnames(keyword(temp_fcs[[1]])$SPILL),fixed = T))){
+        colnames(comp_mat) = gsub("_","/",colnames(comp_mat),fixed = T)
+        rownames(comp_mat) = gsub("_","/",rownames(comp_mat),fixed = T)
+      }
+
+      temp_fcs <- compensate(temp_fcs, comp_mat)
+
+      chnls <- names(temp_fcs[[1]])
+      chnls <- chnls[!grepl("FSC|SSC|Time", chnls)]
+      markernames(temp_fcs) = gsub("IL-2","IL2",markernames(temp_fcs))
+      markernames(temp_fcs) = gsub("IFNg|IFN-g|IFN-y|IFNy","IFNG",markernames(temp_fcs))
+      markernames(temp_fcs) = gsub("TNFa|TNF-a|TNF-aphla","TNF",markernames(temp_fcs))
+      markernames(temp_fcs) = gsub("IL-22","IL22",markernames(temp_fcs))
+      markernames(temp_fcs) = gsub("IL-17","IL17",markernames(temp_fcs))
+      temp_ncfs <- temp_fcs
+
+      trans <- estimateLogicle(temp_ncfs[[1]], channels = chnls)
+      temp_ncfs <- transform(temp_ncfs, trans)
+
+      temp_ncfs_qc = list()
+      for(i in 1:length(temp_ncfs)){
+        temp_qced = PeacoQC(temp_ncfs[[i]],channels = colnames(temp_ncfs)[colnames(temp_ncfs)!="Time"],save_fcs = F,report=T,plot=T)
+        temp_ncfs_qc[[i]] <- temp_ncfs[[i]][temp_qced$GoodCells, ]
+      }
+      names(temp_ncfs_qc) <- rownames(pData(temp_ncfs))
+      temp_ncfs <- cytoset(temp_ncfs_qc)
+
+      temp_ncfs <- GatingSet(temp_ncfs)
+      gt_gating(gating_strategy, temp_ncfs)
+
+
+      for(i in 1:length(temp_ncfs)) {
+        temp_df = gh_pop_compare_stats(temp_ncfs[[i]])
+        temp_df$name = pData(temp_ncfs[i])$name
+        temp_df$pid = pData(temp_ncfs[i])$pid
+        temp_df$stimulation = pData(temp_ncfs[i])$stimulation
+        summary_df = rbind.data.frame(summary_df, temp_df)
+      }
+
+      gate_population_key = rbind.data.frame(
+        c("boundary","FSC-A","FSC-H","cell_subsets"),
+        c("singlets","FSC-A","FSC-H","cell_subsets"),
+        c("SSCneg","SSC-A","FSC-A","cell_subsets"),
+        c("lymph","FSC-A","SSC-A","cell_subsets"),
+        c("cd3.gate","IFNG","CD3","cell_subsets"),
+        c("cd8.neg","CD8","CD4","cell_subsets"),
+        c("cd4.neg","CD8","CD4","cell_subsets"),
+        c("cd4.gate","CD8","CD4","cell_subsets"),
+        c("cd8.gate","CD4","CD8","cell_subsets"))
+      colnames(gate_population_key) = c("gate","xlabel","ylabel","summary_plot")
+
+
+      if(sum(temp_gating$dims=="IFNG")==2){
+        temp_gate_pop = rbind.data.frame(c("cd4IFNG","CD4","IFNG","cd4_t_cells"),
+                                         c("cd8IFNG","CD8","IFNG","cd8_t_cells"))
+        colnames(temp_gate_pop) = c("gate","xlabel","ylabel","summary_plot")
+        gate_population_key = rbind.data.frame(gate_population_key,temp_gate_pop)#Using CD4 and CD8 as x-axis because I would not know what the cytokine combo
+      }
+
+      if(sum(temp_gating$dims=="TNF")==2){
+        temp_gate_pop = rbind.data.frame(c("cd4TNF","CD4","TNF","cd4_t_cells"),
+                                         c("cd8TNF","CD8","TNF","cd8_t_cells"))
+        colnames(temp_gate_pop) = c("gate","xlabel","ylabel","summary_plot")
+        gate_population_key = rbind.data.frame(gate_population_key,temp_gate_pop)
+      }
+
+      if(sum(temp_gating$dims=="IL2")==2){
+        temp_gate_pop = rbind.data.frame(c("cd4IL2","CD4","IL2","cd4_t_cells"),
+                                         c("cd8IL2","CD8","IL2","cd8_t_cells"))
+        colnames(temp_gate_pop) = c("gate","xlabel","ylabel","summary_plot")
+        gate_population_key = rbind.data.frame(gate_population_key,temp_gate_pop)
+      }
+
+      if(sum(temp_gating$dims=="IL17")==2){
+        temp_gate_pop = rbind.data.frame(c("cd4IL17","CD4","IL17","cd4_t_cells"),
+                                         c("cd8IL17","CD8","IL17","cd8_t_cells"))
+        colnames(temp_gate_pop) = c("gate","xlabel","ylabel","summary_plot")
+        gate_population_key = rbind.data.frame(gate_population_key,temp_gate_pop)
+      }
+
+      if(sum(temp_gating$dims=="IL22")==2){
+        temp_gate_pop = rbind.data.frame(c("cd4IL22","CD4","IL22","cd4_t_cells"),
+                                         c("cd8IL22","CD8","IL22","cd8_t_cells"))
+        colnames(temp_gate_pop) = c("gate","xlabel","ylabel","summary_plot")
+        gate_population_key = rbind.data.frame(gate_population_key,temp_gate_pop)
+      }
+
+      gatesToVisualize = gate_population_key$gate
+
+      for (i in 1:length(temp_ncfs)) {
+        outputPath1 = file.path(sample_outputPath, paste0("Flowplots_", pData(temp_ncfs[[i]])$pid, "_", pData(temp_ncfs[[i]])$stimulation))
+        dir.create(outputPath1, showWarnings = F)
+        for (i_1 in 1:length(gatesToVisualize)) {
+          temp_gate = gate_population_key[i_1,]$gate
+
+          Temp.png.file.name = paste(pData(temp_ncfs[[i]])$pid,"_",pData(temp_ncfs[[i]])$stimulation,"_",gsub("/","_",temp_gate,fixed = T),".png",sep = "")
+          Temp.png.file.name = gsub("/","_",Temp.png.file.name)
+          png(filename = paste(outputPath1,"/",Temp.png.file.name,sep = ""))
+
+          if(temp_gate%in%c("boundary","singlets","SSCneg","lymph")){
+            print(autoplot(temp_ncfs[[i]],bins=180,gate=temp_gate,x=subset(gate_population_key,gate_population_key$gate==temp_gate)$xlabel,y=subset(gate_population_key,gate_population_key$gate==temp_gate)$ylabel) + geom_density2d(colour = "black")+
+
+                    theme(
+                      panel.background = element_rect(fill = "white",
+                                                      colour = "black",
+                                                      linewidth = 0.5, linetype = "solid"),
+                      panel.grid.major = element_line(linewidth = 0.5, linetype = 'solid',
+                                                      colour = "white"),
+                      panel.grid.minor = element_line(linewidth = 0.25, linetype = 'solid',
+                                                      colour = "white")
+                    ))
+          }else{
+            print(autoplot(temp_ncfs[[i]],bins=180,gate=temp_gate,x=subset(gate_population_key,gate_population_key$gate==temp_gate)$xlabel,y=subset(gate_population_key,gate_population_key$gate==temp_gate)$ylabel) + geom_density2d(colour = "black")+
+                    ggcyto_par_set(limits = list(x=c(-0.5,5),y=c(-0.5,5)))+
+                    theme(
+                      panel.background = element_rect(fill = "white",
+                                                      colour = "black",
+                                                      linewidth = 0.5, linetype = "solid"),
+                      panel.grid.major = element_line(linewidth = 0.5, linetype = 'solid',
+                                                      colour = "white"),
+                      panel.grid.minor = element_line(linewidth = 0.25, linetype = 'solid',
+                                                      colour = "white")
+                    ))
+          }
+
+          dev.off()
+        }
+      }
+
+      for (i in 1:length(temp_ncfs)) {
+        outputPath3 = file.path(sample_outputPath, paste0("Summary_plots_", pData(temp_ncfs[[i]])$pid, "_", pData(temp_ncfs[[i]])$stimulation))
+        dir.create(outputPath3, showWarnings = F)
+        j=1
+        for(i_2 in unique(gate_population_key$summary_plot)){
+          temp_plots = subset(gate_population_key,gate_population_key$summary_plot==i_2)
+          png(filename = paste(outputPath3,"/",j,"_",i_2, "_GatingStrategy.png",sep = ""),width = 1200,height = 900)
+          temp_folder = file.path(sample_outputPath,paste0("Flowplots_", pData(temp_ncfs[[i]])$pid, "_", pData(temp_ncfs[[i]])$stimulation))
+          temp_folder = list.files(path=temp_folder,full.names = T)
+          if(i_2=="cell_subsets"){
+            par(mfrow=c(3,3))
+          }else{
+            par(mfrow=c(2,3))
+          }
+
+          gates_for_strategy = subset(gate_population_key,gate_population_key$summary_plot==i_2)
+
+          for(i_1 in gates_for_strategy$gate){
+            if(!is.na(i_1)){
+
+              temp.img = image_read(temp_folder[grepl(paste(pData(temp_ncfs[i])$stimulation,"_",gsub("/","_",i_1,fixed = T),".png",sep = ""),temp_folder)],depth = 16)
+              par(mar=c(3,2,0,0))
+              par(xpd=NA)
+              plot(temp.img)
+              mtext(side = 1,subset(gates_for_strategy,gates_for_strategy$gate==i_1)$xlab,cex=2)
+              mtext(side = 2,subset(gates_for_strategy,gates_for_strategy$gate==i_1)$ylab,cex=2)
+            }else{
+              par(mar=c(0,0,0,0))
+              par(xpd=NA)
+              plot.new()
+            }
+          }
+          dev.off()
+          j=j+1
+        }
+      }
+
+      gs_cleanup_temp(temp_ncfs)
+      setwd(results_folder_path)
+      write.csv(summary_df, paste(temp_sampleBatch,"Results_DF.csv",sep = "_"),row.names = FALSE)
+}
+
+```
