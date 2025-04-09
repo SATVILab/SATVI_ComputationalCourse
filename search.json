@@ -464,17 +464,7 @@
     "href": "recordings.html",
     "title": "11  Session Recordings",
     "section": "",
-    "text": "11.1 Description\nOn this page you will find links to the Microsoft Teams recordings for each session. You will only be able to access these recordings if you already have institutional access via Teams. If you would like to access the recordings, but do not have access, please email the course instructors.",
-    "crumbs": [
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Session Recordings</span>"
-    ]
-  },
-  {
-    "objectID": "recordings.html#session-recordings",
-    "href": "recordings.html#session-recordings",
-    "title": "11  Session Recordings",
-    "section": "11.2 2024 Session Recordings",
-    "text": "11.2 2024 Session Recordings\n\n11.2.1 Session 1: Intro to R and swirl\n05 MAR 2024\nSession 1 Video Recording\n\n\n11.2.2 Session 2: MaRcus Training Course lesson 1\n19 MAR 2024\nSession 2 Video Recording\n\n\n11.2.3 Session 3: MaRcus Training Course lesson 2\n26 MAR 2024\nSession 3 Video Recording\n\n\n11.2.4 Session 4: MaRcus Training Course lesson 3\n02 APR 2024\nSession 4 Video Recording\nNote - MaRcus Training Course lesson 4 was skipped as it covers R Markdown which will be replaced by a session on Quarto later.\n\n\n11.2.5 Session 5: MaRcus Training Course lesson 5\n09 APR 2024\nSession 5 Video Recording\n\n\n11.2.6 Session 6: MaRcus Training Course lesson 6\n30 APR 2024\nSession 6 Video Recording\n\n\n11.2.7 Session 7: MaRcus Training Course lesson 7\n07 MAY 2024\nSession 7 Video Recording\n\n\n11.2.8 Session 8: Exporting data from R\n21 MAY 2024\nSession 8 Video Recording",
+    "text": "11.1 Description\nAll session recordings are housed on OneDrive and organized by year. Click Here to access 2025 videos.",
     "crumbs": [
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Session Recordings</span>"
     ]
