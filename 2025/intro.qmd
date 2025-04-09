@@ -10,9 +10,9 @@ Your instructors are SATVI members with experience in each topic. For session-sp
 
 ## Instructor contacts
 
-        Carly Young-Baile: carly.young-bailie@uct.ac.za
-
         Monika Looney: monika.looney@uct.ac.za
+        
+        Carly Young-Baile: carly.young-bailie@uct.ac.za
 
         Miguel Rodo: miguel.rodo@uct.ac.za
 
@@ -26,7 +26,6 @@ Your instructors are SATVI members with experience in each topic. For session-sp
 The full curriculum can be found on the "Syllabus" page.
 
 Happy coding!
-
 
 
 
