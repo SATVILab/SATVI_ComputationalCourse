@@ -516,12 +516,12 @@ kw_obj[["p.value"]] |> signif(3)
 ```{r}
 #| eval: false
 #| code-fold: false
-install_github("MiguelRodo/DataTidyRodoSTA2005S@410a5247d600ce462e7941065233b634574fca86")
+install_github("MiguelRodo/DataTidyRodoSTA2005S")
 ```
 
 ```{r}
 #| code-fold: false
-data("data_tidy_yield", package = "DataTidy23RodoSTA2005SAssignment")
+data("data_tidy_yield", package = "DataTidyRodoSTA2005S")
 data_tidy_yield
 ```
 
