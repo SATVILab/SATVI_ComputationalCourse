@@ -79,7 +79,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** Watch pre-recorded lecture and review the session guide. Come to class prepared to complete the assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/05_session.html)
+**Assignment:** Watch pre-recorded lecture and review the session guide. Come to class prepared to complete the assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/05_session.html)
 
 ### Session 6: MaRcus Training Course lesson 6
 
@@ -93,13 +93,27 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** Watch pre-recorded lecture and review the session guide. Come to class ready to complete the assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/06_session.html)
+**Assignment:** Watch pre-recorded lecture and review the session guide. Come to class ready to complete the assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/06_session.html)
 
-### Session 7: MaRcus Training Course lesson 7
+### SELF-STUDY: MaRcus Training Course lesson 7
 
 **Topic:** Manipulating strings with stringr and intro to regular expressions
 
 **Instructor:** Carly Young-Baile: carly.young-bailie@uct.ac.za
+
+**Date:** SELF-STUDY ONLY - SHORT VIDEO
+
+**Time:** 11h00 - 12h00
+
+**Location:** Lekgotla 4A and 4B
+
+**Assignment:** Watch pre-recorded lecture and review the session guide. Come to class prepared to wrok through the assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/07_session.html)
+
+### Session 7: Data import and export
+
+**Topic:** Importing and exporting data using R
+
+**Instructor:** Monika Looney: monika.looney@uct.ac.za
 
 **Date:** 08 JUL 2024
 
@@ -107,6 +121,7 @@ This page serves as a syllabus for the SATVI Computational Course. Details for e
 
 **Location:** Lekgotla 4A and 4B
 
-**Homework:** Watch pre-recorded lecture and review the session guide. Come to class prepared to wrok through the assignment from [MaRcus R Training Course](https://haswal.github.io/MaRcus/07_session.html)
+**Assignment:** Watch pre-recorded lecture and review the session guide. Come to class prepared to wrok through the assignment from [MaRcus R Training
+
 
 ### Additional sessions to be added shortly
