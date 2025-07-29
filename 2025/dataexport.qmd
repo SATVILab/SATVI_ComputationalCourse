@@ -67,19 +67,16 @@ str(mtcars)
 summary(iris)
 summary(mtcars)
 ```
-Note that summary() will summarize based on the data type in each column. 
 
-**Numeric** - Minimum, 1st quartile, median, mean, 3rd quartile, maximum
-**Factor** - Counts of each level
-**Logical** - Counts of TRUE, FALSE, and NA
-**Character** - Converts to a factor and shows counts (with a warning)
-**Date** - Minimum and maximum dates
+Note that summary() will summarize based on the data type in each column.
+
+**Numeric** - Minimum, 1st quartile, median, mean, 3rd quartile, maximum **Factor** - Counts of each level **Logical** - Counts of TRUE, FALSE, and NA **Character** - Converts to a factor and shows counts (with a warning) **Date** - Minimum and maximum dates
 
 ### Export data to .xlsx
 
 Here we will use dir_save to specify where we want to save our files. Alternatively, you can write out the full path to your output directory.
 
-It is recommended to use simple relative paths that are always the same within the working directory. Using absolute or full file paths that include machine-specific organizations will break if folders are moved around or if you or someone else needs to run your script on a different machine. 
+It is recommended to use simple relative paths that are always the same within the working directory. Using absolute or full file paths that include machine-specific organizations will break if folders are moved around or if you or someone else needs to run your script on a different machine.
 
 ```{r}
 # To export a single data.frame to .xlsx 
@@ -131,7 +128,7 @@ class(df.iris.xlsx)
 head(df.iris.xlsx)
 
 # A common alternative method relies on the 'readxl' package, but functions differently
-df.mtcars.xlsx <- read_xlsx("output/iris_mtcars_data_colrow.xlsx",
+df.mtcars.xlsx <- read_xlsx(path = "output/iris_mtcars_data_colrow.xlsx",
                     sheet = 2)
 
 class(df.mtcars.xlsx)
@@ -153,7 +150,7 @@ df.iris.csv <- read.csv("output/iris_data.csv")
 
 df.iris.csv <- import("output/iris_data.csv")
 
-# Import and set colnames
+# Import and set rownames
 df.iris.csv <- read.table("output/iris_data.csv", row.names = 1, header = TRUE, sep = ",")
 
 head(df.iris.csv)
@@ -261,7 +258,7 @@ Now perform the following steps:
 7.  Create a summary dataframe and save as .csv
 8.  Plot your data however you like! Refer to previous sessions for ideas and guidance.
 9.  Save your plots as pdf, png, and jpeg.
-10.  Export your data file as .xlsx and .csv. Confirm that your row and colnames are in the correct position.
+10. Export your data file as .xlsx and .csv. Confirm that your row and colnames are in the correct position.
 11. Save a relevant object from your environment as .Rdata and .rds.
 12. Load your .Rdata and .rds files back into R.
 13. Consult the internet or ChatGPT and find at least one alternative method or file format to import, export, and save your data or plots. Try these out.

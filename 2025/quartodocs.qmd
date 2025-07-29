@@ -337,7 +337,7 @@ Here are 2 helpful cheatsheets for working with Quarto in R:
 
 [datacamp Quarto Cheetsheet](https://images.datacamp.com/image/upload/v1676540721/Marketing/Blog/Quarto_Cheat_Sheet.pdf)
 
-## Homework
+## In person assignment
 
 **Get familiar with Quarto**
 
@@ -345,8 +345,12 @@ Here are 2 helpful cheatsheets for working with Quarto in R:
 2.  Populate the Quarto document with your own code, make sure each chunk and the full script runs without errors.
 3.  Render the Quarto document to html and pdf (docx if you choose).
 4.  Go back to the script and tailor the code chunk options to suit your visual preferences.
-5.  Render the Quarto document again.
-6.  Experiment with other Quarto features. We recommend initializing a Quarto project, which can knit together multiple Quarto documents into a book, website, presentation, or interactive document.
+5.  Generate at least one plot that you want to show in-line in the Quarto doc HTML. 
+6.  Import an image of your choice to display in line with your text in the rendered HTML. 
+7.  Render the Quarto document again.
+8.  Experiment with other Quarto features. We recommend initializing a Quarto project, which can knit together multiple Quarto documents into a book, website, presentation, or interactive document.
+
+BONUS: Integrate an interactive feature into your Quarto doc (hint: this may involve packages like Observable JS or Shiny)
 
 Remember you can always find help using the R package documentation for rmarkdown and quarto. To access the package documentation, type the following:
 
