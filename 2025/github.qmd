@@ -106,7 +106,7 @@ touch .gitignore
 touch README.md
 ```
 
-It is generally good practice to now set up a basic repo structure. First edit the .gitignore to ignore any large folders or files that you do not want to track (for large analyses, consider ignorming data and output folders)
+It is generally good practice to now set up a basic repo structure. First edit the .gitignore to ignore any large folders or files that you do not want to track (for large analyses, consider ignoring data and output folders)
 
 Make a directory for data. This should generally contain raw unprocessed data. 
 
@@ -131,6 +131,11 @@ git status
           - The git staging area is an intermediate platform between working files and permanently stored version-controlled commits. This allows you to continue working with any files and confirm they are correct before committing. Any files added to the staging area will be committed in the next commit. 
 
 ```{r, eval = FALSE}
+# Make a test file (or copy real files in)
+touch file.txt
+touch file2.csv
+touch file3.txt
+
 # To add one file 
 git add file.txt
 
@@ -138,7 +143,7 @@ git add file.txt
 git add file.txt file2.csv
 
 # To add files by pattern
-git add *.text
+git add *.txt
 
 # To add all files in the directory recursively 
 git add .
@@ -166,12 +171,26 @@ git diff --staged
 git diff
 ```
 
-    9. If necessary, unstage files. 
+      9. Commit changes
+
+        - Once you are happy with the files in your staging area you can commit to save the changes and the current snapshot of the repository. 
+
+    *Note - It is good practice to always include a short "message" with each commit that describes what was changed. This should be written in present tense. Your first commit is generally called "Initial commit."*
+
+```{r, eval = FALSE}
+# The -m option will include the message for your commit
+
+git commit -m "Initial commit."
+```
+    
+    
+    10. If necessary, unstage files. 
 
           - If you view your changes and notice an error (i.e. you have staged a large file that you don't want to track), you can remove it from the staging area or "unstage" it before you commit. 
 
 ```{r, eval = FALSE}
 # To unstage a specific file
+# NOTE - if local changes have been made to the file AFTER the last commit, git restore will restore the local version to that of the previous commit. 
 git restore --staged file.txt
 
 # or
@@ -183,11 +202,11 @@ git restore -- staged file.txt file2.csv
 # To unstage files by pattern
 git restore --staged *.txt
 
-# To unstage everything in the staging area while maintinging changes the files
+# To unstage everything in the staging area while maintaining changes the files. git reset is an older command that will remove the file from the staging area but will keep the changes made to the file in your local directory. 
 git reset .
 ```
 
-    10. Commit changes
+    11. Commit changes
 
           - Once you are happy with the files in your staging area you can commit to save the changes and the current snapshot of the repository. 
 
@@ -196,10 +215,10 @@ git reset .
 ```{r, eval = FALSE}
 # The -m option will include the message for your commit
 
-git commit -m "Initial commit."
+git commit -m "Initiate version control for *.txt files."
 ```
 
-    11. Push repo to GitHub.
+    12. Push repo to GitHub.
 
 To update the online remote repository, you need to push the repo to GitHub. An easy way to do this is to use the [GitHub CLI](https://github.com/cli/cli). If you have not done so already, download and install. 
 
